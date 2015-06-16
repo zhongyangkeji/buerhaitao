@@ -36,6 +36,13 @@ public class B5_9_MyAddressManagement extends BaseActivity implements IXListView
 	Button btn_addNewAddress;
 	ImageButton address_back;
 	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+//		RequestDailog.showDialog(this, "正在加载数据，请稍后");
+		HttpUtils.getAddress(res_getAddress, getSharedPreferenceValue("key"));
+	}
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
@@ -44,7 +51,7 @@ public class B5_9_MyAddressManagement extends BaseActivity implements IXListView
 		address_back=(ImageButton) findViewById(R.id.address_back);
 		setListener(btn_addNewAddress,address_back);
 		listview_addresManagement=(MyListView) findViewById(R.id.listview_addresManagement);
-		adapter = new B5_9_adressManageAdapter(this,data);
+		adapter = new B5_9_adressManageAdapter(this,data,getSharedPreferenceValue("key"));
 		listview_addresManagement.setAdapter(adapter);
 		listview_addresManagement.setPullLoadEnable(true);
 		listview_addresManagement.setPullRefreshEnable(true);
@@ -60,7 +67,7 @@ public class B5_9_MyAddressManagement extends BaseActivity implements IXListView
 		switch (v.getId()) {
 		case R.id.btn_addNewAddress://添加新地址
 			Intent intent_toaddAddress = new Intent(this,B5_9_1_addAddress.class);
-//			intent_toaddAddress.putExtra("changeORadd", "add");
+			intent_toaddAddress.putExtra("change", "add");
 			startActivity(intent_toaddAddress);
 			break;
 		case R.id.address_back:
@@ -112,6 +119,7 @@ public class B5_9_MyAddressManagement extends BaseActivity implements IXListView
 						map.put("area_info", jsonItem.getString("area_info"));
 						map.put("address", jsonItem.getString("address"));
 						map.put("address_id", jsonItem.getString("address_id"));
+						map.put("zip", jsonItem.getString("zip"));
 						map.put("is_default", jsonItem.getString("is_default"));
 						data.add(map);
 					}

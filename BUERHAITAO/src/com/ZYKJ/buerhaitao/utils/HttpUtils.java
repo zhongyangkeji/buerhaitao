@@ -343,35 +343,52 @@ public class HttpUtils {
 	/**
 	 * 19修改地址
 	 * 
-	 * @param res
-	 * @param true_name
-	 *            收货人
-	 * @param address
-	 *            详细地址
-	 * @param mob_phone
-	 *            手机
+
+
+    key 当前登录令牌
+    address_id 地址编号
+    true_name 姓名
+    area_id 地区编号
+    city_id 城市编号
+    area_info 地区信息，例：天津 天津市 红桥区
+    street 街道 例:南大街
+    address 地址信息，例：水游城8层
+    zip 邮编
+    mob_phone 手机
+
+
 	 */
-	public static void changeAddress(AsyncHttpResponseHandler res,
-			String true_name, String area_id, String address, String mob_phone,
-			String address_id) {
-		String url = base_url + "changeAddress&true_name=" + true_name
-				+ "&address=" + address + "&mob_phone=" + mob_phone
-				+ "&area_id=" + area_id + "&address_id=" + address_id;
-		client.get(url, res);
+	public static void changeAddress(AsyncHttpResponseHandler res,String key,String address_id,
+			String true_name, String area_id,String city_id, String address, String area_info,
+			String street,String zip,String mob_phone) {
+		String url = base_url + "index.php?act=member_address&op=address_edit";
+		RequestParams params =new RequestParams();
+		params.put("key", key);
+		params.put("address_id", address_id);
+		params.put("true_name", true_name);
+		params.put("area_id", area_id);
+		params.put("city_id", city_id);
+		params.put("area_info", area_info);
+		params.put("street", street);
+		params.put("address", address);
+		params.put("zip", zip);
+		params.put("mob_phone", mob_phone);
+		client.post(url, params, res);
 	}
 
 	/**
-	 * 20删除地址
+	 * 删除地址
 	 * 
 	 * @param res
 	 * @param address_id
 	 *            地址id
 	 */
-	public static void delAddress(AsyncHttpResponseHandler res,
-			String address_id) {
-		String url = base_url + "delAddress&address_id=" + address_id;
-		Log.i("del-addr", url);
-		client.get(url, res);
+	public static void delAddress(AsyncHttpResponseHandler res,String key,String address_id) {
+		String url = base_url + "index.php?act=member_address&op=address_del";
+		RequestParams pareParams =new RequestParams();
+		pareParams.put("key", key);
+		pareParams.put("address_id", address_id);
+		client.post(url, pareParams, res);
 	}
 
 	/**
@@ -385,16 +402,18 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 22设置默认地址
+	 * 设置默认地址
 	 * 
 	 * @param res
+	 * @param key
 	 * @param address_id
 	 */
-	public static void setDefaultAddress(AsyncHttpResponseHandler res,
-			String address_id) {
-		String url = base_url + "setDefaultAddress&address_id=" + address_id;
-		Log.i("landousurl", url);
-		client.get(url, res);
+	public static void setDefaultAddress(AsyncHttpResponseHandler res,String key,String address_id) {
+		String url = base_url + "index.php?act=member_address&op=address_default";
+		RequestParams params = new RequestParams();
+		params.put("key", key);
+		params.put("address_id", address_id);
+		client.post(url, params, res);
 	}
 
 	/**
