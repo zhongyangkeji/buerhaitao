@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <include layout="@layout/layout_head" />
+        
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/index_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent" >
+
+                <cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager
+                    android:id="@+id/index_viewpage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top" />
+
+                <LinearLayout
+                    android:id="@+id/gallery_point_linear"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/index_viewpage"
+                    android:layout_alignParentLeft="true"
+                    android:background="#f0eff4"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RadioGroup
+                android:id="@+id/index_radio_group"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <!-- 类型1 -->
+
+                <RadioButton
+                    android:id="@+id/index_type1"
+                    style="@style/index_type"
+                    android:drawableTop="@drawable/type_dialog_11"
+                   
+                    />
+
+                <!-- 类型2 -->
+
+                <RadioButton
+                    android:id="@+id/index_type2"
+                    style="@style/index_type"
+                    android:drawableTop="@drawable/type_dialog_14"
+                    />
+
+                <!-- 类型3 -->
+
+                <RadioButton
+                    android:id="@+id/index_type3"
+                    style="@style/index_type"
+                    android:drawableTop="@drawable/type_dialog_9"
+                     />
+
+                <!-- 类型4 -->
+
+                <RadioButton
+                    android:id="@+id/index_type4"
+                    style="@style/index_type"
+                    android:drawableTop="@drawable/type_dialog_4"
+                    />
+
+                <!-- 类型5 -->
+
+                <RadioButton
+                    android:id="@+id/index_type5"
+                    style="@style/index_type"
+                    android:drawableTop="@drawable/type_dialog_3"
+                    />
+
+                <!-- 类型6 -->
+
+                <RadioButton
+                    android:id="@+id/index_type6"
+                    style="@style/index_type"
+                    android:drawableTop="@drawable/type_dialog_15"
+                    />
+            </RadioGroup>
+
+            <!-- 添加标题的显示 -->
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/index_recommand"
+                    android:textColor="#000"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/index_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:text="换一批"
+                    android:textColor="#333"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#cccccc" />
+
+            <com.ZYKJ.buerhaitao.view.ListViewForScroll
+                android:id="@+id/index_listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#cccccc"
+                android:dividerHeight="1dp"
+                android:listSelector="@android:color/transparent"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:scrollbars="none"
+                android:scrollingCache="false" >
+            </com.ZYKJ.buerhaitao.view.ListViewForScroll>
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        layout="@layout/error_layout"
+        android:visibility="gone" />
+
+</LinearLayout>
