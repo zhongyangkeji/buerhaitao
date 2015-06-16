@@ -42,7 +42,6 @@ public class B5_9_1_getArea extends BaseActivity {
 	private ListViewForScroll lv_class_middle = null;
 	private ListViewForScroll lv_class_right = null;
 	private int one = 0, two = 0;
-	String province[30]=new String [30]{};
 	// 以上数据用不到
 //	B0_ClassLeftAdapter class_ada_one;
 //	B0_ClassMiddle_Adapter class_ada_two;
@@ -62,6 +61,10 @@ public class B5_9_1_getArea extends BaseActivity {
 	
 	String parent_id_middle = "";
 	String parent_id_right = "";
+	
+	String province[];//省
+	String city[];//市
+	String area[];//区
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -104,6 +107,7 @@ public class B5_9_1_getArea extends BaseActivity {
 				ON_LISTVIEW = 1;
 				parent_id_middle = view.getTag().toString();
 				RequestDailog.showDialog(B5_9_1_getArea.this, "正在请求数据,请稍后");
+				bundle.putString("province", province[i]);//bundle1
 				HttpUtils.getArea(res_getAreaMiddle,getSharedPreferenceValue("key"),parent_id_middle);
 				one = i;
 				class_ada_one.setItem(one);
@@ -128,10 +132,10 @@ public class B5_9_1_getArea extends BaseActivity {
 					long arg3) {
 				two = arg2;
 				class_ada_two.setItem(two);
-				Toast.makeText(B5_9_1_getArea.this, arg2, Toast.LENGTH_LONG).show();
 //				if (two != 0) {
 					class_ada_two.notifyDataSetChanged();
 					parent_id_right = view.getTag().toString();
+					bundle.putString("city", city[arg2]);//bundle2
 					bundle.putString("city_id", parent_id_right);//城市编号(地址联动的第二级)传给bundle
 					HttpUtils.getArea(res_getAreaRight,getSharedPreferenceValue("key"),parent_id_right);
 					lv_class_right.setVisibility(View.VISIBLE);
@@ -161,8 +165,10 @@ public class B5_9_1_getArea extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int arg2,
 					long arg3) {
+				bundle.putString("area_id", view.getTag().toString());
+				bundle.putString("area", area[arg2]);//bundle2
 				Intent it = new Intent(B5_9_1_getArea.this,B5_9_1_addAddress.class);
-				it.putExtra("gc_id", view.getTag() + "");
+				it.putExtras(bundle);
 				setResult(GetArea, it);
 				overridePendingTransition(R.anim.push_right_in,
 						R.anim.push_right_out);
@@ -195,12 +201,15 @@ public class B5_9_1_getArea extends BaseActivity {
 				JSONArray array;
 				try {
 					array = datas.getJSONArray("area_list");
+				    province=new String [array.length()];
 					for (int i = 0; i < array.length(); i++) {
 						JSONObject jsonItem = array.getJSONObject(i);
 						Map<String, String> map = new HashMap();
 						map.put("area_id", jsonItem.getString("area_id"));
 						map.put("area_name", jsonItem.getString("area_name"));
+						
 						province[i]=jsonItem.getString("area_name");//省份的名字装到数组里面
+						
 						data.add(map);
 					}
 					class_ada_one.notifyDataSetChanged();
@@ -242,11 +251,13 @@ public class B5_9_1_getArea extends BaseActivity {
 				JSONArray array;
 				try {
 					array = datas.getJSONArray("area_list");
+					city=new String [array.length()];
 					for (int i = 0; i < array.length(); i++) {
 						JSONObject jsonItem = array.getJSONObject(i);
 						Map<String, String> map = new HashMap();
 						map.put("area_id", jsonItem.getString("area_id"));
 						map.put("area_name", jsonItem.getString("area_name"));
+						city[i]=jsonItem.getString("area_name");
 						dataMiddle.add(map);
 					}
 					class_ada_two.notifyDataSetChanged();
@@ -288,11 +299,13 @@ public class B5_9_1_getArea extends BaseActivity {
 				JSONArray array;
 				try {
 					array = datas.getJSONArray("area_list");
+					area=new String [array.length()];
 					for (int i = 0; i < array.length(); i++) {
 						JSONObject jsonItem = array.getJSONObject(i);
 						Map<String, String> map = new HashMap();
 						map.put("area_id", jsonItem.getString("area_id"));
 						map.put("area_name", jsonItem.getString("area_name"));
+						area[i]=jsonItem.getString("area_name");
 						dataRight.add(map);
 					}
 					class_ada_three.notifyDataSetChanged();
