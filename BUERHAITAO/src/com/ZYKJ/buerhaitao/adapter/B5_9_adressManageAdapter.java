@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,7 @@ import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.UI.R;
 
-public class B5_9_adressManageAdapter extends BaseAdapter {
+@SuppressLint("NewApi") public class B5_9_adressManageAdapter extends BaseAdapter {
 
 	List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 	private Activity c;
@@ -56,6 +57,14 @@ public class B5_9_adressManageAdapter extends BaseAdapter {
 		TextView tv_addressTAG=(TextView) cellView.findViewById(R.id.tv_addressTAG);
 		TextView tv_addressDetail=(TextView) cellView.findViewById(R.id.tv_addressDetail);
 		Button address_chose =(Button) cellView.findViewById(R.id.address_chose);
+		
+		if (data.get(position).get("is_default").equals("0")) {
+			tv_addressTAG.setAlpha(0);//如果不是默认的地址，就隐藏掉[默认]
+		}
+		tv_name.setText(data.get(position).get("true_name"));
+		tv_phoneNumber.setText(data.get(position).get("mob_phone"));
+		tv_addressDetail.setText(data.get(position).get("area_info")+data.get(position).get("address"));
+		
 		address_chose.setOnClickListener(new ChoseAdressListener(position));
 		
 		return cellView;

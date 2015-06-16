@@ -312,24 +312,32 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 18添加地址
+	 * 地址添加
 	 * 
-	 * @param res
-	 * @param true_name
-	 *            真实修改
-	 * @param area_id
-	 *            地区id
-	 * @param address
-	 *            详细地址
-	 * @param mob_phone
-	 *            手机
+	    key 当前登录令牌
+	    true_name 姓名
+	    city_id 城市编号(地址联动的第二级)
+	    area_id 地区编号(地址联动的第三级)
+	    area_info 地区信息，例：天津 天津市 红桥区
+	    street 街道 例如:南大街
+	    address 地址信息，例：水游城8层
+	    zip 邮编
+	    mob_phone 手机
 	 */
 	public static void addAddress(AsyncHttpResponseHandler res,
-			String true_name, String area_id, String address, String mob_phone) {
-		String url = base_url + "addAddress&true_name=" + true_name
-				+ "&area_id=" + area_id + "&address=" + address + "&mob_phone="
-				+ mob_phone;
-		client.get(url, res);
+			String key, String true_name, String city_id, String area_id,String area_info,String street,String address,String zip,String mob_phone) {
+		String url = base_url + "index.php?act=member_address&op=address_add";
+		RequestParams params =new RequestParams();
+		params.put("key", key);
+		params.put("true_name", true_name);
+		params.put("city_id", city_id);
+		params.put("area_id", area_id);
+		params.put("area_info", area_info);
+		params.put("street", street);
+		params.put("address", address);
+		params.put("zip", zip);
+		params.put("mob_phone", mob_phone);
+		client.post(url, params, res);
 	}
 
 	/**

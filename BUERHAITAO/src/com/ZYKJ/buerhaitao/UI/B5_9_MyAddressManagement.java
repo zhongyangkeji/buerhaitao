@@ -60,7 +60,7 @@ public class B5_9_MyAddressManagement extends BaseActivity implements IXListView
 		switch (v.getId()) {
 		case R.id.btn_addNewAddress://添加新地址
 			Intent intent_toaddAddress = new Intent(this,B5_9_1_addAddress.class);
-			intent_toaddAddress.putExtra("changeORadd", "add");
+//			intent_toaddAddress.putExtra("changeORadd", "add");
 			startActivity(intent_toaddAddress);
 			break;
 		case R.id.address_back:
@@ -101,29 +101,26 @@ public class B5_9_MyAddressManagement extends BaseActivity implements IXListView
 			} 
 			if (error==null)//成功
 			{
-//				try {
-//					data.clear();
-//					org.json.JSONArray array = datas.getJSONArray("pro_list");
-//					Tools.Log("res_pointsMall_array="+array);
-//					for (int i = 0; i < array.length(); i++) {
-//						JSONObject jsonItem = array.getJSONObject(i);
-//						Map<String, String> map = new HashMap();
-//						map.put("pgoods_id", jsonItem.getString("pgoods_id"));
-//						map.put("pgoods_image_small", jsonItem.getString("pgoods_image_small"));
-//						map.put("pgoods_image_old", jsonItem.getString("pgoods_image_old"));
-//						map.put("ex_state", jsonItem.getString("ex_state"));
-//						map.put("pgoods_points", jsonItem.getString("pgoods_points"));
-//						map.put("pgoods_body", jsonItem.getString("pgoods_body"));
-//						map.put("pgoods_name", jsonItem.getString("pgoods_name"));
-//						map.put("pgoods_image", jsonItem.getString("pgoods_image"));
-//						data.add(map);
-//					}
-//					adapter.notifyDataSetChanged();
-//				} 
-//				catch (org.json.JSONException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+				try {
+					data.clear();
+					org.json.JSONArray array = datas.getJSONArray("address_list");
+					for (int i = 0; i < array.length(); i++) {
+						JSONObject jsonItem = array.getJSONObject(i);
+						Map<String, String> map = new HashMap();
+						map.put("true_name", jsonItem.getString("true_name"));
+						map.put("mob_phone", jsonItem.getString("mob_phone"));
+						map.put("area_info", jsonItem.getString("area_info"));
+						map.put("address", jsonItem.getString("address"));
+						map.put("address_id", jsonItem.getString("address_id"));
+						map.put("is_default", jsonItem.getString("is_default"));
+						data.add(map);
+					}
+					adapter.notifyDataSetChanged();
+				} 
+				catch (org.json.JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}
 			else//失败 
