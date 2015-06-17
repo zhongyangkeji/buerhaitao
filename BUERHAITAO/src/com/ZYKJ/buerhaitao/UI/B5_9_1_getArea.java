@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -57,7 +58,6 @@ public class B5_9_1_getArea extends BaseActivity {
 	private LinearLayout ll_middle;
 	private LinearLayout ll_right;
 	private ScrollView m_scroll;
-	private Bundle bundle ;
 	
 	String parent_id_middle = "";
 	String parent_id_right = "";
@@ -65,6 +65,11 @@ public class B5_9_1_getArea extends BaseActivity {
 	String province[];//省
 	String city[];//市
 	String area[];//区
+	
+	String provincesString,cityString,areaString;
+	String city_idString,area_idString;
+	
+	Intent it;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -72,7 +77,7 @@ public class B5_9_1_getArea extends BaseActivity {
 		initView(R.layout.ui_b5_9_1_getarea);
 		
 		RequestDailog.showDialog(this, "正在请求数据");
-		bundle=new Bundle();
+		it=getIntent();
 		if (data.size() == 0) {
 			HttpUtils.getArea(res_getArea,getSharedPreferenceValue("key"),"");
 		}
@@ -107,7 +112,8 @@ public class B5_9_1_getArea extends BaseActivity {
 				ON_LISTVIEW = 1;
 				parent_id_middle = view.getTag().toString();
 				RequestDailog.showDialog(B5_9_1_getArea.this, "正在请求数据,请稍后");
-				bundle.putString("province", province[i]);//bundle1
+//				bundle.putString("province", province[i]);//bundle1
+				provincesString=province[i];
 				HttpUtils.getArea(res_getAreaMiddle,getSharedPreferenceValue("key"),parent_id_middle);
 				one = i;
 				class_ada_one.setItem(one);
@@ -135,8 +141,10 @@ public class B5_9_1_getArea extends BaseActivity {
 //				if (two != 0) {
 					class_ada_two.notifyDataSetChanged();
 					parent_id_right = view.getTag().toString();
-					bundle.putString("city", city[arg2]);//bundle2
-					bundle.putString("city_id", parent_id_right);//城市编号(地址联动的第二级)传给bundle
+//					bundle.putString("city", city[arg2]);//bundle2
+					cityString= city[arg2];
+//					bundle.putString("city_id", parent_id_right);//城市编号(地址联动的第二级)传给bundle
+					city_idString=parent_id_right;
 					HttpUtils.getArea(res_getAreaRight,getSharedPreferenceValue("key"),parent_id_right);
 					lv_class_right.setVisibility(View.VISIBLE);
 					ll_right.setVisibility(View.VISIBLE);
@@ -165,11 +173,19 @@ public class B5_9_1_getArea extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int arg2,
 					long arg3) {
-				bundle.putString("area_id", view.getTag().toString());
-				bundle.putString("area", area[arg2]);//bundle2
-				Intent it = new Intent(B5_9_1_getArea.this,B5_9_1_addAddress.class);
-				it.putExtras(bundle);
+//				bundle.putString("area_id", view.getTag().toString());
+				area_idString=view.getTag().toString();
+//				bundle.putString("area", area[arg2]);//bundle2
+				areaString=area[arg2];
+//				Intent it = new Intent(B5_9_1_getArea.this,B5_9_1_addAddress.class);
+//				it.putExtras(bundle);
+				it.putExtra("province", provincesString);
+				it.putExtra("city", cityString);
+				it.putExtra("area", areaString);
+				it.putExtra("city_id", city_idString);
+				it.putExtra("area_id", area_idString);
 				setResult(GetArea, it);
+				B5_9_1_getArea.this.finish();
 				overridePendingTransition(R.anim.push_right_in,
 						R.anim.push_right_out);
 			}
@@ -184,7 +200,7 @@ public class B5_9_1_getArea extends BaseActivity {
 				JSONObject response) {
 			// TODO Auto-generated method stub
 			super.onSuccess(statusCode, headers, response);
-			Tools.Log("res_getArea_response="+response);
+//			Tools.Log("res_getArea_response="+response);
 			RequestDailog.closeDialog();
 			String error=null;
 			JSONObject datas=null;
@@ -233,7 +249,7 @@ public class B5_9_1_getArea extends BaseActivity {
 				JSONObject response) {
 			// TODO Auto-generated method stub
 			super.onSuccess(statusCode, headers, response);
-//			Tools.Log("res_getArea_response="+response);
+//			Tools.Log("Middle_response="+response);
 			m_scroll.smoothScrollTo(0, 0);//跳转到顶部
 			RequestDailog.closeDialog();
 			String error=null;
@@ -281,7 +297,7 @@ public class B5_9_1_getArea extends BaseActivity {
 				JSONObject response) {
 			// TODO Auto-generated method stub
 			super.onSuccess(statusCode, headers, response);
-			Tools.Log("res_getAreaRight_response="+response);
+//			Tools.Log("Right_response="+response);
 			m_scroll.smoothScrollTo(0, 0);//跳转到顶部
 			RequestDailog.closeDialog();
 			String error=null;
