@@ -18,7 +18,7 @@ import com.ZYKJ.buerhaitao.utils.Tools;
 public class A1_IntroActivity extends BaseActivity implements OnPageChangeListener {
 
 	private ViewPager viewPager;
-
+	int a = 0;
 	/**
 	 * 图片资源id
 	 */
@@ -120,6 +120,22 @@ public class A1_IntroActivity extends BaseActivity implements OnPageChangeListen
 
 	@Override
 	public void onPageScrolled(int arg0, float arg1, int arg2) {
+		if (arg0 == mImageViews.length - 1) {// 进入下一页
+			// 存储版本号
+			if(a>0){
+
+				putSharedPreferenceValue(AppValue.VERSION,
+						Tools.getAppVersion(this) + "");
+				// 存储已经进行过索引的标识
+				putSharedPreferenceValue(AppValue.IS_INTRO, "1");
+				
+				Intent intent = new Intent(this, B0_MainActivity.class);
+				startActivity(intent);
+				finish();
+			}else{
+				a=a+1;
+			}
+		} 
 	}
 
 	@Override

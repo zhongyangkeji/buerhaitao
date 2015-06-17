@@ -121,7 +121,7 @@
 <string name="productInfo">兑换商品信息 </string>
 <string name="comment">备注留言: </string>
 <string name="comment_hint">选填，可以写下你对兑换商品的需要</string>
-
+<!-- 首页 -->
     
     
 </resources>
