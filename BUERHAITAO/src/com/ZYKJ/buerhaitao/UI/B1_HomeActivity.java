@@ -1,26 +1,146 @@
 package com.ZYKJ.buerhaitao.UI;
 
 /**
- * 首页界面
+ * 首页界面 lss 6.17
  */
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.view.ToastView;
 
 public class B1_HomeActivity extends BaseActivity {
-
+	//首页中间八个大分类
+	ImageView im_b1nvshi,im_b1nanshi,im_b1muying,im_b1huazhuang,im_b1shouji,im_b1bangong,im_b1shenghuo,im_b1techan;
+	//天天特价,晒单圈,猜你喜欢，每日好店
+	RelativeLayout rl_b1_a1tttj,b5_3_shaidanquan,rl_b1_a2_cnxh,rl_b1_a3_mrhd;
+	//搜索选择
+	TextView tv_baobei;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_index);
+		initView();
+	}
+	
+	private void initView(){
+		im_b1nvshi = (ImageView)findViewById(R.id.im_b1nvshi);
+		im_b1nanshi = (ImageView)findViewById(R.id.im_b1nanshi);
+		im_b1muying = (ImageView)findViewById(R.id.im_b1muying);
+		im_b1huazhuang = (ImageView)findViewById(R.id.im_b1huazhuang);
+		im_b1shouji = (ImageView)findViewById(R.id.im_b1shouji);
+		im_b1bangong = (ImageView)findViewById(R.id.im_b1bangong);
+		im_b1shenghuo = (ImageView)findViewById(R.id.im_b1shenghuo);
+		im_b1techan = (ImageView)findViewById(R.id.im_b1techan);
+		rl_b1_a1tttj = (RelativeLayout)findViewById(R.id.rl_b1_a1tttj);
+		b5_3_shaidanquan = (RelativeLayout)findViewById(R.id.b5_3_shaidanquan);
+		rl_b1_a2_cnxh = (RelativeLayout)findViewById(R.id.rl_b1_a2_cnxh);
+		rl_b1_a3_mrhd = (RelativeLayout)findViewById(R.id.rl_b1_a3_mrhd);
+		tv_baobei = (TextView)findViewById(R.id.tv_baobei);
+		setListener(im_b1nvshi,im_b1nanshi,im_b1muying,im_b1huazhuang,im_b1shouji,im_b1bangong,im_b1shenghuo,im_b1techan,rl_b1_a1tttj,b5_3_shaidanquan,rl_b1_a2_cnxh,rl_b1_a3_mrhd,tv_baobei);
+	}
+
+	@Override
+	public void onClick(View v) {
+		super.onClick(v);
+		switch (v.getId()) {
+		//女士服装
+		case R.id.im_b1nvshi:
+			Intent itnvshi = new Intent();
+			itnvshi.setClass(B1_HomeActivity.this, B1_1_NvShiFuZhuang.class);
+			startActivity(itnvshi);
+			break;
+		//男士服装
+		case R.id.im_b1nanshi:
+			Intent itnanshi = new Intent();
+			itnanshi.setClass(B1_HomeActivity.this, B1_2_NanShiFuZhuang.class);
+			startActivity(itnanshi);
+			break;
+		//母婴
+		case R.id.im_b1muying:
+			Intent itmuying = new Intent();
+			itmuying.setClass(B1_HomeActivity.this, B1_3_MuYing.class);
+			startActivity(itmuying);
+			break;
+		//化妆品
+		case R.id.im_b1huazhuang:
+			Intent ithuazhuang = new Intent();
+			ithuazhuang.setClass(B1_HomeActivity.this, B1_4_HuaZhuangPin.class);
+			startActivity(ithuazhuang);
+			break;
+		//手机数码
+		case R.id.im_b1shouji:
+			Intent itshouji = new Intent();
+			itshouji.setClass(B1_HomeActivity.this, B1_5_ShouJiShuMa.class);
+			startActivity(itshouji);
+			break;
+		//办公家电
+		case R.id.im_b1bangong:
+			Intent itbangong = new Intent();
+			itbangong.setClass(B1_HomeActivity.this, B1_6_BanGongJiaDian.class);
+			startActivity(itbangong);
+			break;
+		//生活服务
+		case R.id.im_b1shenghuo:
+			Intent itshenghuo = new Intent();
+			itshenghuo.setClass(B1_HomeActivity.this, B1_7_ShengHuoFuWu.class);
+			startActivity(itshenghuo);
+			break;
+		//特产
+		case R.id.im_b1techan:
+			Intent ittechan = new Intent();
+			ittechan.setClass(B1_HomeActivity.this, B1_8_TeChan.class);
+			startActivity(ittechan);
+			break;
+		//天天特价
+		case R.id.rl_b1_a1tttj:
+			Intent ittttj = new Intent();
+			ittttj.setClass(B1_HomeActivity.this, B1_a1_TianTianTeJia.class);
+			startActivity(ittttj);
+			break;
+		//晒单圈
+		case R.id.b5_3_shaidanquan:
+			Intent itshaidanquan = new Intent();
+			itshaidanquan.setClass(B1_HomeActivity.this, B5_3_ShaiDanQuan.class);
+			startActivity(itshaidanquan);
+			break;
+		//猜你喜欢
+		case R.id.rl_b1_a2_cnxh:
+			Intent itcnxh = new Intent();
+			itcnxh.setClass(B1_HomeActivity.this, B1_a2_CaiNiXiHuan.class);
+			startActivity(itcnxh);
+			break;
+			
+		//每日好店
+		case R.id.rl_b1_a3_mrhd:
+			Intent itmrhd = new Intent();
+			itmrhd.setClass(B1_HomeActivity.this, B1_a3_MeiRiHaoDian.class);
+			startActivity(itmrhd);
+			break;
+		//宝贝
+		case R.id.tv_baobei:
+			new AlertDialog.Builder(B1_HomeActivity.this)
+			.setItems(new  String[] {"宝贝", "店铺" },  null )
+			.setNegativeButton("确定" ,  null )  
+			.show();    
+			break;
 		
+		case R.id.error_layout:// 错误页面的点击
+			//htttp请求
+			break;
+		}
+
 	}
 	
 	// 退出操作
@@ -57,17 +177,6 @@ public class B1_HomeActivity extends BaseActivity {
 //		intent.putExtra("type", type);
 //		startActivity(intent);
 		Toast.makeText(this, type, Toast.LENGTH_LONG).show();
-	}
-
-	@Override
-	public void onClick(View v) {
-		super.onClick(v);
-		switch (v.getId()) {
-		case R.id.error_layout:// 错误页面的点击
-			//htttp请求
-			break;
-		}
-
 	}
 
 }

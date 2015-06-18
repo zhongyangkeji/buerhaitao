@@ -7,10 +7,11 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="18" />
+
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-<!-- 网络权限 -->
+    <!-- 网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 改变屏幕权限 -->
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
@@ -31,6 +32,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 拍照 -->
     <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:name="com.ZYKJ.buerhaitao.base.BaseApp"
         android:allowBackup="true"
@@ -41,33 +43,69 @@
             android:name="com.ZYKJ.buerhaitao.UI.B0_MainActivity"
             android:label="@string/app_name" >
         </activity>
-        <activity 
+        <activity
             android:name="com.ZYKJ.buerhaitao.UI.A0_Welcome"
-            android:label="@string/app_name"
-            >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.ZYKJ.buerhaitao.UI.A1_IntroActivity"></activity>
-        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_HomeActivity"></activity>
-        <activity android:name="B5_MyActivity"></activity>
-        <activity android:name="B5_1_LoginActivity"></activity>
-        <activity android:name="B5_1_1_RegistActivity"></activity>
-        <activity android:name="B5_12_SetActivity"></activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.A1_IntroActivity" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_HomeActivity" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B5_MyActivity" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B5_1_LoginActivity" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B5_1_1_RegistActivity" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B5_12_SetActivity" >
+        </activity>
         <!-- 短信验证 -->
         <activity
-			android:name="com.mob.tools.MobUIShell"
-			android:configChanges="keyboardHidden|orientation|screenSize"
-			android:theme="@android:style/Theme.Translucent.NoTitleBar"
-			android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name="B5_2_MyPointsDetail"></activity>
-        <activity android:name="B5_11_PointsMall"></activity>
-        <activity android:name="B5_11_1_ExchangeDetail"></activity>
-        <activity android:name="B5_9_MyAddressManagement"></activity>
-        <activity android:name="B5_9_1_addAddress"></activity>
-        <activity android:name="B5_9_1_getArea"></activity>
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B5_2_MyPointsDetail" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B5_11_PointsMall" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B5_11_1_ExchangeDetail" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B5_9_MyAddressManagement" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B5_9_1_addAddress" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B5_9_1_getArea" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_1_NvShiFuZhuang" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_2_NanShiFuZhuang" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_3_MuYing" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_4_HuaZhuangPin" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_5_ShouJiShuMa" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_6_BanGongJiaDian" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_7_ShengHuoFuWu" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_8_TeChan" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_a1_TianTianTeJia" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B5_3_ShaiDanQuan" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_a2_CaiNiXiHuan" >
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_a3_MeiRiHaoDian" >
+        </activity>
     </application>
 
 </manifest>
