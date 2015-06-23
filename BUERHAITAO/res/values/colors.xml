@@ -20,7 +20,9 @@
     <color name="line_grey">#EEEEEE</color> 
     
     <color name="blue">#35b7fe</color> 
-    
+    <color name="edit_hint_color">#B3B3B3</color>
+    <color name="classify_checked">#FFFFFF</color>
+    <color name="classify_back">#E5BFFC</color>
     
 
 </resources>

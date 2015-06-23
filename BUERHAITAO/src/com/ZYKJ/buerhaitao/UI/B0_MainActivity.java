@@ -42,13 +42,13 @@ public class B0_MainActivity extends BaseTabActivity {
 		// final TabWidget _widget = m_tab.getTabWidget();
 		// _widget.setStripEnabled(false);
 		intent_1 = new Intent(this, B1_HomeActivity.class);//相当于IndexActivity
-//		intent_2 = new Intent(this, ShopList.class);
+		intent_2 = new Intent(this, B2_ClassifyActivity.class);
 //		intent_3 = new Intent(this, ManageActivity.class);
 //		intent_4 = new Intent(this, SetActivity.class);
 		intent_5 = new Intent(this, B5_MyActivity.class);
 
 		m_tab.addTab(buildTagSpec("test1", 0, intent_1));
-//		m_tab.addTab(buildTagSpec("test2", 1, intent_2));
+		m_tab.addTab(buildTagSpec("test2", 1, intent_2));
 //		m_tab.addTab(buildTagSpec("test3", 2, intent_3));
 //		m_tab.addTab(buildTagSpec("test4", 3, intent_4));
 		m_tab.addTab(buildTagSpec("test5", 4, intent_5));

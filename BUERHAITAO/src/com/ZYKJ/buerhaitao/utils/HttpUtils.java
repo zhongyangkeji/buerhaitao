@@ -131,14 +131,13 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 5获取商品分类 parent_id默认为0
+	 * 5获取商品分类 gc_id默认为0
 	 * 
 	 * @param res
-	 * @param parent_id
+	 * @param gc_id
 	 */
-	public static void getGoodsClass(AsyncHttpResponseHandler res,
-			String parent_id) {
-		String url = base_url + "getGoodsClass&parent_id=" + parent_id;
+	public static void getGoodsClass(AsyncHttpResponseHandler res,String gc_id) {
+		String url = base_url + "index.php?act=goods_class"+(gc_id != null?"&gc_id="+gc_id:"");
 		client.get(url, res);
 	}
 

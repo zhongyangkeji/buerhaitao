@@ -121,4 +121,13 @@
         <item name="android:windowEnterAnimation">@anim/fade_in</item>
         <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
+    
+    <!-- EditText的风格 -->
+    <style name="edit_text">
+        <!-- 背景色 -->
+        <item name="android:background">@null</item>
+        <!-- 提示颜色 -->
+        <item name="android:textColorHint">@color/edit_hint_color</item>
+    </style>
+    
 </resources>
