@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,12 +32,16 @@ public class B5_11_PointsMall extends BaseActivity implements IXListViewListener
 	B5_11_PointsMallAdapter adapter;
 	List<Map<String, String>> data = new ArrayList<Map<String,String>>();
 	private TextView tv_totlePoints;
+	private ImageButton pointsmall_back;
+	private TextView tv_record;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		initView(R.layout.ui_points_mall);
 		tv_totlePoints=(TextView) findViewById(R.id.tv_totlePoints);
+		pointsmall_back=(ImageButton) findViewById(R.id.pointsmall_back);
+		tv_record=(TextView) findViewById(R.id.tv_record);
 		listview=(MyListView) findViewById(R.id.listview_pointsMall);
 		adapter = new B5_11_PointsMallAdapter(B5_11_PointsMall.this,data);
 		listview.setAdapter(adapter);
@@ -47,7 +52,22 @@ public class B5_11_PointsMall extends BaseActivity implements IXListViewListener
 		RequestDailog.showDialog(this, "正在加载数据，请稍后");
 		HttpUtils.pointsMall(res_pointsMall, getSharedPreferenceValue("key"));
 		
+		setListener(pointsmall_back,tv_record);
+		
 	}
+	public void onClick(android.view.View v) {
+		switch (v.getId()) {
+		case R.id.pointsmall_back://退出
+			this.finish();
+			break;
+		case R.id.tv_record://兑换记录
+			Toast.makeText(this, "兑换记录", Toast.LENGTH_LONG).show();
+			break;
+		default:
+			break;
+		}
+		
+	};
 	/**
 	 * 获取积分详情
 	 */
@@ -118,6 +138,7 @@ public class B5_11_PointsMall extends BaseActivity implements IXListViewListener
 	public void onLoadMore(int id) {
 		// TODO Auto-generated method stub
 //		Toast.makeText(this, "目前只有这些", Toast.LENGTH_LONG).show();
+		HttpUtils.pointsMall(res_pointsMall, getSharedPreferenceValue("key"));
 	}
 
 }

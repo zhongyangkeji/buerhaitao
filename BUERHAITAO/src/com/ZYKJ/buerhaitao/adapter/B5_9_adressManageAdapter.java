@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,12 +35,18 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 	private Activity c;
 	private LayoutInflater listContainer;
 	private String key;
+	private Intent intent;
+	boolean ChoseAddress=false;
+	private int GetAddress=1;
 	
-	public B5_9_adressManageAdapter(Activity c, List<Map<String, String>> data,String key) {
+	
+	public B5_9_adressManageAdapter(Activity c, List<Map<String, String>> data,String key,Intent it,boolean ChoseAddress) {
 		this.c = c;
 		this.data = data;
 		listContainer = LayoutInflater.from(c);
 		this.key=key;
+		this.intent=it;
+		this.ChoseAddress = ChoseAddress;
 	}
 	@Override
 	public int getCount() {
@@ -69,19 +76,20 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 		TextView tv_phoneNumber=(TextView) cellView.findViewById(R.id.tv_phoneNumber);
 		TextView tv_addressTAG=(TextView) cellView.findViewById(R.id.tv_addressTAG);
 		TextView tv_addressDetail=(TextView) cellView.findViewById(R.id.tv_addressDetail);
-		Button address_chose =(Button) cellView.findViewById(R.id.address_chose);
-		
+		CheckBox address_chose =(CheckBox) cellView.findViewById(R.id.address_chose);
+		address_chose.setOnClickListener(new ChoseAdressListener(position));
+		if (ChoseAddress==false) {
+			address_chose.setVisibility(View.GONE);
+		}
 		tv_name.setText(data.get(position).get("true_name"));
 		tv_phoneNumber.setText(data.get(position).get("mob_phone"));
 		tv_addressDetail.setText(data.get(position).get("area_info")+data.get(position).get("address"));
-		address_chose.setTag(data.get(position).get("address_id"));
 		
 		if (data.get(position).get("is_default").equals("1")) {
 			tv_addressTAG.setAlpha(1);//
 		}else {
 			tv_addressTAG.setAlpha(0);//如果不是默认的地址，就隐藏掉[默认]
 		}
-		address_chose.setOnClickListener(new ChoseAdressListener(position));
 		tv_addressDetail.setOnClickListener(new ChoseAdressListener(position));
 		return cellView;
 	}
@@ -101,7 +109,14 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 //			Toast.makeText(c,"position="+position, Toast.LENGTH_LONG).show();
 			switch (v.getId()) {
 			case R.id.address_chose:
-				v.setBackgroundResource(R.drawable.address_chosed);
+//				Toast.makeText(c, position+"", Toast.LENGTH_LONG).show();
+				intent.putExtra("true_name", data.get(position).get("true_name"));
+				intent.putExtra("mob_phone", data.get(position).get("mob_phone"));
+				intent.putExtra("area_info", data.get(position).get("area_info"));
+				intent.putExtra("address", data.get(position).get("address"));
+				intent.putExtra("address_id", data.get(position).get("address_id"));
+				c.setResult(GetAddress, intent);
+				c.finish();
 				break;
 			case R.id.tv_addressDetail:
 				Intent intent_to_changeAddress=new Intent(c,B5_9_1_addAddress.class);

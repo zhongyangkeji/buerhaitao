@@ -18,7 +18,11 @@ import com.ZYKJ.buerhaitao.utils.Tools;
 import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-
+/**
+ * 设置页面
+ * @author zyk
+ *
+ */
 public class B5_12_SetActivity extends BaseActivity {
 
 	private RelativeLayout cetification,resetpasswd,aboutus,aboutapp,appupdate;
@@ -55,7 +59,9 @@ public class B5_12_SetActivity extends BaseActivity {
 	{
 		switch (v.getId()) {
 		case R.id.set_1://实名认证
-			
+			Intent intent_cet=new Intent();
+			intent_cet.setClass(this, B5_12_1_Certification.class);
+			startActivity(intent_cet);
 			break;
 		case R.id.RelativeLayout01://重置密码
 			Intent intent_reset=new Intent();

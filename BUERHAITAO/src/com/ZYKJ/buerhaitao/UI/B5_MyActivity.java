@@ -272,7 +272,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 				startActivity(intent_toPointsMall);
 				
 				break;
-			case R.id.my_set_page://设置
+			case R.id.my_set_page://设置页面
 				Intent intent_set=new Intent();
 				intent_set.setClass(this, B5_12_SetActivity.class);
 				startActivity(intent_set);
@@ -422,6 +422,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 			String error=null;
 			String datas=null;
 			Tools.Log("res_saveavatar="+response);
+//			{"datas":{"avatar":"http:\/\/115.28.21.137\/data\/upload\/shop\/avatar\/avatar_26.jpg"},"code":200}
 			try {
 				 datas = response.getString("datas");
 				 error = response.getString("error");
@@ -431,6 +432,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 			}
 			if (error==null)//成功
 			{
+
 				Tools.Log("res_saveavatar="+datas);
 			}
 			else//失败 
@@ -593,6 +595,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 		try {
 			f.createNewFile();
 			fOut = new FileOutputStream(f);
+			HttpUtils.update(res_uploadavatar , getSharedPreferenceValue("key"),"avatar",f);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -606,7 +609,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 		}
 		
 		RequestDailog.showDialog(this, "正在上传头像，请稍后");
-		HttpUtils.update(res_uploadavatar , getSharedPreferenceValue("key"),filename);
 	}
 //*****************************图像处理操作     end******************************************
 	// 退出操作

@@ -125,5 +125,9 @@
         <!-- 提示颜色 -->
         <item name="android:textColorHint">@color/edit_hint_color</item>
     </style>
+    <!-- checkbox样式 -->
+        <style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">  
+        <item name="android:button">@drawable/checkbox_style</item>  
+    </style>  
     
 </resources>

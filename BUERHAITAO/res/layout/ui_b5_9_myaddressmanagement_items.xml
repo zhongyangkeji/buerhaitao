@@ -5,6 +5,7 @@
     android:orientation="vertical" >
     
     <RelativeLayout
+        android:background="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="100dp" >
 
@@ -31,14 +32,14 @@
             android:text="18888888888"
             android:textColor="@color/black" />
 
-        <Button
+        <CheckBox
             android:id="@+id/address_chose"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
-            android:background="@drawable/address_chose" />
+            style="@style/CustomCheckboxTheme" />
 
         <TextView
             android:id="@+id/tv_addressTAG"
@@ -66,6 +67,7 @@
 	<View 
             android:layout_width="match_parent"
             android:layout_height="6dp"
+            android:background="@color/theme_grey"
             
             />
 </LinearLayout>
