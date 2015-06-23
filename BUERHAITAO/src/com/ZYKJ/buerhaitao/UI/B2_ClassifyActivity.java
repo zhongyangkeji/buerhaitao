@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -33,7 +34,6 @@ import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
 import com.ZYKJ.buerhaitao.utils.ImageOptions;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * @author csh
@@ -169,15 +169,16 @@ public class B2_ClassifyActivity extends BaseActivity implements OnEditorActionL
 							return convertView;
 						}
 					});
+	                product_grid.setCacheColorHint(0);
 	                
 	                product_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 						@Override
 						public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 							String gc_id = list.get(position).get("gc_id");
 							Toast.makeText(B2_ClassifyActivity.this, gc_id, Toast.LENGTH_LONG).show();
-//							Intent intent = new Intent(B2_ClassifyActivity.this,B2_ShopsByClassifyActivity.class);
-//							intent.putExtra("gc_id", gc_id);
-//							startActivity(intent);
+							Intent intent = new Intent(B2_ClassifyActivity.this,B2_ShopByClassifyActivity.class);
+							intent.putExtra("gc_id", gc_id);
+							startActivity(intent);
 						}
 					});
 				} catch (JSONException e) {

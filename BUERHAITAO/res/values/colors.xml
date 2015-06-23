@@ -23,6 +23,7 @@
     <color name="edit_hint_color">#B3B3B3</color>
     <color name="classify_checked">#FFFFFF</color>
     <color name="classify_back">#E5BFFC</color>
+    <color name="classify_type_text">#6B4182</color>
     
 
 </resources>
