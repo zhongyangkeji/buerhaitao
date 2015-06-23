@@ -132,6 +132,11 @@
 <string name="classify_address">临沂 </string>
 <string name="classify_baby">宝贝</string>
 <string name="classify_search">请输入搜索信息</string>
+<string name="classify_search_product">搜索宝贝的名称</string>
 <string name="classify_ladys">女士服装</string>
+<string name="product_tab1">默认</string>
+<string name="product_tab2">销量</string>
+<string name="product_tab3">价格</string>
+<string name="product_tab4">好评</string>
     
 </resources>

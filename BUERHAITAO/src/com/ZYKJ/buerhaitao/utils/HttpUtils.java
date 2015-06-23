@@ -101,13 +101,20 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 3获取首页轮播图
+	 * 3获取首页信息
 	 * 
 	 * @param res
 	 */
-	public static void getScreenList(AsyncHttpResponseHandler res) {
-		String url = base_url + "getSpecialList";
-		client.get(url, res);
+	public static void getFirstList(AsyncHttpResponseHandler res,String city_id ,String lng ,String lat) {
+//		String url = base_url + "getSpecialList";
+//		client.get(url, res);
+		String url = null;
+		url = base_url + "index.php?act=index"+"&city_id="+city_id+"&lng="+lng+"&lat="+lat;
+		RequestParams requestParams  = new RequestParams();
+		requestParams.put("city_id", city_id);
+		requestParams.put("lng", lng);
+		requestParams.put("lat", lat);
+		client.post(url,requestParams,res);
 	}
 
 	/**

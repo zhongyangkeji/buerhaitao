@@ -30,6 +30,7 @@
             <ImageView
                 android:layout_width="13dp"
                 android:layout_height="10dp"
+                android:layout_marginLeft="3dp"
                 android:layout_toRightOf="@id/classify_address"
                 android:layout_centerVertical="true"
                 android:src="@drawable/b1_ditusousuo" />
