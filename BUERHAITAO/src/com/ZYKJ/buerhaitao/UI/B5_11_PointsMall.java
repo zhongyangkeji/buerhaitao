@@ -9,6 +9,7 @@ import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -62,6 +63,8 @@ public class B5_11_PointsMall extends BaseActivity implements IXListViewListener
 			break;
 		case R.id.tv_record://兑换记录
 			Toast.makeText(this, "兑换记录", Toast.LENGTH_LONG).show();
+			Intent intent_to_record= new Intent(this,B5_11_2_ExchangeRecord.class);
+			startActivity(intent_to_record);
 			break;
 		default:
 			break;

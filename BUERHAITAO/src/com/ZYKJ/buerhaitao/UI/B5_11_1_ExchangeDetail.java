@@ -86,11 +86,11 @@ public class B5_11_1_ExchangeDetail extends BaseActivity {
 			break;
 		case R.id.btn_exchange://立即兑换
 			String pcart_message =  et_pcart_message.getText().toString().trim();
+			HttpUtils.addPointsOrder(res_addPointsOrder, getSharedPreferenceValue("key"), pgoods_id, pcart_message,address_id);
 			Tools.Log("key="+getSharedPreferenceValue("key"));
 			Tools.Log("pgoods_id="+pgoods_id);
 			Tools.Log("pcart_message="+pcart_message);
 			Tools.Log("address_id="+address_id);
-			HttpUtils.addPointsOrder(res_addPointsOrder, getSharedPreferenceValue("key"), pgoods_id, pcart_message,address_id);
 			break;
 
 		default:
@@ -131,14 +131,31 @@ public class B5_11_1_ExchangeDetail extends BaseActivity {
 			} 
 			if (error==null)//成功
 			{
-				Tools.Log("datas="+datas);
+				Toast.makeText(B5_11_1_ExchangeDetail.this, "兑换成功", Toast.LENGTH_LONG).show();
+				B5_11_1_ExchangeDetail.this.finish();
+//				Tools.Log("datas="+datas);
+/*				try {
+					Tools.Notic(B5_11_1_ExchangeDetail.this, "datas="+datas.getString("error"), null);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}*/
 			}
 			else//失败 
 			{
-				Tools.Log("res_Points_error="+error+"");
-//				Tools.Notic(B5_MyActivity.this, error+"", null);
+//				Tools.Log("res_Points_error="+error+"");
+				Tools.Notic(B5_11_1_ExchangeDetail.this, "error="+error, null);
 			}
 			
 		}
+
+		@Override
+		public void onFailure(int statusCode, Header[] headers,
+				Throwable throwable, JSONObject errorResponse) {
+			// TODO Auto-generated method stub
+			Tools.Notic(B5_11_1_ExchangeDetail.this, "网络连接失败，请重试", null);
+			super.onFailure(statusCode, headers, throwable, errorResponse);
+		}
+	
 	};
 }

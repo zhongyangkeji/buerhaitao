@@ -67,10 +67,16 @@ public class B5_12_1_Certification extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		initView(R.layout.ui_b5_12_1_certification);
+		
 		certification_back=(ImageButton) findViewById(R.id.certification_back);
 		et_name=(EditText) findViewById(R.id.et_name_c);
 		et_birthday=(EditText) findViewById(R.id.et_birthday);
 		et_ad=(EditText) findViewById(R.id.et_ad);
+		if (getSharedPreferenceValue("certifi_name")!=null) {
+			et_name.setText(getSharedPreferenceValue("certifi_name"));
+			et_birthday.setText(getSharedPreferenceValue("certifi_birthday"));
+			et_ad.setText(getSharedPreferenceValue("certifi_address"));
+		}
 		btn_certification=(Button) findViewById(R.id.btn_certification);
 		iv_left=(ImageView) findViewById(R.id.iv_left);
 		iv_right=(ImageView) findViewById(R.id.iv_right);
@@ -100,11 +106,11 @@ public class B5_12_1_Certification extends BaseActivity {
 			address=et_ad.getText().toString().trim();
 			if (photocunt>1) {
 				RequestDailog.showDialog(this, "正在认证，请稍后");
-//				Tools.Log("key="+getSharedPreferenceValue("key"));
-//				Tools.Log("name="+name);
-//				Tools.Log("birthday="+birthday);
-//				Tools.Log("address="+address);
-//				Tools.Log("image_name="+image_name);
+				Tools.Log("key="+getSharedPreferenceValue("key"));
+				Tools.Log("name="+name);
+				Tools.Log("birthday="+birthday);
+				Tools.Log("address="+address);
+				Tools.Log("image_name="+image_name);
 				HttpUtils.certificate(res_certificate, getSharedPreferenceValue("key"), name, birthday, address, image_name);
 			}else {
 				Tools.Notic(this, "请先上传身份证正反面照片", null);
@@ -302,7 +308,7 @@ public class B5_12_1_Certification extends BaseActivity {
 		}
 	//*****************************图像处理操作     end******************************************
 		/**
-		 * 上传头像之后的操作
+		 * 上传身份证之后的操作
 		 */
 		JsonHttpResponseHandler res_uploadIDcard  = new JsonHttpResponseHandler() {
 
@@ -374,10 +380,14 @@ public class B5_12_1_Certification extends BaseActivity {
 				}
 				if (error==null)//成功
 				{
-					Tools.Notic(B5_12_1_Certification.this, "认证成功", new OnClickListener() {
+					putSharedPreferenceValue("certifi_name",name);
+					putSharedPreferenceValue("certifi_birthday",birthday);
+					putSharedPreferenceValue("certifi_address",address);
+					Tools.Notic(B5_12_1_Certification.this, "信息上传成功，正在审核", new OnClickListener() {
 						@Override
 						public void onClick(View arg0) {
 							// TODO Auto-generated method stub
+							putSharedPreferenceValue("isCertificated", "1");
 							B5_12_1_Certification.this.finish();
 						}
 					});

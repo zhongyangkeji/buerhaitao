@@ -48,7 +48,7 @@ public class Tools {
 	 */
 	public static void Notic(Context context, String notic,
 			OnClickListener listener) {
-		UIDialog.ForNotic(context, notic, listener);
+		UIDialog.ForNotic(context,notic,listener);
 	}
 
 	/**

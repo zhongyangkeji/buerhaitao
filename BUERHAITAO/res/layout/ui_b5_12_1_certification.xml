@@ -63,6 +63,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:background="@drawable/bg_edittext"
+            android:hint="@string/name"
             android:ems="10" />
     </RelativeLayout>
 
@@ -99,6 +100,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:background="@drawable/bg_edittext"
+            android:hint="@string/datestyle"
             android:ems="10" >
         </EditText>
     </RelativeLayout>
@@ -137,6 +139,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:background="@drawable/bg_edittext"
+            android:hint="@string/detailAddress"
             android:ems="10" />
     </RelativeLayout>
 

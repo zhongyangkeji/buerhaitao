@@ -33,6 +33,7 @@
         android:paddingRight="30dp"
         android:paddingTop="5dp"
         android:text="确定"
+        android:textColor="@color/white"
         android:textSize="18sp" />
 
 </RelativeLayout>

@@ -84,12 +84,14 @@
   <string name="certification">实名认证</string> 
   <string name="certifi">认证</string> 
   <string name="uploadidCard">上传身份证正反面</string> 
+  <string name="datestyle">格式:2015-01-01</string> 
   <string name="birthday">出生日期</string> 
   <string name="resetpasswd">重置密码</string> 
   <string name="aboutus">关于我们</string> 
   <string name="updateapp">版本更新</string> 
   <string name="aboutapp">应用说明</string> 
   <string name="logout">退出登陆</string> 
+  <string name="lastversion">最新版本1.0</string> 
   <!-- 积分详情页 -->
   <string name="pointsdetail">积分详情</string> 
   
@@ -120,6 +122,7 @@
 <string name="exchange">立即兑换</string>
 <string name="pointsMall">积分商城</string>
 <string name="exchangedetail">兑换详情 </string>
+<string name="exchangerecord">兑换记录 </string>
 <string name="addAdress">新增收货地址 </string>
 <string name="productInfo">兑换商品信息 </string>
 <string name="comment">备注留言: </string>

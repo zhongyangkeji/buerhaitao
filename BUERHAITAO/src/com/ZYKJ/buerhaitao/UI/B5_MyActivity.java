@@ -595,7 +595,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 		try {
 			f.createNewFile();
 			fOut = new FileOutputStream(f);
-			HttpUtils.update(res_uploadavatar , getSharedPreferenceValue("key"),"avatar",f);
+			HttpUtils.update(res_uploadavatar,getSharedPreferenceValue("key"),"avatar",f);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

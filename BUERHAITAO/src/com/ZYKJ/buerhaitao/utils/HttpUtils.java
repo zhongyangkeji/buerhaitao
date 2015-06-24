@@ -686,8 +686,15 @@ public class HttpUtils {
 	public static void addPointsOrder(AsyncHttpResponseHandler res,
 			String key, String pgoods_id, String pcart_message,
 			String address_id) {
-		String url = base_url + "index.php?act=member_points&op=exchange"+"&key="+key+"&pgoods_id="+pgoods_id+"&pcart_message="+pcart_message+"&address_id="+address_id;
-		client.get(url, res);
+
+		String url = null;
+		url = base_url + "index.php?act=member_points&op=exchange";
+		RequestParams requestParams  = new RequestParams();
+		requestParams.put("key", key);
+		requestParams.put("pgoods_id", pgoods_id);
+		requestParams.put("pcart_message", pcart_message);
+		requestParams.put("address_id", address_id);
+		client.post(url,requestParams,res);
 	}
 
 	/**
@@ -937,7 +944,7 @@ public class HttpUtils {
 	 * @param idcard
 	 */
 	public static void certificate(AsyncHttpResponseHandler res, String key,String truename ,String birthday,String address,String idcard) {
-		String url = base_url + "index.php?act=act=member_index&op=identification";
+		String url = base_url + "index.php?act=member_index&op=identification";
 		RequestParams params = new RequestParams();
 		params.put("key",key);
 		params.put("truename",truename);
