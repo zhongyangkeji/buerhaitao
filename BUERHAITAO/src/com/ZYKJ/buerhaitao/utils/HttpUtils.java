@@ -696,6 +696,17 @@ public class HttpUtils {
 		requestParams.put("address_id", address_id);
 		client.post(url,requestParams,res);
 	}
+	/**
+	 * 积分兑换记录
+	 * @param res
+	 * @param key
+	 */
+	public static void exchangerecord(AsyncHttpResponseHandler res,String key) {
+		
+		String url = null;
+		url = base_url + "index.php?act=member_points&op=record"+"&key="+key;
+		client.get(url, res);
+	}
 
 	/**
 	 * 39积分订单付款完成

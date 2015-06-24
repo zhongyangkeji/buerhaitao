@@ -141,5 +141,10 @@
 <string name="product_tab2">销量</string>
 <string name="product_tab3">价格</string>
 <string name="product_tab4">好评</string>
-    
+<!--我的晒单圈 -->
+<string name="myshaidanquan">我的晒单圈</string>
+<string name="publish">发布</string>
+<string name="mypublish">我发表的</string>
+<string name="mycomment">我评论的</string>
+  
 </resources>

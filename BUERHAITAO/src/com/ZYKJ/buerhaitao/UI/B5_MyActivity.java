@@ -233,9 +233,12 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 					startActivity(intent_login);
 				}
 				break;
-			case R.id.btn_shaidanquan:
+			case R.id.btn_shaidanquan://晒单圈
+//				Toast.makeText(this, "晒单圈", Toast.LENGTH_LONG).show();
 				
-				Toast.makeText(this, "晒单圈", Toast.LENGTH_LONG).show();
+				Intent intent_shaidanquan=new Intent();
+				intent_shaidanquan.setClass(this, B5_3_MyShaiDanQuan.class);
+				startActivity(intent_shaidanquan);
 				break;
 			case R.id.btn_chackInShape://签到
 				RequestDailog.showDialog(this, "正在签到，请稍后");

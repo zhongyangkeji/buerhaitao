@@ -62,7 +62,7 @@ public class B5_11_PointsMall extends BaseActivity implements IXListViewListener
 			this.finish();
 			break;
 		case R.id.tv_record://兑换记录
-			Toast.makeText(this, "兑换记录", Toast.LENGTH_LONG).show();
+//			Toast.makeText(this, "兑换记录", Toast.LENGTH_LONG).show();
 			Intent intent_to_record= new Intent(this,B5_11_2_ExchangeRecord.class);
 			startActivity(intent_to_record);
 			break;
