@@ -1,5 +1,6 @@
 package com.ZYKJ.buerhaitao.UI;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -67,7 +68,8 @@ public class B5_3_MyShaiDanQuan extends BaseActivity{
 			this.finish();
 		break;
 		case R.id.btn_publish://发布
-			Toast.makeText(this, "publish",  Toast.LENGTH_LONG).show();
+			Intent fabuIntent=new Intent(this,TestPicActivity.class);
+			startActivity(fabuIntent);
 		break;
 			
 		case R.id.ll_mypublish://我发表的

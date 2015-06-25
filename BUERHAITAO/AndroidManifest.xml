@@ -114,6 +114,11 @@
         <activity android:name="B5_12_1_Certification"></activity>
         <activity android:name="B5_11_2_ExchangeRecord"></activity>
         <activity android:name="B5_3_MyShaiDanQuan"></activity>
+        <activity android:name="PhotoActivity"></activity>
+        <activity android:name="com.ZYKJ.buerhaitao.utils.BitmapCache"></activity>
+        <activity android:name="com.ZYKJ.buerhaitao.utils.ImageGridActivity"></activity>
+        <activity android:name="PublishedActivity"></activity>
+        <activity android:name="TestPicActivity"></activity>
     </application>
 
 </manifest>

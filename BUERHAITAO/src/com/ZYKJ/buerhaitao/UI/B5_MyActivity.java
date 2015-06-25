@@ -589,16 +589,14 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 		cutnameString = dateFormat.format(date);
 		filename = Environment.getExternalStorageDirectory().getPath() + "/"
 				+ cutnameString + ".jpg";
-		
+		Tools.Log("filename="+filename);
 		File f = new File(filename);
-
         putSharedPreferenceValue("headImg_filename", filename);
 		
 		FileOutputStream fOut = null;
 		try {
 			f.createNewFile();
 			fOut = new FileOutputStream(f);
-			HttpUtils.update(res_uploadavatar,getSharedPreferenceValue("key"),"avatar",f);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -612,6 +610,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 		}
 		
 		RequestDailog.showDialog(this, "正在上传头像，请稍后");
+		HttpUtils.update(res_uploadavatar,getSharedPreferenceValue("key"),"avatar",f);
 	}
 //*****************************图像处理操作     end******************************************
 	// 退出操作

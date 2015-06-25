@@ -924,6 +924,44 @@ public class HttpUtils {
 			e.printStackTrace();
 		} // Upload a File
 		String url = base_url + "index.php?act=member_index&op=avatar_upload";
+//		String url = base_url + "index.php?act=member_circle&op=image_upload";
+		client.post(url, params, res);
+	}
+	/**
+	 * 上传晒单圈图片
+	 * @param res
+	 * @param key
+	 * @param name
+	 */
+	
+	public static void uploadshaidanquan(AsyncHttpResponseHandler res, String key,String name,File file ) {
+		RequestParams params = new RequestParams();
+		try {
+			params.put("key", key);
+			params.put("name", name);
+			params.put("avatar",file);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // Upload a File
+		String url = base_url + "index.php?act=member_circle&op=image_upload";
+//		String url = base_url + "index.php?act=member_index&op=avatar_upload";
+		client.post(url, params, res);
+	}
+/**
+ * 晒单圈-发布
+ * @param res
+ * @param key
+ * @param description
+ * @param image
+ */
+	
+	public static void shaidanquanfabu(AsyncHttpResponseHandler res, String key,String description,String image) {
+		RequestParams params = new RequestParams();
+		params.put("key", key);
+		params.put("description", description);
+		params.put("image",image);
+		String url = base_url + "index.php?act=member_circle&op=publish";
 		client.post(url, params, res);
 	}
 	/**
