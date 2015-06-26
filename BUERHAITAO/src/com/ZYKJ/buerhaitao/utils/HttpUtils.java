@@ -965,6 +965,15 @@ public class HttpUtils {
 		client.post(url, params, res);
 	}
 	/**
+	 * 晒单圈-我发布的
+	 * @param res
+	 * @param key
+	 */
+	public static void shaidanquan_mypublish(AsyncHttpResponseHandler res, String key) {
+		String url = base_url + "index.php?act=member_circle&op=my_publish"+"&key="+key;
+		client.get(url, res);
+	}
+	/**
 	 * 上传身份证
 	 * @param res
 	 * @param key

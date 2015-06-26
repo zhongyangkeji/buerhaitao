@@ -119,7 +119,7 @@ public class B5_11_1_ExchangeDetail extends BaseActivity {
 			super.onSuccess(statusCode, headers, response);
 			RequestDailog.closeDialog();
 			Tools.Log("res_addPointsOrder="+response);
-			Toast.makeText(B5_11_1_ExchangeDetail.this, response+"", Toast.LENGTH_LONG).show();
+//			Toast.makeText(B5_11_1_ExchangeDetail.this, response+"", Toast.LENGTH_LONG).show();
 			String error=null;
 			JSONObject datas=null;
 			try {

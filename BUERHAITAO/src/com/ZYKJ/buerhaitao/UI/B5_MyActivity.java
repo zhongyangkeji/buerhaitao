@@ -44,6 +44,7 @@ import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.ZYKJ.buerhaitao.view.ToastView;
 import com.ZYKJ.buerhaitao.view.UIDialog;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 @SuppressLint("NewApi") public class B5_MyActivity extends BaseActivity implements OnClickListener {
 
@@ -81,13 +82,15 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 			ISLOGIN=1;
 			HttpUtils.getPointsLog(res_Points, getSharedPreferenceValue("key"));
 			String headImgString=getSharedPreferenceValue("headImg_filename");
-			if (headImgString!=null) //如果登陆过，显示之前本地的头像
-			{
-//				File f = new File(headImgString); 
-			    Bitmap bitmap_head=BitmapFactory.decodeFile(headImgString);
-			    img_head.setImageBitmap(bitmap_head);
-			    
-			}
+//			if (headImgString!=null) //如果登陆过，显示之前本地的头像
+//			{
+////				File f = new File(headImgString); 
+//			    Bitmap bitmap_head=BitmapFactory.decodeFile(headImgString);
+//			    img_head.setImageBitmap(bitmap_head);
+//			    
+//			}
+			//网络加载头像
+			ImageLoader.getInstance().displayImage(getSharedPreferenceValue("avatar"), img_head);
 		}else if (FirstLog==0) {//第一次进来，如果没有登录，跳转到登录页面
 			Intent intent_login1=new Intent();
 			intent_login1.setClass(this, B5_1_LoginActivity.class);
