@@ -903,4 +903,34 @@ public class HttpUtils {
 		String url = base_url + "index.php?act=member_index&op=avatar_upload";
 		client.post(url, params, res);
 	}
+	
+	/**
+	 * 54 猜你喜欢
+	 * @param lng 经度
+	 * @param lat 纬度
+	 * @param city_id 城市id
+	 * @param curpage 当前页码
+	 */
+	public static void getCaiNiLike(AsyncHttpResponseHandler res,String lng,String lat,String city_id,String curpage) {
+		String url = base_url + "index.php?act=goods&op=goods_like_list"+"&lng="+lng+"&lat="+lat+"&city_id="+city_id+"&curpage="+curpage;
+		client.get(url, res);
+//		String url = base_url + "index.php?act=member_points&op=points_log";
+//		RequestParams requestParams =new RequestParams();
+//		requestParams.put("key", key);
+//		client.post(url, requestParams, res);
+		
+	}
+	/**
+	 * 55 每日好店
+	 * @param page 每页数量
+	 * @param curpage 当前页码
+	 * @param city_id 城市id
+	 * @param lng 经度
+	 * @param lat 纬度
+	 */
+	public static void getGoodStore(AsyncHttpResponseHandler res,String page,String curpage,String city_id,String lng,String lat) {
+		String url = base_url + "index.php?act=store&op=good_store"+"&page="+page+"&curpage="+curpage+"&city_id="+city_id+"&lng="+lng+"&lat="+lat;
+		client.get(url, res);
+		
+	}
 }

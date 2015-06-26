@@ -345,31 +345,6 @@ public class B1_HomeShowView  extends FrameLayout {
 		ImageLoader.getInstance().init(config);
 	}
 	
-//	JsonHttpResponseHandler res_admain = new JsonHttpResponseHandler() {
-//
-//		@Override
-//		public void onSuccess(int statusCode, Header[] headers,
-//				JSONObject response) {
-//			super.onSuccess(statusCode, headers, response);
-//			try {
-//				JSONArray re = response.getJSONArray("data");
-//				JSONObject info = re.getJSONObject(0);
-//				
-//				String a = info.getString("imageUrl1");
-//				String b = info.getString("imageUrl2");
-//				String c = info.getString("imageUrl3");
-//				imageUrls = new String[]{
-//						a,
-//						b,
-//						c
-//				};
-//				initData();
-//			} catch (JSONException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//		}
-//	};
 	JsonHttpResponseHandler res_getSyList = new JsonHttpResponseHandler()
 	{
 		public void onSuccess(int statusCode, Header[] headers,
@@ -390,12 +365,10 @@ public class B1_HomeShowView  extends FrameLayout {
 			if (error==null)//成功
 			{
 				try {
-					JSONObject joba = datas.getJSONObject("slide");
-					JSONObject asf = joba.getJSONObject("1");
-//					for (int i = 0; i < asf.length(); i++) {
-//						String a = asf.getString("pic_img");
-						
-//						JSONObject jsonItem = array.getJSONObject(i);
+					org.json.JSONArray joba = datas.getJSONArray("slide");
+					imageUrls = new String[joba.length()];
+					for (int i = 0; i < joba.length(); i++) {						
+						JSONObject jsonItem = joba.getJSONObject(i);
 //						Map<String, String> map = new HashMap();
 //						map.put("pic_name", jsonItem.getString("pic_name"));
 //						map.put("pic_url", jsonItem.getString("pic_url"));
@@ -403,23 +376,10 @@ public class B1_HomeShowView  extends FrameLayout {
 //						map.put("pic_id", jsonItem.getString("pic_id"));
 //						map.put("pic_img", jsonItem.getString("pic_img"));
 //						data.add(map);
-//						imageUrls[i]=jsonItem.getString("pic_img");
-//					}
-					
-//					JSONArray re = response.getJSONArray("data");
-//					JSONObject info = re.getJSONObject(0);
-//					
-//					String a = info.getString("imageUrl1");
-//					String b = info.getString("imageUrl2");
-//					String c = info.getString("imageUrl3");
-//					String d = info.getString("imageUrl4");
-//					String e = info.getString("imageUrl5");
-//					imageUrls = new String[]{
-//							a,
-//							b,
-//							c,
-//							d,
-//							e
+						
+						imageUrls[i]=jsonItem.getString("pic_img");
+					}
+					initData();
 				} 
 				catch (org.json.JSONException e) {
 					// TODO Auto-generated catch block
