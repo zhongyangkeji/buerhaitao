@@ -9,6 +9,7 @@ import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.bool;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -35,6 +36,9 @@ public class B5_9_MyAddressManagement extends BaseActivity implements IXListView
 	B5_9_adressManageAdapter adapter;
 	Button btn_addNewAddress;
 	ImageButton address_back;
+	boolean ChoseAddress;
+	
+	Intent it;
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -47,11 +51,13 @@ public class B5_9_MyAddressManagement extends BaseActivity implements IXListView
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		initView(R.layout.ui_b5_9_myaddressmanagement);
+		it=getIntent();
+		ChoseAddress=it.getBooleanExtra("ChoseAddress", false);
 		btn_addNewAddress=(Button) findViewById(R.id.btn_addNewAddress);
 		address_back=(ImageButton) findViewById(R.id.address_back);
 		setListener(btn_addNewAddress,address_back);
 		listview_addresManagement=(MyListView) findViewById(R.id.listview_addresManagement);
-		adapter = new B5_9_adressManageAdapter(this,data,getSharedPreferenceValue("key"));
+		adapter = new B5_9_adressManageAdapter(this,data,getSharedPreferenceValue("key"),it,ChoseAddress);
 		listview_addresManagement.setAdapter(adapter);
 		listview_addresManagement.setPullLoadEnable(true);
 		listview_addresManagement.setPullRefreshEnable(true);

@@ -26,6 +26,7 @@ import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.loopj.android.http.JsonHttpResponseHandler;
 /**
  * 增加收货地址
+ * 地址修改
  * @author zyk
  *
  */
@@ -39,6 +40,7 @@ public class B5_9_1_addAddress extends BaseActivity {
 	private String typeString;//通过typeString来判断是修改还是添加地址 change   add
 	
 	private int GetArea=1;
+	private int ActivityFromChoseArea=0;
 	
 
 	String province,city,area;
@@ -53,7 +55,8 @@ public class B5_9_1_addAddress extends BaseActivity {
 		super.onResume();
 		Intent intent_fromIntent =getIntent();
 		typeString=intent_fromIntent.getStringExtra("change");
-		if (typeString.equals("change")) {
+		if (typeString.equals("change")&&(ActivityFromChoseArea==0)) //第一次进来，修改地址，加载用户信息
+		{
 			area_id=intent_fromIntent.getStringExtra("area_id");
 			true_name=intent_fromIntent.getStringExtra("true_name");
 			area_info=intent_fromIntent.getStringExtra("area_info");
@@ -68,13 +71,22 @@ public class B5_9_1_addAddress extends BaseActivity {
 			et_postcode.setText(zip);
 			et_addressDetail.setText(address);
 			tv_choseOrigen.setText(area_info);
-		}else{
+		}else if (ActivityFromChoseArea==1) //修改地址之后，加载用户信息
+		{
+			et_name.setText(true_name);
+			et_phone.setText(mob_phone);
+			et_postcode.setText(zip);
+			et_addressDetail.setText(address);
+			tv_choseOrigen.setText(area_info);
+			
+		}else {//第一次进来，新增加地址
 			et_name.setText("");
 			et_phone.setText("");
 			et_postcode.setText("");
 			et_addressDetail.setText("");
 			rl_delate.setVisibility(View.GONE);
 			rl_setDefaultAddress.setVisibility(View.GONE);
+			
 		}
 		
 	}
@@ -122,6 +134,10 @@ public class B5_9_1_addAddress extends BaseActivity {
 		case R.id.tv_choseOrigen://选择地区
 //			HttpUtils.getArea(res_getArea,getSharedPreferenceValue("key"),"");
 			//弹出地址选择页面
+			true_name=et_name.getText().toString();
+			mob_phone=et_phone.getText().toString();
+			zip=et_postcode.getText().toString();
+			address=et_addressDetail.getText().toString();
 			Intent intent_to_chose =new Intent(this,B5_9_1_getArea.class);
 			startActivityForResult(intent_to_chose, GetArea);
 			break;
@@ -142,19 +158,21 @@ public class B5_9_1_addAddress extends BaseActivity {
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode==GetArea) {
+			ActivityFromChoseArea=1;
 			province=data.getStringExtra("province");
 			city=data.getStringExtra("city");
 			area=data.getStringExtra("area");
 			area_info=province+city+area;
 			city_id=data.getStringExtra("city_id");
 			area_id=data.getStringExtra("area_id");
-			
 			et_name.setText(true_name);
 			et_phone.setText(mob_phone);
 			et_postcode.setText(zip);
 			et_addressDetail.setText(address);
+				
+//			tv_choseOrigen.setText(province+" "+city+" "+area);
+			tv_choseOrigen.setText(area_info);
 			
-			tv_choseOrigen.setText(province+" "+city+" "+area);
 		}
 		
 	};

@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
@@ -18,10 +19,14 @@ import com.ZYKJ.buerhaitao.utils.Tools;
 import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-
+/**
+ * 设置页面
+ * @author zyk
+ *
+ */
 public class B5_12_SetActivity extends BaseActivity {
 
-	private RelativeLayout cetification,resetpasswd,aboutus,aboutapp,appupdate;
+	private RelativeLayout cetification,resetpasswd,aboutus,appupdate;
 	private Button btn_logout;
 	private ImageButton set_back;
 	String mobile=null;
@@ -39,14 +44,13 @@ public class B5_12_SetActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_set);
 		initView();
-		setListener(cetification,resetpasswd,aboutus,aboutapp,appupdate,btn_logout,set_back);
+		setListener(cetification,resetpasswd,aboutus,appupdate,btn_logout,set_back);
 	}
 	private void initView() {
 		// TODO Auto-generated method stub
 		cetification=(RelativeLayout) findViewById(R.id.set_1);//实名认证
 		resetpasswd=(RelativeLayout) findViewById(R.id.RelativeLayout01);//重置密码
 		aboutus=(RelativeLayout) findViewById(R.id.RelativeLayout02);//关于我们
-		aboutapp=(RelativeLayout) findViewById(R.id.RelativeLayout03);//应用说明
 		appupdate=(RelativeLayout) findViewById(R.id.RelativeLayout04);//版本跟新
 		btn_logout=(Button) findViewById(R.id.btn_logout);//退出登陆
 		set_back=(ImageButton) findViewById(R.id.set_back);
@@ -55,7 +59,9 @@ public class B5_12_SetActivity extends BaseActivity {
 	{
 		switch (v.getId()) {
 		case R.id.set_1://实名认证
-			
+			Intent intent_cet=new Intent();
+			intent_cet.setClass(this, B5_12_1_Certification.class);
+			startActivity(intent_cet);
 			break;
 		case R.id.RelativeLayout01://重置密码
 			Intent intent_reset=new Intent();
@@ -64,17 +70,20 @@ public class B5_12_SetActivity extends BaseActivity {
 			startActivity(intent_reset);
 			break;
 		case R.id.RelativeLayout02://关于我们
-			
-			break;
-		case R.id.RelativeLayout03://应用说明
-			
+			Tools.Notic(this, "不二海淘是亚太地区较大的网络零售商圈，" +
+					"在2003年5月10日创立。" +
+					"不二海淘现在业务跨越C2C（个人对个人）、" +
+					"B2C（商家对个人）两大部分。截止2014年，" +
+					"不二海淘注册会员超5亿人每天有超过1.2亿的活跃用户，" +
+					"在线商品数达到10亿件，不二海淘的交易额总额超过了1.5万亿。", null);
 			break;
 		case R.id.RelativeLayout04://版本跟新
-			
+//			Toast.makeText(this, "目前为最新版本", Toast.LENGTH_LONG).show();
+			Tools.Notic(this,"目前为最新版本", null);
 			break;
 		case R.id.btn_logout://退出登陆
 			RequestDailog.showDialog(this, "正在退出登陆，请稍后");
-			HttpUtils.logout(res_logout, mobile, key);
+			HttpUtils.logout(res_logout,mobile, key);
 			break;
 		case R.id.set_back://退出设置页面
 			this.finish();

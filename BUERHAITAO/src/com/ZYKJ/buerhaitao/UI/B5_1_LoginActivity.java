@@ -94,14 +94,14 @@ public class B5_1_LoginActivity extends BaseActivity {
 			// TODO Auto-generated method stub
 			super.onSuccess(statusCode, headers, response);
 			RequestDailog.closeDialog();
-//			Tools.Log("responseresponse--->"+response);
+			Tools.Log("res_login_response--->"+response);
 //			{"datas":{"error":"用户名密码错误"},"code":200}
 			String error=null;
 			JSONObject datas=null;
 			Tools.Log("res_login="+response);
 			try {
 				 datas = response.getJSONObject("datas");
-				 error = response.getString("error");
+				 error = response.getJSONObject("datas").getString("error");
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

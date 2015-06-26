@@ -38,7 +38,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
+        android:theme="@android:style/Theme.Light.NoTitleBar" >
         <activity
             android:name="com.ZYKJ.buerhaitao.UI.B0_MainActivity"
             android:label="@string/app_name" >
@@ -111,6 +111,14 @@
         <!-- 首页分类 -->
         <activity android:name="com.ZYKJ.buerhaitao.UI.B2_ClassifyActivity">
         </activity>
+        <activity android:name="B5_12_1_Certification"></activity>
+        <activity android:name="B5_11_2_ExchangeRecord"></activity>
+        <activity android:name="B5_3_MyShaiDanQuan"></activity>
+        <activity android:name="PhotoActivity"></activity>
+        <activity android:name="com.ZYKJ.buerhaitao.utils.BitmapCache"></activity>
+        <activity android:name="com.ZYKJ.buerhaitao.utils.ImageGridActivity"></activity>
+        <activity android:name="PublishedActivity"></activity>
+        <activity android:name="TestPicActivity"></activity>
     </application>
 
 </manifest>

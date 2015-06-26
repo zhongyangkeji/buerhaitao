@@ -16,7 +16,8 @@
         <TextView
             android:id="@+id/textView_regist"
             style="@style/title_head"
-            android:text="@string/title_regist" />
+            android:text="@string/title_regist"
+            android:textSize="18sp" />
 
         <ImageButton
             android:id="@+id/regist_back"
@@ -34,7 +35,7 @@
 <LinearLayout
         android:id="@+id/linearLayout_regist"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_below="@+id/relativeLayout_regist"
         android:layout_marginTop="8dp"
         android:background="@drawable/shape_background"
@@ -68,7 +69,10 @@
             <EditText
                 android:id="@+id/et_regist_login_name"
                 android:layout_width="200dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/bg_edittext"
                 android:hint="@string/login_name_hint"
                 android:inputType="text"
                 android:textSize="16sp" >
@@ -81,7 +85,7 @@
     <LinearLayout
         android:id="@+id/regist_layout_password"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/linearLayout_regist"
         android:layout_marginTop="14dp"
@@ -99,10 +103,13 @@
             <EditText
                 android:id="@+id/et_registCode"
                 android:layout_width="200dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
+                android:background="@drawable/bg_edittext"
                 android:textSize="20sp" />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -115,7 +122,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
                 android:background="@drawable/shape_btn_background"
                 android:text="@string/getregistcode"
                 android:textColor="@color/white"
@@ -126,7 +132,7 @@
     <LinearLayout
         android:id="@+id/LinearLayout01"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/regist_layout_password"
         android:layout_marginTop="18dp"
@@ -160,10 +166,14 @@
             <EditText
                 android:id="@+id/et_registPassWord"
                 android:layout_width="200dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/bg_edittext"
                 android:hint="@string/login_pass_hint"
                 android:inputType="text"
                 android:textSize="16sp" />
+
         </RelativeLayout>
     </LinearLayout>
 

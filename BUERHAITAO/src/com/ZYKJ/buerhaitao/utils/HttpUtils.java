@@ -674,21 +674,37 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 38 提交积分订单
+	 * 积分兑换
 	 * 
 	 * @param res
-	 * @param pgoods_id
-	 * @param count
-	 * @param ship_method
-	 * @param address_id
+	 * @param key           登录令牌
+	 * @param pgoods_id     商品id
+	 * @param address_id    收货地址id
+	 * @param pcart_message 留言
+	 * 
 	 */
 	public static void addPointsOrder(AsyncHttpResponseHandler res,
-			String pgoods_id, String count, String ship_method,
+			String key, String pgoods_id, String pcart_message,
 			String address_id) {
-		String url = base_url + "addPointsOrder&pgoods_id=" + pgoods_id
-				+ "&count=" + count + "&ship_method=" + ship_method
-				+ "&address_id=" + address_id;
-		Log.i("landousjson", url);
+
+		String url = null;
+		url = base_url + "index.php?act=member_points&op=exchange";
+		RequestParams requestParams  = new RequestParams();
+		requestParams.put("key", key);
+		requestParams.put("pgoods_id", pgoods_id);
+		requestParams.put("pcart_message", pcart_message);
+		requestParams.put("address_id", address_id);
+		client.post(url,requestParams,res);
+	}
+	/**
+	 * 积分兑换记录
+	 * @param res
+	 * @param key
+	 */
+	public static void exchangerecord(AsyncHttpResponseHandler res,String key) {
+		
+		String url = null;
+		url = base_url + "index.php?act=member_points&op=record"+"&key="+key;
 		client.get(url, res);
 	}
 
@@ -736,10 +752,11 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 42 上传头像保存
+	 * 上传头像保存
 	 * 
 	 * @param res
-	 * @param member_avatar
+	 * @param avatar
+	 * @param key
 	 */
 	public static void saveAvatar(AsyncHttpResponseHandler res,String avatar,String key ) {
 		String url = base_url + "index.php?act=member_index&op=avatar_save";
@@ -889,18 +906,25 @@ public class HttpUtils {
 		String url = base_url + "payOrder&pay_sn=" + pay_sn;
 		client.get(url, res);
 	}
+	/**
+	 * 上传头像
+	 * @param res
+	 * @param key
+	 * @param name
+	 */
 
-	public static void update(AsyncHttpResponseHandler res, String key,String name ) {
+	public static void update(AsyncHttpResponseHandler res, String key,String name,File file ) {
 		RequestParams params = new RequestParams();
 		try {
 			params.put("key", key);
 			params.put("name", name);
-			params.put("FILES", new File(name));
+			params.put("avatar",file);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} // Upload a File
 		String url = base_url + "index.php?act=member_index&op=avatar_upload";
+//		String url = base_url + "index.php?act=member_circle&op=image_upload";
 		client.post(url, params, res);
 	}
 	
@@ -933,4 +957,81 @@ public class HttpUtils {
 		client.get(url, res);
 		
 	}
+	
+	/**
+	 * 上传晒单圈图片
+	 * @param res
+	 * @param key
+	 * @param name
+	 */
+	
+	public static void uploadshaidanquan(AsyncHttpResponseHandler res, String key,String name,File file ) {
+		RequestParams params = new RequestParams();
+		try {
+			params.put("key", key);
+			params.put("name", name);
+			params.put("avatar",file);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // Upload a File
+		String url = base_url + "index.php?act=member_circle&op=image_upload";
+//		String url = base_url + "index.php?act=member_index&op=avatar_upload";
+		client.post(url, params, res);
+	}
+/**
+ * 晒单圈-发布
+ * @param res
+ * @param key
+ * @param description
+ * @param image
+ */
+	
+	public static void shaidanquanfabu(AsyncHttpResponseHandler res, String key,String description,String image) {
+		RequestParams params = new RequestParams();
+		params.put("key", key);
+		params.put("description", description);
+		params.put("image",image);
+		String url = base_url + "index.php?act=member_circle&op=publish";
+		client.post(url, params, res);
+	}
+	/**
+	 * 上传身份证
+	 * @param res
+	 * @param key
+	 * @param name
+	 */
+	public static void uploadIDcard(AsyncHttpResponseHandler res, String key,String name,File file ) {
+		RequestParams params = new RequestParams();
+		try {
+			params.put("key", key);
+			params.put("name", name);
+			params.put("avatar",file);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // Upload a File
+		String url = base_url + "index.php?act=member_index&op=idcard_upload";
+		client.post(url, params, res);
+	}
+	/**
+	 * 买家实名认证
+	 * @param res
+	 * @param key
+	 * @param truename
+	 * @param birthday
+	 * @param address
+	 * @param idcard
+	 */
+	public static void certificate(AsyncHttpResponseHandler res, String key,String truename ,String birthday,String address,String idcard) {
+		String url = base_url + "index.php?act=member_index&op=identification";
+		RequestParams params = new RequestParams();
+		params.put("key",key);
+		params.put("truename",truename);
+		params.put("birthday",birthday);
+		params.put("address",address);
+		params.put("idcard",idcard);
+		client.post(url, params,res);
+	}
+	
 }

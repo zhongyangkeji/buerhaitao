@@ -126,6 +126,7 @@ public class B5_11_PointsMallAdapter extends BaseAdapter {
 					bundle.putString("pgoods_name", data.get(position).get("pgoods_name"));
 					bundle.putString("pgoods_body", data.get(position).get("pgoods_body"));
 					bundle.putString("pgoods_points", data.get(position).get("pgoods_points"));
+					bundle.putString("pgoods_id", data.get(position).get("pgoods_id"));
 					intent_to_exchangepoints.putExtras(bundle);
 					
 					c.startActivity(intent_to_exchangepoints);

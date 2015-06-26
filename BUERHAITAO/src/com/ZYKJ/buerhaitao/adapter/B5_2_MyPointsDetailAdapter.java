@@ -55,7 +55,11 @@ public class B5_2_MyPointsDetailAdapter extends BaseAdapter {
 		
 		add_time.setText(data.get(position).get("pl_addtime"));
 		point_change.setText(data.get(position).get("pl_points"));
-		originOfPoints.setText(data.get(position).get("pl_desc"));
+		if (data.get(position).get("pl_desc").length()<6) {
+			originOfPoints.setText(data.get(position).get("pl_desc"));
+		}else {
+			originOfPoints.setText(data.get(position).get("pl_desc").substring(0,4));
+		}
 		totoalPoints.setText("总积分:"+data.get(position).get("pl_total_points"));
 		
 		return cellView;

@@ -20,7 +20,7 @@
             android:textSize="18sp"/>
 
         <ImageButton
-            android:id="@+id/set_back"
+            android:id="@+id/pointsmall_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -32,7 +32,7 @@
             android:src="@drawable/symbol_left" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tv_record"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

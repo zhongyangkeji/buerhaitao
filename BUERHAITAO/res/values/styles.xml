@@ -129,6 +129,10 @@
         <!-- 提示颜色 -->
         <item name="android:textColorHint">@color/edit_hint_color</item>
     </style>
+    <!-- checkbox样式 -->
+        <style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">  
+        <item name="android:button">@drawable/checkbox_style</item>  
+    </style>  
     
     <style name="coupon_Rating_Bar" parent="@android:style/Widget.RatingBar">    
     <!--指向star_rating_bar_full.xml文件 -->
