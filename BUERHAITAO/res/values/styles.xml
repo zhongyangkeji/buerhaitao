@@ -121,7 +121,7 @@
         <item name="android:windowEnterAnimation">@anim/fade_in</item>
         <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
-    
+     
     <!-- EditText的风格 -->
     <style name="edit_text">
         <!-- 背景色 -->
@@ -134,4 +134,8 @@
         <item name="android:button">@drawable/checkbox_style</item>  
     </style>  
     
+    <style name="coupon_Rating_Bar" parent="@android:style/Widget.RatingBar">    
+    <!--指向star_rating_bar_full.xml文件 -->
+        <item name="android:progressDrawable">@drawable/star_rating_full</item>        
+    </style> 
 </resources>

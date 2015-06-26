@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,10 +24,13 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ZYKJ.buerhaitao.adapter.B1_a2_CaiNiLikeAdapter;
+import com.ZYKJ.buerhaitao.adapter.B1_a3_MeiRiHaoDianAdapter;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.popupwindow.AddPopWindow;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
@@ -34,6 +38,7 @@ import com.ZYKJ.buerhaitao.utils.Tools;
 import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.ZYKJ.buerhaitao.view.ToastView;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class B1_HomeActivity extends BaseActivity {
 	//首页中间八个大分类
@@ -42,13 +47,19 @@ public class B1_HomeActivity extends BaseActivity {
 	RelativeLayout rl_b1_a1tttj,b5_3_shaidanquan,rl_b1_a2_cnxh,rl_b1_a3_mrhd;
 	//搜索选择
 	RelativeLayout rl_sousuokuang;
+	//每日好店
+	ListView list_meirihaodian,list_cainilike;
 	List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+	List<Map<String, String>> data1 = new ArrayList<Map<String, String>>();
+	//天天特价
+	ImageView im_b1_a1_pic;
+	TextView tv_b1_a1_chanpinname,tv_b1_a1_chanpinjianjie,tv_b1_a1_zhehoujia,tv_b1_a1_yuanjia;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_index);
 		initView();
-		HttpUtils.getFirstList(res_getSyList, "00","35","118");
+		HttpUtils.getFirstList(res_getSyList, "88","80","100");
 	}
 	
 	JsonHttpResponseHandler res_getSyList = new JsonHttpResponseHandler()
@@ -72,24 +83,56 @@ public class B1_HomeActivity extends BaseActivity {
 			{
 				try {
 					data.clear();
-					org.json.JSONArray array = datas.getJSONArray("slide");
+					//每日好店
+					org.json.JSONArray array = datas.getJSONArray("good_store");
 					for (int i = 0; i < array.length(); i++) {
-//						JSONObject jsonItem = array.getJSONObject(i);
-//						Map<String, String> map = new HashMap();
-//						map.put("pic_name", jsonItem.getString("pic_name"));
-//						map.put("pic_url", jsonItem.getString("pic_url"));
-//						map.put("color", jsonItem.getString("color"));
-//						map.put("pic_id", jsonItem.getString("pic_id"));
-//						map.put("pic_img", jsonItem.getString("pic_img"));
-//						data.add(map);
+						JSONObject jsonItem = array.getJSONObject(i);
+						Map<String, String> map = new HashMap<String, String>();
+						map.put("store_name", jsonItem.getString("store_name"));
+						map.put("sc_name", jsonItem.getString("sc_name"));
+						map.put("area_info", jsonItem.getString("area_info"));
+						map.put("store_address", jsonItem.getString("store_address"));
+						map.put("store_label", jsonItem.getString("store_label"));
+						map.put("store_desccredit", jsonItem.getString("store_desccredit"));
+						map.put("juli", jsonItem.getString("juli"));						
+						data.add(map);
 					}
+					B1_a3_MeiRiHaoDianAdapter goodadapter = new B1_a3_MeiRiHaoDianAdapter(B1_HomeActivity.this, data);
+					list_meirihaodian.setAdapter(goodadapter);
+					//猜你喜欢
+					data1.clear();
+					org.json.JSONArray array1 = datas.getJSONArray("goods_like");
+					for (int i = 0; i < array1.length(); i++) {
+						JSONObject jsonItem1 = array1.getJSONObject(i);
+						Map<String, String> map1 = new HashMap<String, String>();
+						map1.put("goods_jingle", jsonItem1.getString("goods_jingle"));
+						map1.put("goods_name", jsonItem1.getString("goods_name"));
+						map1.put("nc_distinct", jsonItem1.getString("nc_distinct"));
+						map1.put("juli", jsonItem1.getString("juli"));
+						map1.put("goods_price", jsonItem1.getString("goods_price"));
+						map1.put("goods_image", jsonItem1.getString("goods_image"));
+						map1.put("goods_id", jsonItem1.getString("goods_id"));						
+						data1.add(map1);
+					}
+					B1_a2_CaiNiLikeAdapter cainilikeadapter = new B1_a2_CaiNiLikeAdapter(B1_HomeActivity.this, data1);
+					list_cainilike.setAdapter(cainilikeadapter);
+					
+					//天天特价
+					org.json.JSONArray arr = datas.getJSONArray("day_special");
+					JSONObject jsonIt = array1.getJSONObject(0);
+					ImageLoader.getInstance().displayImage(jsonIt.getString("goods_image"), im_b1_a1_pic);
+					tv_b1_a1_chanpinname.setText(jsonIt.getString("goods_name"));
+					tv_b1_a1_chanpinjianjie.setText(jsonIt.getString("goods_jingle"));
+					tv_b1_a1_zhehoujia.setText(jsonIt.getString("goods_price"));
+					tv_b1_a1_yuanjia.setText(jsonIt.getString("goods_promotion_price"));
+					tv_b1_a1_yuanjia.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); 
 				} 
 				catch (org.json.JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
-			}
+			}/*circle*/
 			else//失败 
 			{
 				Tools.Log("res_Points_error="+error+"");
@@ -115,6 +158,13 @@ public class B1_HomeActivity extends BaseActivity {
 		rl_b1_a2_cnxh = (RelativeLayout)findViewById(R.id.rl_b1_a2_cnxh);
 		rl_b1_a3_mrhd = (RelativeLayout)findViewById(R.id.rl_b1_a3_mrhd);
 		rl_sousuokuang = (RelativeLayout)findViewById(R.id.rl_sousuokuang);
+		list_meirihaodian = (ListView)findViewById(R.id.list_meirihaodian);
+		list_cainilike = (ListView)findViewById(R.id.list_cainilike);
+		im_b1_a1_pic = (ImageView)findViewById(R.id.im_b1_a1_pic);
+		tv_b1_a1_chanpinname = (TextView)findViewById(R.id.tv_b1_a1_chanpinname);
+		tv_b1_a1_chanpinjianjie = (TextView)findViewById(R.id.tv_b1_a1_chanpinjianjie);
+		tv_b1_a1_zhehoujia = (TextView)findViewById(R.id.tv_b1_a1_zhehoujia);
+		tv_b1_a1_yuanjia = (TextView)findViewById(R.id.tv_b1_a1_yuanjia);
 		setListener(im_b1nvshi,im_b1nanshi,im_b1muying,im_b1huazhuang,im_b1shouji,im_b1bangong,im_b1shenghuo,im_b1techan,rl_b1_a1tttj,b5_3_shaidanquan,rl_b1_a2_cnxh,rl_b1_a3_mrhd,rl_sousuokuang);
 	}
 

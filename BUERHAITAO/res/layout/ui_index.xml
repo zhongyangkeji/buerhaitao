@@ -78,7 +78,8 @@
                     android:textColor="#B3B3B3"
                     android:textSize="14sp" />
 
-               <!--  <TextView
+                <!--
+                     <TextView
                     android:id="@+id/a1_sydpss"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -89,7 +90,8 @@
                     android:hint="搜索附近商品、商铺"
                     android:textColor="#000"
                     android:textColorHint="#B3B3B3"
-                    android:textSize="14sp" /> -->
+                    android:textSize="14sp" />
+                -->
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
@@ -113,21 +115,13 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/body_cont_bg"
                 android:orientation="vertical" >
 
                 <com.ZYKJ.buerhaitao.customview.B1_HomeShowView
-                android:id="@+id/slideshowView"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:background="@drawable/logo_default" />
-                <!--
-                    <com.zykj.familyinlinyi.customview.A1_ShouYeSlideShowView
                     android:id="@+id/slideshowView"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:background="@drawable/address_chose" />
-                -->
+                    android:background="@drawable/body_cont_bg" />
             </LinearLayout>
             <!-- 中间八个图标 -->
 
@@ -350,6 +344,82 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" >
+
+                    <ImageView
+                        android:id="@+id/im_b1_a1_pic"
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/buerhaitao" />
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="90dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical" >
+
+                        <RelativeLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="0.0dp"
+                            android:layout_weight="1" >
+
+                            <TextView
+                                android:id="@+id/tv_b1_a1_chanpinname"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:text="产品名称"
+                                android:textColor="#000"
+                                android:textSize="16sp" />
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="0.0dp"
+                            android:layout_weight="1.5"
+                            android:gravity="center_vertical" >
+
+                            <TextView
+                                android:id="@+id/tv_b1_a1_chanpinjianjie"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:text="产品简介产品简介产品简介产品简介产品简介产品" />
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="0.0dp"
+                            android:layout_weight="1" >
+
+                            <TextView
+                                android:id="@+id/tv_b1_a1_zhehoujia"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:text="￥88"
+                                android:textColor="#F85D58"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/tv_b1_a1_yuanjia"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@id/tv_b1_a1_zhehoujia"
+                                android:text="￥98" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="10dp"
+                                android:src="@drawable/b1_a2_shenglve" />
+                        </RelativeLayout>
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -446,6 +516,12 @@
                         android:textColor="#707070" />
                 </RelativeLayout>
 
+                <com.ZYKJ.buerhaitao.view.MyListView
+                    android:id="@+id/list_cainilike"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+                </com.ZYKJ.buerhaitao.view.MyListView>
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
@@ -495,6 +571,12 @@
                         android:text="你中意的店铺"
                         android:textColor="#707070" />
                 </RelativeLayout>
+
+                <com.ZYKJ.buerhaitao.view.MyListView
+                    android:id="@+id/list_meirihaodian"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+                </com.ZYKJ.buerhaitao.view.MyListView>
 
                 <View
                     android:layout_width="fill_parent"
