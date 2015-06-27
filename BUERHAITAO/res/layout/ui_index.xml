@@ -343,7 +343,7 @@
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" >
+                    android:layout_height="fill_parent">
 
                     <ImageView
                         android:id="@+id/im_b1_a1_pic"
@@ -354,7 +354,7 @@
 
                     <LinearLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="90dp"
+                        android:layout_height="87dp"
                         android:layout_marginTop="10dp"
                         android:orientation="vertical" >
 
@@ -465,7 +465,11 @@
                         android:text="N条新内容更新"
                         android:textColor="#707070" />
                 </RelativeLayout>
-
+				<com.ZYKJ.buerhaitao.customview.B5_3_ShowView
+                    android:id="@+id/slideshowView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@drawable/body_cont_bg" />
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"

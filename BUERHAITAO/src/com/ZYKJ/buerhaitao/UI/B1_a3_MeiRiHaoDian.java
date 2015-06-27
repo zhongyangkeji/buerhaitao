@@ -53,7 +53,7 @@ public class B1_a3_MeiRiHaoDian extends BaseActivity implements IXListViewListen
 	}
 	
 	/**
-	 * 获取积分详情
+	 * 每日好店
 	 */
 	JsonHttpResponseHandler res_goodstore = new JsonHttpResponseHandler()
 	{

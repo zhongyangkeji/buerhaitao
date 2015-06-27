@@ -1033,5 +1033,17 @@ public class HttpUtils {
 		params.put("idcard",idcard);
 		client.post(url, params,res);
 	}
+	/**
+	 *  tiant 
+	 * @param curpage 当前页码
+	 * @param city_id 城市id
+	 * @param lng 经度
+	 * @param lat 纬度
+	 */
+	public static void getDaySpecial(AsyncHttpResponseHandler res,String curpage,String city_id,String lng,String lat) {
+		String url = base_url + "index.php?act=goods&op=day_special"+"&curpage="+curpage+"&city_id="+city_id+"&lng="+lng+"&lat="+lat;
+		client.get(url, res);
+		
+	}
 	
 }

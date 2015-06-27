@@ -22,12 +22,15 @@ import android.os.Message;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.ZYKJ.buerhaitao.adapter.B1_a2_CaiNiLikeAdapter;
 import com.ZYKJ.buerhaitao.adapter.B1_a3_MeiRiHaoDianAdapter;
@@ -99,6 +102,16 @@ public class B1_HomeActivity extends BaseActivity {
 					}
 					B1_a3_MeiRiHaoDianAdapter goodadapter = new B1_a3_MeiRiHaoDianAdapter(B1_HomeActivity.this, data);
 					list_meirihaodian.setAdapter(goodadapter);
+					list_meirihaodian.setOnItemClickListener(new OnItemClickListener() {
+
+						@Override
+						public void onItemClick(AdapterView<?> arg0, View view, int i,
+								long arg3) {
+							Intent itmrhd = new Intent();
+							itmrhd.setClass(B1_HomeActivity.this, B1_a3_MeiRiHaoDian.class);
+							startActivity(itmrhd);							
+						}
+					});
 					//猜你喜欢
 					data1.clear();
 					org.json.JSONArray array1 = datas.getJSONArray("goods_like");
@@ -125,7 +138,7 @@ public class B1_HomeActivity extends BaseActivity {
 					tv_b1_a1_chanpinjianjie.setText(jsonIt.getString("goods_jingle"));
 					tv_b1_a1_zhehoujia.setText(jsonIt.getString("goods_price"));
 					tv_b1_a1_yuanjia.setText(jsonIt.getString("goods_promotion_price"));
-					tv_b1_a1_yuanjia.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); 
+					tv_b1_a1_yuanjia.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG |Paint.ANTI_ALIAS_FLAG);
 				} 
 				catch (org.json.JSONException e) {
 					// TODO Auto-generated catch block
