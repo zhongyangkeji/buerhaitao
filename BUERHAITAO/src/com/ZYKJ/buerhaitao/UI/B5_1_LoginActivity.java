@@ -115,6 +115,7 @@ public class B5_1_LoginActivity extends BaseActivity {
 					putSharedPreferenceValue("userid", datas.getString("userid"));
 					putSharedPreferenceValue("key", datas.getString("key"));
 					putSharedPreferenceValue("avatar", datas.getString("avatar"));
+//					Tools.Log("image="+datas.getString("avatar"));
 					putSharedPreferenceValue("member_points", datas.getString("member_points"));
 					putSharedPreferenceValue("predeposit", datas.getString("predeposit"));
 				} catch (JSONException e) {

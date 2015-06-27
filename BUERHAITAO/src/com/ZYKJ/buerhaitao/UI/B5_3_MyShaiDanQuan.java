@@ -47,7 +47,7 @@ public class B5_3_MyShaiDanQuan extends BaseActivity implements IXListViewListen
 	private LinearLayout ll_mypublish,ll_mycomment;
 	private View v1,v2;
 	private MyListView lv_shaidanquan_mypublish;
-	List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+	List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
 	B5_3_MyShaiDanQuanAdapter adapter;
 	@Override
 	protected void onResume() {
@@ -156,7 +156,7 @@ public class B5_3_MyShaiDanQuan extends BaseActivity implements IXListViewListen
 			// TODO Auto-generated method stub
 			super.onSuccess(statusCode, headers, response);
 			RequestDailog.closeDialog();
-			Tools.Log("110="+response);
+//			Tools.Log("110="+response);
 			String error=null;
 			JSONObject datas=null;
 			try {
@@ -173,13 +173,14 @@ public class B5_3_MyShaiDanQuan extends BaseActivity implements IXListViewListen
 					org.json.JSONArray array = datas.getJSONArray("circle_list");
 					for (int i = 0; i < array.length(); i++) {
 						JSONObject jsonItem = array.getJSONObject(i);
-						Map<String, String> map = new HashMap();
+						Map<String, Object> map = new HashMap();
 						map.put("addtime", jsonItem.getString("addtime"));
 						map.put("replys", jsonItem.getString("replys"));
 						map.put("circle_id", jsonItem.getString("circle_id"));
 						map.put("views", jsonItem.getString("views"));
 						map.put("description", jsonItem.getString("description"));
-						map.put("image", jsonItem.getString("image"));
+						map.put("image", jsonItem.getJSONObject("image"));
+						Tools.Log("image="+jsonItem.getString("image"));
 						map.put("praise", jsonItem.getString("praise"));
 						map.put("avatar", jsonItem.getString("avatar"));
 						map.put("member_name", jsonItem.getString("member_name"));

@@ -4,42 +4,39 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.ZYKJ.buerhaitao.UI.B5_MyActivity;
 import com.ZYKJ.buerhaitao.UI.R;
-import com.ZYKJ.buerhaitao.adapter.B5_11_PointsMallAdapter.ExchangeListener;
-import com.ZYKJ.buerhaitao.utils.HttpUtils;
-import com.ZYKJ.buerhaitao.utils.Tools;
-import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.ZYKJ.buerhaitao.utils.Tools;
+import com.ZYKJ.buerhaitao.view.NoScrollGridView;
 
 public class B5_3_MyShaiDanQuanAdapter extends BaseAdapter {
 
-	List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+	List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
 	private Activity c;
 	private LayoutInflater listContainer;
 	ViewHolder viewHolder = null;
 	String commentString;
 //	ListView lv_comment;
-	
+	GridViewAdatper_myshaidanquan photosadapter;
 
-	public B5_3_MyShaiDanQuanAdapter(Activity c, List<Map<String, String>> data) {
+	public B5_3_MyShaiDanQuanAdapter(Activity c, List<Map<String, Object>> data) {
 		this.c = c;
 		this.data = data;
 		listContainer = LayoutInflater.from(c);
@@ -80,29 +77,39 @@ public class B5_3_MyShaiDanQuanAdapter extends BaseAdapter {
             viewHolder.tv_num_look = (TextView) convertView.findViewById(R.id.tv_num_look);//多少人看过
             viewHolder.tv_zan = (TextView) convertView.findViewById(R.id.tv_zan);//赞数
             viewHolder.tv_comment = (TextView) convertView.findViewById(R.id.tv_comment);//评论数
-//            viewHolder.comment0 = (LinearLayout) convertView.findViewById(R.id.comment0);
-//            viewHolder.tv_checkallcomment = (TextView) convertView.findViewById(R.id.tv_checkallcomment);//查看所有3条评论
-//            viewHolder.comment_container = (LinearLayout) convertView.findViewById(R.id.comment_container);//查看所有3条评论
-
+            viewHolder.gridView = (NoScrollGridView) convertView.findViewById(R.id.gridView);
+//          viewHolder.comment0 = (LinearLayout) convertView.findViewById(R.id.comment0);
+//          viewHolder.tv_checkallcomment = (TextView) convertView.findViewById(R.id.tv_checkallcomment);//查看所有3条评论
+//          viewHolder.comment_container = (LinearLayout) convertView.findViewById(R.id.comment_container);//查看所有3条评论
             convertView.setTag(viewHolder);
         }
         else
         {
-            viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder = (ViewHolder)convertView.getTag();
         }
+        JSONObject obj = (JSONObject) data.get(position).get("image");
+//        Tools.Log("obj.length="+obj.length());
+        if (obj.length()!=0) {
+        	viewHolder.gridView.setVisibility(View.VISIBLE);
+        	photosadapter = new GridViewAdatper_myshaidanquan(c,obj);
+        	viewHolder.gridView.setAdapter(photosadapter);
+		}else {
+			Tools.Log("没有上传图片");
+		}
+    	
+		String replys = data.get(position).get("replys").toString();//评论数
 		
-		String replys = data.get(position).get("replys");//评论数
-		
-		viewHolder.tv_nickname.setText(data.get(position).get("member_name"));//昵称
-		viewHolder.tv_content.setText(data.get(position).get("description"));//内容
-		viewHolder.tv_date.setText(data.get(position).get("addtime"));//日期
-		viewHolder.tv_zan.setText(data.get(position).get("praise"));//赞个数
+		viewHolder.tv_nickname.setText(data.get(position).get("member_name").toString());//昵称
+		viewHolder.tv_content.setText(data.get(position).get("description").toString());//内容
+		viewHolder.tv_date.setText(data.get(position).get("addtime").toString());//日期
+		viewHolder.tv_zan.setText(data.get(position).get("praise").toString());//赞个数
 		viewHolder.tv_comment.setText(replys);//评论数
 		viewHolder.tv_num_look.setText(data.get(position).get("views")+"人浏览过");//123人浏览过
 //		viewHolder.tv_checkallcomment.setText("查看所有"+replys+"条评论");//查看所有3条评论
 //		viewHolder.tv_checkallcomment.setOnClickListener(new Checkallcomment(position));
-		viewHolder.comment0.setOnClickListener(new Comment(position));
-		ImageLoader.getInstance().displayImage(data.get(position).get("avatar"), viewHolder.iv_head_img);
+//		viewHolder.comment0.setOnClickListener(new Comment(position));
+		ImageLoader.getInstance().displayImage(data.get(position).get("avatar").toString(), viewHolder.iv_head_img);
+//		ImageLoader.getInstance().displayImage(data.get(position).get("image").toString(), viewHolder.iv_head_img);
 		
 		return convertView;
 	}
@@ -171,8 +178,10 @@ public class B5_3_MyShaiDanQuanAdapter extends BaseAdapter {
 			TextView tv_comment;//评论数
 //			TextView tv_checkallcomment ;//查看所有3条评论
 			LinearLayout comment_container;//所有评论内容
-			LinearLayout comment0;//所有评论内容
+//			LinearLayout comment0;//所有评论内容
 			LinearLayout commentnew;//所有评论内容
+			
+			NoScrollGridView gridView;//显示上传图片
 	    }
 	
 }

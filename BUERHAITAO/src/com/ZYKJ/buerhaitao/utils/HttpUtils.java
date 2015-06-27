@@ -797,15 +797,18 @@ public class HttpUtils {
 		client.get(url, res);
 	}
 	/**
-	 * 钻石充值接口
+	 * 充值接口
 	 * 
 	 * @param res
 	 */
-	public static void addGemsPoints(AsyncHttpResponseHandler res, int gemsNumbers) {
-		String url = base_url + "subtractCheckPoints&gemsNumbers="+gemsNumbers;
-		client.get(url, res);
+	public static void recharge(AsyncHttpResponseHandler res, String key, String pdr_amount,String channel) {
+		String url = base_url + "index.php?act=member_predeposit&op=recharge_add";
+		RequestParams requestParams = new RequestParams();
+		requestParams.put("key", key);
+		requestParams.put("pdr_amount", pdr_amount);
+		requestParams.put("channel ", channel );
+		client.post(url, res);
 	}
-
 	/**
 	 * 45 积分订单确认收货
 	 * 
@@ -814,14 +817,11 @@ public class HttpUtils {
 	 */
 	public static void receivePointsOrder(AsyncHttpResponseHandler res,
 			String point_orderid) {
-		String url = base_url + "receivePointsOrder&point_orderid="
-				+ point_orderid;
+		String url = base_url + "receivePointsOrder&point_orderid="+ point_orderid;
 		client.get(url, res);
-
 	}
-
 	/**
-	 * 46.获取支付宝秘钥
+	 *  获取支付宝秘钥
 	 * 
 	 * @param res
 	 */
