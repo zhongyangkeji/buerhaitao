@@ -3,9 +3,7 @@ package com.ZYKJ.buerhaitao.UI;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.http.Header;
@@ -45,6 +43,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.utils.Bimp;
 import com.ZYKJ.buerhaitao.utils.FileUtils;

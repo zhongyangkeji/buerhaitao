@@ -6,13 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.http.Header;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ZYKJ.buerhaitao.adapter.B5_2_MyPointsDetailAdapter;
+import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.adapter.B5_3_MyShaiDanQuanAdapter;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.utils.CircularImage;

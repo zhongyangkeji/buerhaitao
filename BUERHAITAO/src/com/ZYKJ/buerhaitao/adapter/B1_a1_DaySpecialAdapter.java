@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ZYKJ.buerhaitao.UI.R;
+import com.ZYKJ.buerhaitao.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**

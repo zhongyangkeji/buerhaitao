@@ -4,24 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.ZYKJ.buerhaitao.UI.R;
-import com.ZYKJ.buerhaitao.adapter.B5_9_adressManageAdapter.ChoseAdressListener;
-import com.ZYKJ.buerhaitao.data.Carousels;
-import com.ZYKJ.buerhaitao.data.HttpAction;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import android.app.Activity;
-import android.graphics.Color;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.ZYKJ.buerhaitao.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * @author lss 2015年6月24日 每日好店adapter

@@ -3,8 +3,6 @@ package com.ZYKJ.buerhaitao.adapter;
 import java.util.List;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ZYKJ.buerhaitao.UI.R;
+import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.data.Goods;
 import com.ZYKJ.buerhaitao.data.HttpAction;
 import com.ZYKJ.buerhaitao.utils.ImageOptions;
-import com.ZYKJ.buerhaitao.utils.Tools;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.ZYKJ.buerhaitao.UI.R;
+import com.ZYKJ.buerhaitao.R;
 
 public class XListViewHeader extends LinearLayout {
 	private LinearLayout mContainer;

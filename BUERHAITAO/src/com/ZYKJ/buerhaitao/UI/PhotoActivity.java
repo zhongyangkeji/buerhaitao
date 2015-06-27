@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.utils.Bimp;
 import com.ZYKJ.buerhaitao.utils.FileUtils;
 

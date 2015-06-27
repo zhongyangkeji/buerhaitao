@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.adapter.B5_2_MyPointsDetailAdapter;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;

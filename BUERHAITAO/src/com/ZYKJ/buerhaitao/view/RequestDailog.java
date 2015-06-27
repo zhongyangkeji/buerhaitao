@@ -10,7 +10,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ZYKJ.buerhaitao.UI.R;
+import com.ZYKJ.buerhaitao.R;
 
 public class RequestDailog extends Dialog {
 

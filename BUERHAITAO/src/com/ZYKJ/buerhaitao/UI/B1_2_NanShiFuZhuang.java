@@ -3,6 +3,7 @@ package com.ZYKJ.buerhaitao.UI;
 import android.os.Bundle;
 import android.view.View;
 
+import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 
 /**

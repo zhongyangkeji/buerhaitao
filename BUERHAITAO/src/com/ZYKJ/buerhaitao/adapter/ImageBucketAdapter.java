@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ZYKJ.buerhaitao.UI.R;
+import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.utils.BitmapCache;
 import com.ZYKJ.buerhaitao.utils.BitmapCache.ImageCallback;
 import com.ZYKJ.buerhaitao.utils.ImageBucket;

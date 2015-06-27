@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -13,7 +12,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -21,8 +19,8 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.UI.PublishedActivity;
-import com.ZYKJ.buerhaitao.UI.R;
 import com.ZYKJ.buerhaitao.adapter.ImageGridAdapter;
 import com.ZYKJ.buerhaitao.adapter.ImageGridAdapter.TextCallback;
 import com.ZYKJ.buerhaitao.base.BaseActivity;

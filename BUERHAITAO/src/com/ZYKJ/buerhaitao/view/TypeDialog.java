@@ -15,7 +15,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 
-import com.ZYKJ.buerhaitao.UI.R;
+import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.adapter.GridTypeAdapter;
 import com.ZYKJ.buerhaitao.base.BaseApp;
 

@@ -1,8 +1,5 @@
 package com.ZYKJ.buerhaitao.UI;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
 import com.ZYKJ.buerhaitao.utils.Tools;

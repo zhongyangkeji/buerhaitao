@@ -1,7 +1,5 @@
 package com.ZYKJ.buerhaitao.popupwindow;
 
-import com.ZYKJ.buerhaitao.UI.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
@@ -12,7 +10,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.ZYKJ.buerhaitao.R;
 
 /**
  * @author lss 2015年6月18日  首页宝贝店铺选择popuWindow

@@ -21,10 +21,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ZYKJ.buerhaitao.UI.R;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.utils.Tools;
 import com.ZYKJ.buerhaitao.view.NoScrollGridView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class B5_3_MyShaiDanQuanAdapter extends BaseAdapter {
 

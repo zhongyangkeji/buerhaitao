@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
-import com.ZYKJ.buerhaitao.UI.R;
+import com.ZYKJ.buerhaitao.R;
 import com.umeng.comm.core.CommunitySDK;
 import com.umeng.comm.core.beans.CommConfig;
 import com.umeng.comm.core.beans.CommUser;

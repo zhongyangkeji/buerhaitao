@@ -6,6 +6,7 @@ import java.util.TimerTask;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.data.AppValue;
 import com.ZYKJ.buerhaitao.utils.Tools;

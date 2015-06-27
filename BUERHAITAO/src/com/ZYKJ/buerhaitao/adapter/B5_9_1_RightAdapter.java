@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.ZYKJ.buerhaitao.UI.R;
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.util.DisplayMetrics;
@@ -17,6 +15,7 @@ import android.widget.TextView;
 
 public class B5_9_1_RightAdapter extends BaseAdapter {
 
+	
 	private Activity context;
 	private int item = -1;
 	List<Map<String, String>> data = new ArrayList<Map<String, String>>();

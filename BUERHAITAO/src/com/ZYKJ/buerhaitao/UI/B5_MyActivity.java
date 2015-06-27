@@ -14,7 +14,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -36,6 +35,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.utils.CircularImage;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
@@ -45,7 +45,6 @@ import com.ZYKJ.buerhaitao.view.ToastView;
 import com.ZYKJ.buerhaitao.view.UIDialog;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.umeng.community.example.MainActivity_we;
 
 @SuppressLint("NewApi") public class B5_MyActivity extends BaseActivity implements OnClickListener {
 

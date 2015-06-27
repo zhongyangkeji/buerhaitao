@@ -12,14 +12,13 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
+import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.adapter.B5_9_1_LeftAdapter;
 import com.ZYKJ.buerhaitao.adapter.B5_9_1_MiddleAdapter;
 import com.ZYKJ.buerhaitao.adapter.B5_9_1_RightAdapter;

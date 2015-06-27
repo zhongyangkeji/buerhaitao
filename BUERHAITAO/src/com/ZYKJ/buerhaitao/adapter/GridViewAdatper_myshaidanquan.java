@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.ZYKJ.buerhaitao.UI.R;
+import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.utils.Tools;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

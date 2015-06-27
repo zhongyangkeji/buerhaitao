@@ -13,7 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ZYKJ.buerhaitao.UI.R;
+import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.view.TypeDialog;
 
 public class GridTypeAdapter extends BaseAdapter implements OnItemClickListener {

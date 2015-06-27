@@ -13,10 +13,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.adapter.ImageBucketAdapter;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.utils.AlbumHelper;
-import com.ZYKJ.buerhaitao.utils.Bimp;
 import com.ZYKJ.buerhaitao.utils.ImageBucket;
 import com.ZYKJ.buerhaitao.utils.ImageGridActivity;
 /**

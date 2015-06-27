@@ -1,7 +1,6 @@
 package com.ZYKJ.buerhaitao.customview;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -12,18 +11,6 @@ import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.ZYKJ.buerhaitao.UI.R;
-import com.ZYKJ.buerhaitao.utils.HttpUtils;
-import com.ZYKJ.buerhaitao.utils.Tools;
-import com.ZYKJ.buerhaitao.view.RequestDailog;
-import com.alibaba.fastjson.JSONArray;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-
-import android.R.integer;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -40,6 +27,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+
+import com.ZYKJ.buerhaitao.R;
+import com.ZYKJ.buerhaitao.utils.HttpUtils;
+import com.ZYKJ.buerhaitao.utils.Tools;
+import com.ZYKJ.buerhaitao.view.RequestDailog;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 public class B1_HomeShowView  extends FrameLayout {
 	

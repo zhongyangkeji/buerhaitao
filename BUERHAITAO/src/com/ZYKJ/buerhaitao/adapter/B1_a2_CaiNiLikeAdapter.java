@@ -10,11 +10,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.ZYKJ.buerhaitao.UI.R;
-import com.ZYKJ.buerhaitao.adapter.B1_a3_MeiRiHaoDianAdapter.ViewHolder;
+import com.ZYKJ.buerhaitao.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**

@@ -7,16 +7,13 @@ import java.util.Map;
 import android.app.Activity;
 import android.graphics.Color;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import cn.smssdk.statistics.NewAppReceiver;
-
-import com.ZYKJ.buerhaitao.UI.R;
+import com.ZYKJ.buerhaitao.R;
 
 public class B5_9_1_LeftAdapter extends BaseAdapter {
 
