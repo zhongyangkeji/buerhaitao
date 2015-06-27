@@ -32,7 +32,7 @@ public class B1_a2_CaiNiXiHuan extends BaseActivity implements
 	private ImageButton b1_a2_back;
 	private MyListView listview_b1_a2_like;
 	private List<Map<String, String>> data = new ArrayList<Map<String, String>>();
-	private B1_a2_CaiNiLikeAdapter cainilikeadapter;
+	private B1_a2_CaiNiLikeAdapter cainilikeadapter; 
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

@@ -44,12 +44,14 @@ import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.ZYKJ.buerhaitao.view.ToastView;
 import com.ZYKJ.buerhaitao.view.UIDialog;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.community.example.MainActivity_we;
 
 @SuppressLint("NewApi") public class B5_MyActivity extends BaseActivity implements OnClickListener {
 
 	private CircularImage img_head;
 	private Button btn_login,btn_shaidanquan,btn_chackInShape;
-	private LinearLayout ll_chackin,ll_NoPay,ll_notransport,ll_noget,ll_haveget,ll_my_points;
+	private LinearLayout ll_chackin,ll_NoPay,ll_notransport,ll_noget,ll_haveget,ll_my_points,ll_my_purse;
 	private RelativeLayout my_address_page,my_store_page,my_points_page,my_set_page;
 	private TextView tv_my_points,my_money;//积分+钱包
 	
@@ -81,13 +83,15 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 			ISLOGIN=1;
 			HttpUtils.getPointsLog(res_Points, getSharedPreferenceValue("key"));
 			String headImgString=getSharedPreferenceValue("headImg_filename");
-			if (headImgString!=null) //如果登陆过，显示之前本地的头像
-			{
-//				File f = new File(headImgString); 
-			    Bitmap bitmap_head=BitmapFactory.decodeFile(headImgString);
-			    img_head.setImageBitmap(bitmap_head);
-			    
-			}
+//			if (headImgString!=null) //如果登陆过，显示之前本地的头像
+//			{
+////				File f = new File(headImgString); 
+//			    Bitmap bitmap_head=BitmapFactory.decodeFile(headImgString);
+//			    img_head.setImageBitmap(bitmap_head);
+//			    
+//			}
+			//网络加载头像
+			ImageLoader.getInstance().displayImage(getSharedPreferenceValue("avatar"), img_head);
 		}else if (FirstLog==0) {//第一次进来，如果没有登录，跳转到登录页面
 			Intent intent_login1=new Intent();
 			intent_login1.setClass(this, B5_1_LoginActivity.class);
@@ -111,6 +115,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 		ll_noget=(LinearLayout) findViewById(R.id.ll_noget);
 		ll_haveget=(LinearLayout) findViewById(R.id.ll_haveget);
 		ll_my_points=(LinearLayout) findViewById(R.id.ll_my_points);//积分
+		ll_my_purse=(LinearLayout) findViewById(R.id.ll_my_purse);//我的钱包
 		my_address_page=(RelativeLayout) findViewById(R.id.my_address_page);
 		my_store_page=(RelativeLayout) findViewById(R.id.my_store_page);
 		my_points_page=(RelativeLayout) findViewById(R.id.my_points_page);
@@ -127,7 +132,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 			}
 			setListener(img_head,btn_shaidanquan,btn_login,
 					   ll_chackin,ll_NoPay,ll_notransport,
-					   ll_noget,ll_haveget,ll_my_points,my_address_page,
+					   ll_noget,ll_haveget,ll_my_points,ll_my_purse,my_address_page,
 					   my_store_page,my_points_page,my_set_page,btn_chackInShape);
 		}else{
 			setListener(btn_login);
@@ -235,9 +240,12 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 				break;
 			case R.id.btn_shaidanquan://晒单圈
 //				Toast.makeText(this, "晒单圈", Toast.LENGTH_LONG).show();
-				
 				Intent intent_shaidanquan=new Intent();
+				
 				intent_shaidanquan.setClass(this, B5_3_MyShaiDanQuan.class);
+				
+//				intent_shaidanquan.setClass(this, MainActivity_we.class);
+				
 				startActivity(intent_shaidanquan);
 				break;
 			case R.id.btn_chackInShape://签到
@@ -260,6 +268,11 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 				Intent intent_my_points=new Intent();
 				intent_my_points.setClass(this, B5_2_MyPointsDetail.class);
 				startActivity(intent_my_points);
+				break;
+			case R.id.ll_my_purse://我的钱包
+				Intent intent_my_purse=new Intent();
+				intent_my_purse.setClass(this, B5_13_MyPurse.class);
+				startActivity(intent_my_purse);
 				break;
 			case R.id.my_address_page://收货地址
 				Intent intent_my_address_page=new Intent();

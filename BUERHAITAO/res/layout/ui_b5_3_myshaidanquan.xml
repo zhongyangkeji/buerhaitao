@@ -3,6 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical" >
 
      <!-- 导入title -->
@@ -138,7 +139,11 @@
 	<View 
          android:layout_width="match_parent"
          android:layout_height="1dp"
-         android:background="@color/theme_grey"
-    />
+         android:background="@color/theme_grey" />
+	<com.ZYKJ.buerhaitao.view.MyListView
+        android:id="@+id/lv_myshaidanquan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </com.ZYKJ.buerhaitao.view.MyListView>
 
 </LinearLayout>
