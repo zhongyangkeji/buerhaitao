@@ -36,6 +36,7 @@
                 android:src="@drawable/b1_ditusousuo" />
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/rl_sousuokuang"
             android:layout_width="fill_parent"
             android:layout_height="35dp"
             android:layout_centerVertical="true"
@@ -69,7 +70,6 @@
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/search_detail"
 	                android:hint="@string/classify_search"
-	                android:imeOptions="actionSearch"
                     android:textColor="#000"
                 	style="@style/edit_text"
                     android:textSize="14sp" />
@@ -104,6 +104,7 @@
                 android:id="@+id/product_grid"
                 android:layout_height="fill_parent"
                 android:layout_width="fill_parent"
+                android:listSelector="#00000000"
               	android:numColumns="3"/>
         </RelativeLayout>
         <View 

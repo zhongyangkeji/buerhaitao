@@ -2,6 +2,8 @@ package com.ZYKJ.buerhaitao.utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import android.content.Context;
 import android.util.Log;
@@ -153,10 +155,8 @@ public class HttpUtils {
 	 * @param search_text
 	 *            搜索关键字
 	 */
-	public static void getGoodsList(AsyncHttpResponseHandler res_getGoodsList,
-			String g_type) {
-		String url = base_url + "getGoodsList" + g_type;
-		Log.i("landousurl", url);
+	public static void getGoodsList(AsyncHttpResponseHandler res_getGoodsList, String params) {
+		String url = base_url + "index.php?act=goods&op=goods_list"+params;
 		client.get(url, res_getGoodsList);
 	}
 	/**
@@ -201,17 +201,11 @@ public class HttpUtils {
 	/**
 	 * 9获取商店列表
 	 * 
-	 * @param res
+	 * @param params
 	 */
-	public static void getStoreList(AsyncHttpResponseHandler res,
-			String search_text) {
-		String url = null;
-		if (search_text == null) {
-			url = base_url + "getStoreList";
-		} else {
-			url = base_url + "getStoreList&search_text=" + search_text;
-		}
-		client.get(url, res);
+	public static void getStoreList(AsyncHttpResponseHandler res_getStoreList, String params) {
+		String url = base_url + "index.php?act=store&op=store_list"+params;
+		client.get(url, res_getStoreList);
 	}
 
 	/**
@@ -1053,6 +1047,16 @@ public class HttpUtils {
 		String url = base_url + "index.php?act=goods&op=day_special"+"&curpage="+curpage+"&city_id="+city_id+"&lng="+lng+"&lat="+lat;
 		client.get(url, res);
 		
+	}
+	
+	public static String iterateParams(HashMap<String,String> params){
+		String parameter = "";
+		Iterator<String> iterator = params.keySet().iterator();
+		while(iterator.hasNext()){
+			String key = iterator.next();
+			parameter += "&"+key+"="+params.get(key);
+		}
+		return parameter;
 	}
 	
 }

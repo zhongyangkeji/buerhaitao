@@ -12,6 +12,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.ZYKJ.buerhaitao.R;
+import com.ZYKJ.buerhaitao.UI.B1_a4_SearchActivity;
 
 /**
  * @author lss 2015年6月18日  首页宝贝店铺选择popuWindow
@@ -54,7 +55,8 @@ public class AddPopWindow extends PopupWindow {
  
 			@Override
 			public void onClick(View arg0) {
-				a4_sousuobbdp.setText("宝贝 ▼");
+				a4_sousuobbdp.setText("宝贝");
+				B1_a4_SearchActivity.CHANNEL = 0;
 				AddPopWindow.this.dismiss();
 			}
 		});
@@ -63,7 +65,8 @@ public class AddPopWindow extends PopupWindow {
 
 			@Override
 			public void onClick(View v) {
-				a4_sousuobbdp.setText("店铺 ▼");
+				a4_sousuobbdp.setText("店铺");
+				B1_a4_SearchActivity.CHANNEL = 1;
 				AddPopWindow.this.dismiss();
 			}
 		});
