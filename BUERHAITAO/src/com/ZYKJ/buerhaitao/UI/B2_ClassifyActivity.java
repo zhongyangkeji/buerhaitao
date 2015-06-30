@@ -13,21 +13,18 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
@@ -40,11 +37,11 @@ import com.loopj.android.http.JsonHttpResponseHandler;
  * @author csh
  * 首页分类
  */
-public class B2_ClassifyActivity extends BaseActivity implements OnEditorActionListener{
+public class B2_ClassifyActivity extends BaseActivity{
 	
-	private TextView cl_address,search_detail;
-	private EditText search_input;
+	private TextView cl_address;
 	private RadioGroup category_list;
+	private RelativeLayout rl_sousuokuang;
 	private GridView product_grid;
     private RadioGroup.LayoutParams mRadioParams;
     private List<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
@@ -63,15 +60,13 @@ public class B2_ClassifyActivity extends BaseActivity implements OnEditorActionL
 	 */
 	private void initView(){
 		cl_address = (TextView)findViewById(R.id.classify_address);//地址选择
-		search_input = (EditText)findViewById(R.id.search_input);//搜索输入框
-		search_detail = (TextView)findViewById(R.id.search_detail);//宝贝
 		category_list = (RadioGroup)findViewById(R.id.category_list);
 		product_grid = (GridView)findViewById(R.id.product_grid);
+		rl_sousuokuang = (RelativeLayout)findViewById(R.id.rl_sousuokuang);
         mRadioParams = new RadioGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         cl_address.setOnClickListener(this);
-        search_detail.setOnClickListener(this);
-        search_input.setOnEditorActionListener(this);
+        rl_sousuokuang.setOnClickListener(this);
 	}
 	
 	/**
@@ -80,8 +75,7 @@ public class B2_ClassifyActivity extends BaseActivity implements OnEditorActionL
 	private void requestData(){
 		HttpUtils.getGoodsClass(new JsonHttpResponseHandler(){
 			@Override
-			public void onSuccess(int statusCode, Header[] headers,
-					JSONObject response) {
+			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 				super.onSuccess(statusCode, headers, response);
 				try {
 					int code = response.getInt("code");
@@ -177,7 +171,7 @@ public class B2_ClassifyActivity extends BaseActivity implements OnEditorActionL
 						public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 							String gc_id = list.get(position).get("gc_id");
 							Toast.makeText(B2_ClassifyActivity.this, gc_id, Toast.LENGTH_LONG).show();
-							Intent intent = new Intent(B2_ClassifyActivity.this,B2_ShopByClassifyActivity.class);
+							Intent intent = new Intent(B2_ClassifyActivity.this,B1_a4_SearchActivity.class);
 							intent.putExtra("gc_id", gc_id);
 							startActivity(intent);
 						}
@@ -194,18 +188,12 @@ public class B2_ClassifyActivity extends BaseActivity implements OnEditorActionL
         switch (view.getId()){
             case R.id.classify_address:
                 break;
-            case R.id.search_detail:
-                break;
+    		case R.id.rl_sousuokuang:
+    			Intent itsydps = new Intent();
+    			itsydps.setClass(B2_ClassifyActivity.this, B1_a4_SearchActivity.class);
+    			startActivity(itsydps);
+    			break;
         }
-	}
-
-	@Override
-	public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
-		switch(actionId){
-		case EditorInfo.IME_ACTION_SEARCH:
-			Toast.makeText(B2_ClassifyActivity.this, "搜索", Toast.LENGTH_LONG).show();
-		}
-		return true;
 	}
 	
 }
