@@ -290,17 +290,28 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 16查询商店收藏
+	 * 收藏列表（产品）
 	 * 
 	 * @param res
-	 * @param page
-	 * @param per_page
+	 * @param key
 	 */
-	public static void getFavoriteStore(AsyncHttpResponseHandler res,
-			String page, String per_page) {
-		String url = base_url + "getFavoriteStore&page=" + page + "&per_page="
-				+ per_page;
-		client.get(url, res);
+	public static void getFavoriteProduct(AsyncHttpResponseHandler res,String key) {
+		String url = base_url + "index.php?act=member_favorites&op=favorites_list";
+		RequestParams requestParams = new RequestParams();
+		requestParams.put("key",key);
+		client.post(url, res);
+	}
+	/**
+	 * 收藏列表（店铺）
+	 * 
+	 * @param res
+	 * @param key
+	 */
+	public static void getFavoriteStore(AsyncHttpResponseHandler res,String key) {
+		String url = base_url + "index.php?act=member_favorites_store&op=favorites_list";
+		RequestParams requestParams = new RequestParams();
+		requestParams.put("key",key);
+		client.post(url, res);
 	}
 
 	/**
@@ -545,17 +556,18 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 29查询订单列表
+	 * 订单列表
 	 * 
 	 * @param res
 	 * @param order_state
-	 *            订单状态：0(已取消)10(默认):未付款;20:已付款;30:已发货;40:已收货;
+	 *            订单状态（待付款:10,待发货:20,待收货:30,已收货:40）
 	 */
-	public static void getOrderList(AsyncHttpResponseHandler res,
-			String order_state) {
-		String url = base_url + "getOrderList&order_state=" + order_state;
-		client.get(url, res);
-
+	public static void getOrderList(AsyncHttpResponseHandler res,String key,int order_state) {
+		String url = base_url + "index.php?act=member_order&op=order_list";
+		RequestParams params = new RequestParams();
+		params.put("key", key);
+		params.put("order_state", order_state);
+		client.post(url, params, res);
 	}
 
 	/**
@@ -805,9 +817,10 @@ public class HttpUtils {
 		String url = base_url + "index.php?act=member_predeposit&op=recharge_add";
 		RequestParams requestParams = new RequestParams();
 		requestParams.put("key", key);
+		requestParams.put("channel", channel );
 		requestParams.put("pdr_amount", pdr_amount);
-		requestParams.put("channel ", channel );
-		client.post(url, res);
+		client.post(url, requestParams, res);
+		
 	}
 	/**
 	 * 45 积分订单确认收货

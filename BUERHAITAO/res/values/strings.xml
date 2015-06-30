@@ -127,7 +127,7 @@
 <string name="productInfo">兑换商品信息 </string>
 <string name="comment">备注留言: </string>
 <string name="comment_hint">选填，可以写下你对兑换商品的需要</string>
-<!-- 首页 -->
+<!--首页-->
     
 
 <!-- 分类 -->
@@ -150,6 +150,9 @@
 <string name="mypurse">我的钱包</string>
 <string name="chargenow">立即充值</string>
 <string name="pleaseinputnumber">请输入充值金额</string>
+<!--我的收藏 -->
+<string name="edit">编辑</string>
+<string name="product">产品</string>
 
 <!-- 微社区 -->
  <string name="action_settings">Settings</string>

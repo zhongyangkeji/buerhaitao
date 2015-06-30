@@ -122,14 +122,14 @@
         <!-- 首页分类 -->
         <activity android:name="com.ZYKJ.buerhaitao.UI.B2_ClassifyActivity">
         </activity>
-        <activity android:name="B5_12_1_Certification"></activity>
-        <activity android:name="B5_11_2_ExchangeRecord"></activity>
-        <activity android:name="B5_3_MyShaiDanQuan"></activity>
-        <activity android:name="PhotoActivity"></activity>
+        <activity android:name=".UI.B5_12_1_Certification"></activity>
+        <activity android:name=".UI.B5_11_2_ExchangeRecord"></activity>
+        <activity android:name=".UI.B5_3_MyShaiDanQuan"></activity>
+        <activity android:name=".UI.PhotoActivity"></activity>
         <activity android:name="com.ZYKJ.buerhaitao.utils.BitmapCache"></activity>
         <activity android:name="com.ZYKJ.buerhaitao.utils.ImageGridActivity"></activity>
-        <activity android:name="PublishedActivity"></activity>
-        <activity android:name="TestPicActivity"></activity>
+        <activity android:name=".UI.PublishedActivity"></activity>
+        <activity android:name=".UI.TestPicActivity"></activity>
        <!-- 微社区 -->
        <activity
             android:name="com.umeng.community.example.MainActivity_we"
@@ -292,7 +292,7 @@
             android:name="UMENG_MESSAGE_SECRET"
             android:value="a102852523d3070310d74f676d128a3c" >
         </meta-data> -->
-        <activity android:name="B5_13_MyPurse"></activity>
+        <activity android:name=".UI.B5_13_MyPurse"></activity>
         
 <!-- Ping++ SDK 注册 -->
 <activity
@@ -309,7 +309,9 @@
     android:name="com.alipay.sdk.app.H5PayActivity"
     android:configChanges="orientation|keyboardHidden|navigation"
     android:exported="false"
-    android:screenOrientation="behind" />        
+    android:screenOrientation="behind" />
+<activity android:name=".UI.B5_10_MyCollection"></activity>
+<activity android:name=".UI.B5_5_OrderStatus"></activity>        
     </application>
 
 </manifest>

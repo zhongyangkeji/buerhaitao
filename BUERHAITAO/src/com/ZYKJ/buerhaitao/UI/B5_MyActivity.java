@@ -59,9 +59,14 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 	public String pl_desc;//积分来源
 	public String pl_addtime;//日期
 	
-    private static final int PAIZHAO = 4;
-    private static final int XIANGCE = 5;
-    private static final int CAIJIAN = 6;
+    private static final int PAIZHAO = 14;
+    private static final int XIANGCE = 15;
+    private static final int CAIJIAN = 16;
+    
+    private static final int DAIFUKUAN = 10;
+    private static final int DAIFAHUO = 20;
+    private static final int DAISHOUHUO = 30;
+    private static final int YISHOUHUO = 40;
 	/**
 	 * 上传头像的字段
 	 */
@@ -84,7 +89,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 			String headImgString=getSharedPreferenceValue("headImg_filename");
 //			if (headImgString!=null) //如果登陆过，显示之前本地的头像
 //			{
-////				File f = new File(headImgString); 
+////			File f = new File(headImgString); 
 //			    Bitmap bitmap_head=BitmapFactory.decodeFile(headImgString);
 //			    img_head.setImageBitmap(bitmap_head);
 //			    
@@ -251,16 +256,30 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 				RequestDailog.showDialog(this, "正在签到，请稍后");
 				HttpUtils.chackIn(res_chackin, getSharedPreferenceValue("key"));
 				break;
-			case R.id.ll_NoPay:
+			case R.id.ll_NoPay://待付款
+				Intent intent_daifukuan=new Intent();
+				intent_daifukuan.setClass(this, B5_5_OrderStatus.class);
+				intent_daifukuan.putExtra("STATUS", DAIFUKUAN);
+				startActivity(intent_daifukuan);
+				break;
+			case R.id.ll_notransport://待发货
+				Intent intent_daifahuo=new Intent();
+				intent_daifahuo.setClass(this, B5_5_OrderStatus.class);
+				intent_daifahuo.putExtra("STATUS", DAIFAHUO);
+				startActivity(intent_daifahuo);
+				break;
+			case R.id.ll_noget://待收货
+				Intent intent_daishouhuo=new Intent();
+				intent_daishouhuo.setClass(this, B5_5_OrderStatus.class);
+				intent_daishouhuo.putExtra("STATUS", DAISHOUHUO);
+				startActivity(intent_daishouhuo);
 				
 				break;
-			case R.id.ll_notransport:
-				
-				break;
-			case R.id.ll_noget:
-				
-				break;
-			case R.id.ll_haveget:
+			case R.id.ll_haveget://已收货
+				Intent intent_yishouhuo=new Intent();
+				intent_yishouhuo.setClass(this, B5_5_OrderStatus.class);
+				intent_yishouhuo.putExtra("STATUS", YISHOUHUO);
+				startActivity(intent_yishouhuo);
 				
 				break;
 			case R.id.ll_my_points://积分
@@ -278,7 +297,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 				intent_my_address_page.setClass(this, B5_9_MyAddressManagement.class);
 				startActivity(intent_my_address_page);
 				break;
-			case R.id.my_store_page:
+			case R.id.my_store_page://我的收藏
+				Intent intent_my_store_page=new Intent();
+				intent_my_store_page.setClass(this, B5_10_MyCollection.class);
+				startActivity(intent_my_store_page);
 				
 				break;
 			case R.id.my_points_page://积分商城
