@@ -127,14 +127,14 @@
 <string name="productInfo">兑换商品信息 </string>
 <string name="comment">备注留言: </string>
 <string name="comment_hint">选填，可以写下你对兑换商品的需要</string>
-<!-- 首页 -->
+<!--首页-->
     
 
 <!-- 分类 -->
 <string name="classify">分类</string>
 <string name="classify_address">临沂 </string>
 <string name="classify_baby">宝贝</string>
-<string name="classify_search">请输入搜索信息</string>
+<string name="classify_search">搜索附近商品、商铺</string>
 <string name="classify_search_product">搜索宝贝的名称</string>
 <string name="classify_ladys">女士服装</string>
 <string name="product_tab1">默认</string>
@@ -150,9 +150,11 @@
 <string name="mypurse">我的钱包</string>
 <string name="chargenow">立即充值</string>
 <string name="pleaseinputnumber">请输入充值金额</string>
+<!--我的收藏 -->
+<string name="edit">编辑</string>
+<string name="product">产品</string>
 
 <!-- 微社区 -->
- <string name="action_settings">Settings</string>
     <string name="feed_detail">feed详情页面</string>
     <string name="msg">进入友盟社区</string>
     <string name="user_info">用户信息页面</string>

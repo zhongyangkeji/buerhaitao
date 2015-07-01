@@ -80,7 +80,7 @@ public class IndexAdapter extends BaseAdapter implements OnItemClickListener {
 		Goods goods = m_list_goods.get(position);
 
 		ImageLoader.getInstance().displayImage(
-				HttpAction.SERVER_IP + goods.getGoodsimg(), holder.icon,
+				HttpAction.SERVER_IP + goods.getGoods_image_url(), holder.icon,
 				m_options);
 		// // 重新设置商品的显示
 		// int temp_width = holder.icon.getDrawable().getIntrinsicWidth();
@@ -96,11 +96,11 @@ public class IndexAdapter extends BaseAdapter implements OnItemClickListener {
 		// goods_layout.height = (int) (((float) Tools.dp2px(context, 100) /
 		// temp_width) * temp_height);
 
-		holder.title.setText(goods.getGoodsname());
+		holder.title.setText(goods.getGoods_name());
 		// holder.price.setText("￥ "+goods.getPrice());
-		holder.shop_name.setText(goods.getShop().getNick());
-		holder.shop_phone.setText("电话:" + goods.getShop().getMobile());
-		holder.shop_address.setText("地址:" + goods.getShop().getAddress());
+//		holder.shop_name.setText(goods.getShop().getNick());
+//		holder.shop_phone.setText("电话:" + goods.getShop().getMobile());
+//		holder.shop_address.setText("地址:" + goods.getShop().getAddress());
 
 		return convertView;
 	}

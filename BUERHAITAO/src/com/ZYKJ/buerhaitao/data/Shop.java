@@ -1,273 +1,63 @@
 package com.ZYKJ.buerhaitao.data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Shop implements Serializable {
-
-	private String tbid;
-
-	private String shopName;
-
-	private Long typeid;
-
-	private String address;
-
-	private String phone;
-
-	private String mobile;
-
-	private Long lat;
-
-	private Long lon;
-
-	private String imei;
-
-	private String username;
-
-	private String pwd;
-
-	private String fTime;
-
-	private String lTime;
-
-	private String parentid;
-
-	private Byte recommend;
-
-	private String versionname;
-
-	private Byte isdistribution;
-
-	private String nick;
-
-	private String createtime;
-
-	private String shopImg;
-
-	private String sex;
-
-	private String ldpi;
-
-	private String mdpi;
-
-	private List<Shop> children = new ArrayList<Shop>();
-
-	public String getTbid() {
-		return tbid;
+	/**
+	 * 商铺
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private String store_id;// 店铺id
+	private String store_name;// 店铺名称
+	private String sc_name;// 分类名
+	private String area_info;// 区域信息
+	private String store_address;// 地址
+	private String store_avatar;// 店铺头像
+	private String juli;// 距离
+	
+	public String getStore_id() {
+		return store_id;
 	}
-
-	public Shop setTbid(String tbid) {
-		this.tbid = tbid;
-		return this;
+	public void setStore_id(String store_id) {
+		this.store_id = store_id;
 	}
-
-	public String getShopName() {
-		return shopName;
+	public String getStore_name() {
+		return store_name;
 	}
-
-	public Shop setShopName(String shopName) {
-		this.shopName = shopName;
-		return this;
+	public void setStore_name(String store_name) {
+		this.store_name = store_name;
 	}
-
-	public Long getTypeid() {
-		return typeid;
+	public String getSc_name() {
+		return sc_name;
 	}
-
-	public Shop setTypeid(Long typeid) {
-		this.typeid = typeid;
-		return this;
+	public void setSc_name(String sc_name) {
+		this.sc_name = sc_name;
 	}
-
-	public String getAddress() {
-		return address;
+	public String getArea_info() {
+		return area_info;
 	}
-
-	public Shop setAddress(String address) {
-		this.address = address;
-		return this;
+	public void setArea_info(String area_info) {
+		this.area_info = area_info;
 	}
-
-	public String getPhone() {
-		return phone;
+	public String getStore_address() {
+		return store_address;
 	}
-
-	public Shop setPhone(String phone) {
-		this.phone = phone;
-		return this;
+	public void setStore_address(String store_address) {
+		this.store_address = store_address;
 	}
-
-	public String getMobile() {
-		return mobile;
+	public String getStore_avatar() {
+		return store_avatar;
 	}
-
-	public Shop setMobile(String mobile) {
-		this.mobile = mobile;
-		return this;
+	public void setStore_avatar(String store_avatar) {
+		this.store_avatar = store_avatar;
 	}
-
-	public Long getLat() {
-		return lat;
+	public String getJuli() {
+		return juli;
 	}
-
-	public Shop setLat(Long lat) {
-		this.lat = lat;
-		return this;
+	public void setJuli(String juli) {
+		this.juli = juli;
 	}
-
-	public Long getLon() {
-		return lon;
-	}
-
-	public Shop setLon(Long lon) {
-		this.lon = lon;
-		return this;
-	}
-
-	public String getImei() {
-		return imei;
-	}
-
-	public Shop setImei(String imei) {
-		this.imei = imei;
-		return this;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public Shop setUsername(String username) {
-		this.username = username;
-		return this;
-	}
-
-	public String getPwd() {
-		return pwd;
-	}
-
-	public Shop setPwd(String pwd) {
-		this.pwd = pwd;
-		return this;
-	}
-
-	public String getfTime() {
-		return fTime;
-	}
-
-	public Shop setfTime(String fTime) {
-		this.fTime = fTime;
-		return this;
-	}
-
-	public String getlTime() {
-		return lTime;
-	}
-
-	public Shop setlTime(String lTime) {
-		this.lTime = lTime;
-		return this;
-	}
-
-	public String getParentid() {
-		return parentid;
-	}
-
-	public Shop setParentid(String parentid) {
-		this.parentid = parentid;
-		return this;
-	}
-
-	public Byte getRecommend() {
-		return recommend;
-	}
-
-	public Shop setRecommend(Byte recommend) {
-		this.recommend = recommend;
-		return this;
-	}
-
-	public String getVersionname() {
-		return versionname;
-
-	}
-
-	public Shop setVersionname(String versionname) {
-		this.versionname = versionname;
-		return this;
-	}
-
-	public Byte getIsdistribution() {
-		return isdistribution;
-	}
-
-	public Shop setIsdistribution(Byte isdistribution) {
-		this.isdistribution = isdistribution;
-		return this;
-	}
-
-	public String getNick() {
-		return nick;
-	}
-
-	public Shop setNick(String nick) {
-		this.nick = nick;
-		return this;
-	}
-
-	public String getCreatetime() {
-		return createtime;
-	}
-
-	public Shop setCreatetime(String createtime) {
-		this.createtime = createtime;
-		return this;
-	}
-
-	public String getShopImg() {
-		return shopImg;
-	}
-
-	public Shop setShopImg(String shopImg) {
-		this.shopImg = shopImg;
-		return this;
-	}
-
-	public String getSex() {
-		return sex;
-	}
-
-	public Shop setSex(String sex) {
-		this.sex = sex;
-		return this;
-	}
-
-	public String getLdpi() {
-		return ldpi;
-	}
-
-	public Shop setLdpi(String ldpi) {
-		this.ldpi = ldpi;
-		return this;
-	}
-
-	public String getMdpi() {
-		return mdpi;
-	}
-
-	public Shop setMdpi(String mdpi) {
-		this.mdpi = mdpi;
-		return this;
-	}
-
-	public List<Shop> getChildren() {
-		return children;
-	}
-
-	public void setChildren(List<Shop> children) {
-		this.children = children;
-	}
-
+	
+	
 }
