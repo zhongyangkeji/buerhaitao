@@ -1043,7 +1043,7 @@ public class HttpUtils {
 		client.post(url, params,res);
 	}
 	/**
-	 *  tiant 
+	 *  天天特价
 	 * @param curpage 当前页码
 	 * @param city_id 城市id
 	 * @param lng 经度
@@ -1053,6 +1053,16 @@ public class HttpUtils {
 		String url = base_url + "index.php?act=goods&op=day_special"+"&curpage="+curpage+"&city_id="+city_id+"&lng="+lng+"&lat="+lat;
 		client.get(url, res);
 		
+	}
+	
+	/**
+	 *  店铺详情
+	 * @param store_id 店铺ID
+	 * @param key 登录令牌（可选），登陆后提交令牌返回是否已经收藏该店铺
+	 */
+	public static void getStoreInfo(AsyncHttpResponseHandler res,String store_id,String key) {
+		String url = base_url + "index.php?act=store&op=store_info"+"&store_id="+store_id+"&key="+key;
+		client.get(url, res);
 	}
 	
 }

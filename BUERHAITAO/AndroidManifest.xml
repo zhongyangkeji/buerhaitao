@@ -122,6 +122,12 @@
         <!-- 首页分类 -->
         <activity android:name="com.ZYKJ.buerhaitao.UI.B2_ClassifyActivity">
         </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.BX_DianPuXiangQingActivity">
+            
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.Sp_GoodsInfoActivity">
+            
+        </activity>
         <activity android:name="B5_12_1_Certification"></activity>
         <activity android:name="B5_11_2_ExchangeRecord"></activity>
         <activity android:name="B5_3_MyShaiDanQuan"></activity>
