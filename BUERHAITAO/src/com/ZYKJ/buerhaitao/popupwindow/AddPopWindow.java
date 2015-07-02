@@ -55,8 +55,10 @@ public class AddPopWindow extends PopupWindow {
  
 			@Override
 			public void onClick(View arg0) {
-				a4_sousuobbdp.setText("宝贝");
-				B1_a4_SearchActivity.CHANNEL = 0;
+				if(B1_a4_SearchActivity.CHANNEL != 0){
+					B1_a4_SearchActivity.CHANNEL = 0;
+					a4_sousuobbdp.setText("宝贝");
+				};
 				AddPopWindow.this.dismiss();
 			}
 		});
@@ -65,8 +67,10 @@ public class AddPopWindow extends PopupWindow {
 
 			@Override
 			public void onClick(View v) {
-				a4_sousuobbdp.setText("店铺");
-				B1_a4_SearchActivity.CHANNEL = 1;
+				if(B1_a4_SearchActivity.CHANNEL != 1){
+					B1_a4_SearchActivity.CHANNEL = 1;
+					a4_sousuobbdp.setText("店铺");
+				};
 				AddPopWindow.this.dismiss();
 			}
 		});

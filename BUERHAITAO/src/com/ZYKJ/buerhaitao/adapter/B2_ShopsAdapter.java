@@ -8,17 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.data.Shop;
-import com.ZYKJ.buerhaitao.utils.ImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class B2_ShopsAdapter extends BaseAdapter {
 
 	private List<Shop> list;
     private LayoutInflater inflater;
-	
 	
 	public B2_ShopsAdapter(Context context, List<Shop> list) {
         inflater = LayoutInflater.from(context);
@@ -41,35 +41,41 @@ public class B2_ShopsAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup arg2) {
-		ViewHolder holder;
-        if(convertView == null){
-            convertView=inflater.inflate(R.layout.ui_b2_item_goods,null);
-            holder=new ViewHolder();
-            holder.good_image= (ImageView) convertView.findViewById(R.id.good_image);//图片
-            holder.good_name= (TextView) convertView.findViewById(R.id.good_name);//名称
-            holder.good_juli= (TextView) convertView.findViewById(R.id.good_juli);//距离
-            holder.good_jingle= (TextView) convertView.findViewById(R.id.good_jingle);//简介
-            holder.goods_price= (TextView) convertView.findViewById(R.id.goods_price);//价格
-            convertView.setTag(holder);
-        }else{
-            holder= (ViewHolder) convertView.getTag();
-        }
+		ViewHolder ViewHolder=null;
+		if(convertView==null){
+			convertView=inflater.inflate(R.layout.b1_a3_item, null);
+			ViewHolder=new ViewHolder();
+			ViewHolder.im_a3_pic=(ImageView) convertView.findViewById(R.id.im_a3_pic);
+			ViewHolder.tv_a3_storename=(TextView) convertView.findViewById(R.id.tv_a3_storename);
+			ViewHolder.tv_a3_juli=(TextView) convertView.findViewById(R.id.tv_a3_juli);
+			ViewHolder.comment_rating_bar=(RatingBar) convertView.findViewById(R.id.comment_rating_bar);
+			ViewHolder.tv_a3_pinglunsum=(TextView) convertView.findViewById(R.id.tv_a3_pinglunsum);
+			ViewHolder.tv_a3_dpfl=(TextView) convertView.findViewById(R.id.tv_a3_dpfl);
+			ViewHolder.tv_a3_address=(TextView) convertView.findViewById(R.id.tv_a3_address);
+			convertView.setTag(ViewHolder);
+		}else{
+			ViewHolder=(ViewHolder) convertView.getTag();
+		}
         Shop shop = list.get(position);
         
-        ImageOptions.displayImage2Circle(holder.good_image, shop.getStore_address(), 10f);
-        holder.good_name.setText(shop.getSc_name()+"");
-        holder.good_juli.setText(shop.getJuli()+"");
-        holder.good_jingle.setText(shop.getArea_info()+"");
-        holder.goods_price.setText(shop.getStore_avatar()+"");
+		ImageLoader.getInstance().displayImage(shop.getStore_avatar(), ViewHolder.im_a3_pic);
+		ViewHolder.tv_a3_storename.setText(shop.getStore_name());
+		ViewHolder.tv_a3_juli.setText(shop.getJuli());
+		ViewHolder.comment_rating_bar.setRating(Float.parseFloat(shop.getStore_desccredit()));
+		ViewHolder.tv_a3_pinglunsum.setText(shop.getStore_evaluate_count());
+		ViewHolder.tv_a3_dpfl.setText(shop.getSc_name());
+		ViewHolder.tv_a3_address.setText(shop.getStore_address());
 		return convertView;
 	}
 	
 	class ViewHolder{
-        ImageView good_image;//图片
-        TextView good_name;//名称
-        TextView good_juli;//距离
-        TextView good_jingle;//简介
-        TextView goods_price;//价格
+        ImageView im_a3_pic;//图片
+        TextView tv_a3_storename;//名称
+        TextView tv_a3_juli;//距离
+        RatingBar comment_rating_bar;//评价
+        TextView tv_a3_pinglunsum;//评论数
+        TextView tv_a3_dpfl;//分类
+        TextView tv_a3_address;//地址
     }
 }
 

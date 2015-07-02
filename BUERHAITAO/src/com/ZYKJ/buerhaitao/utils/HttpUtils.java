@@ -150,10 +150,8 @@ public class HttpUtils {
 	 * 
 	 * @param gc_id
 	 *            类别排序
-	 * @param store_id
+	 * @param gc_id
 	 *            店铺
-	 * @param search_text
-	 *            搜索关键字
 	 */
 	public static void getGoodsList(AsyncHttpResponseHandler res_getGoodsList, String params) {
 		String url = base_url + "index.php?act=goods&op=goods_list"+params;
@@ -214,11 +212,9 @@ public class HttpUtils {
 	 * @param res
 	 * @param store_id
 	 */
-	public static void getStoreGoodsClass(AsyncHttpResponseHandler res,
-			String store_id) {
-		String url = base_url + "getStoreGoodsClass&store_id=" + store_id;
+	public static void getStoreClass(AsyncHttpResponseHandler res) {
+		String url = base_url + "index.php?act=store&op=store_class";
 		client.get(url, res);
-
 	}
 
 	/**
