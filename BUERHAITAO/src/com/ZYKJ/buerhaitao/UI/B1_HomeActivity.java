@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,6 +36,7 @@ import com.ZYKJ.buerhaitao.adapter.B1_a3_MeiRiHaoDianAdapter;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
 import com.ZYKJ.buerhaitao.utils.Tools;
+import com.ZYKJ.buerhaitao.view.MyListView;
 import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.ZYKJ.buerhaitao.view.ToastView;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -48,12 +50,13 @@ public class B1_HomeActivity extends BaseActivity {
 	//搜索选择
 	RelativeLayout rl_sousuokuang;
 	//每日好店
-	ListView list_meirihaodian,list_cainilike;
+	MyListView list_meirihaodian,list_cainilike;
 	List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 	List<Map<String, String>> data1 = new ArrayList<Map<String, String>>();
 	//天天特价
 	ImageView im_b1_a1_pic;
 	TextView tv_b1_a1_chanpinname,tv_b1_a1_chanpinjianjie,tv_b1_a1_zhehoujia,tv_b1_a1_yuanjia;
+	LinearLayout ll_dayspecial;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -84,17 +87,20 @@ public class B1_HomeActivity extends BaseActivity {
 				try {
 					data.clear();
 					//每日好店
-					org.json.JSONArray array = datas.getJSONArray("good_store");
+					final org.json.JSONArray array = datas.getJSONArray("good_store");
 					for (int i = 0; i < array.length(); i++) {
-						JSONObject jsonItem = array.getJSONObject(i);
+						JSONObject jsonItem = array.getJSONObject(i); 
+						
 						Map<String, String> map = new HashMap<String, String>();
+						map.put("store_id ", jsonItem.getString("store_id"));
 						map.put("store_name", jsonItem.getString("store_name"));
 						map.put("sc_name", jsonItem.getString("sc_name"));
+						map.put("store_evaluate_count", jsonItem.getString("store_evaluate_count"));
 						map.put("area_info", jsonItem.getString("area_info"));
 						map.put("store_address", jsonItem.getString("store_address"));
 						map.put("store_label", jsonItem.getString("store_label"));
 						map.put("store_desccredit", jsonItem.getString("store_desccredit"));
-						map.put("juli", jsonItem.getString("juli"));						
+						map.put("juli", jsonItem.getString("juli"));
 						data.add(map);
 					}
 					B1_a3_MeiRiHaoDianAdapter goodadapter = new B1_a3_MeiRiHaoDianAdapter(B1_HomeActivity.this, data);
@@ -104,11 +110,19 @@ public class B1_HomeActivity extends BaseActivity {
 						@Override
 						public void onItemClick(AdapterView<?> arg0, View view, int i,
 								long arg3) {
-							Intent itmrhd = new Intent();
-							itmrhd.setClass(B1_HomeActivity.this, B1_a3_MeiRiHaoDian.class);
-							startActivity(itmrhd);							
+							Intent intent = new Intent();
+							try {
+								String storeid = array.getJSONObject(i).getString("store_id");
+								intent.putExtra("store_id",storeid);
+								intent.setClass(B1_HomeActivity.this, BX_DianPuXiangQingActivity.class);
+								startActivity(intent);
+							} catch (JSONException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						}
 					});
+					
 					//猜你喜欢
 					data1.clear();
 					org.json.JSONArray array1 = datas.getJSONArray("goods_like");
@@ -168,14 +182,15 @@ public class B1_HomeActivity extends BaseActivity {
 		rl_b1_a2_cnxh = (RelativeLayout)findViewById(R.id.rl_b1_a2_cnxh);
 		rl_b1_a3_mrhd = (RelativeLayout)findViewById(R.id.rl_b1_a3_mrhd);
 		rl_sousuokuang = (RelativeLayout)findViewById(R.id.rl_sousuokuang);
-		list_meirihaodian = (ListView)findViewById(R.id.list_meirihaodian);
-		list_cainilike = (ListView)findViewById(R.id.list_cainilike);
+		list_meirihaodian = (MyListView)findViewById(R.id.list_meirihaodian);
+		list_cainilike = (MyListView)findViewById(R.id.list_cainilike);
 		im_b1_a1_pic = (ImageView)findViewById(R.id.im_b1_a1_pic);
 		tv_b1_a1_chanpinname = (TextView)findViewById(R.id.tv_b1_a1_chanpinname);
 		tv_b1_a1_chanpinjianjie = (TextView)findViewById(R.id.tv_b1_a1_chanpinjianjie);
 		tv_b1_a1_zhehoujia = (TextView)findViewById(R.id.tv_b1_a1_zhehoujia);
 		tv_b1_a1_yuanjia = (TextView)findViewById(R.id.tv_b1_a1_yuanjia);
-		setListener(im_b1nvshi,im_b1nanshi,im_b1muying,im_b1huazhuang,im_b1shouji,im_b1bangong,im_b1shenghuo,im_b1techan,rl_b1_a1tttj,b5_3_shaidanquan,rl_b1_a2_cnxh,rl_b1_a3_mrhd,rl_sousuokuang);
+		ll_dayspecial = (LinearLayout)findViewById(R.id.ll_dayspecial);
+		setListener(im_b1nvshi,im_b1nanshi,im_b1muying,im_b1huazhuang,im_b1shouji,im_b1bangong,im_b1shenghuo,im_b1techan,rl_b1_a1tttj,b5_3_shaidanquan,rl_b1_a2_cnxh,rl_b1_a3_mrhd,rl_sousuokuang,ll_dayspecial);
 	}
 
 	@Override
@@ -265,6 +280,12 @@ public class B1_HomeActivity extends BaseActivity {
 			Intent itsydps = new Intent();
 			itsydps.setClass(B1_HomeActivity.this, B1_a4_SearchActivity.class);
 			startActivity(itsydps);
+			break;
+		//首页天天特价
+		case R.id.ll_dayspecial:
+			Intent itdayspec = new Intent();
+			itdayspec.setClass(B1_HomeActivity.this, Sp_GoodsInfoActivity.class);
+			startActivity(itdayspec);
 			break;
 		
 		case R.id.error_layout:// 错误页面的点击

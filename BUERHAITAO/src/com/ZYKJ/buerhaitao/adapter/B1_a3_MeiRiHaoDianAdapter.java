@@ -5,15 +5,20 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
+import com.ZYKJ.buerhaitao.UI.B1_HomeActivity;
+import com.ZYKJ.buerhaitao.UI.B1_a3_MeiRiHaoDian;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
@@ -59,7 +64,7 @@ public class B1_a3_MeiRiHaoDianAdapter  extends BaseAdapter {
 			ViewHolder.tv_a3_juli=(TextView) convertView.findViewById(R.id.tv_a3_juli);
 			ViewHolder.comment_rating_bar=(RatingBar) convertView.findViewById(R.id.comment_rating_bar);
 			ViewHolder.tv_a3_pinglunsum=(TextView) convertView.findViewById(R.id.tv_a3_pinglunsum);
-			ViewHolder.tv_a3_dpfl=(TextView) convertView.findViewById(R.id.tv_a3_dpfl	);
+			ViewHolder.tv_a3_dpfl=(TextView) convertView.findViewById(R.id.tv_a3_dpfl);
 			ViewHolder.tv_a3_address=(TextView) convertView.findViewById(R.id.tv_a3_address);
 			convertView.setTag(ViewHolder);
 		}else{
@@ -74,6 +79,7 @@ public class B1_a3_MeiRiHaoDianAdapter  extends BaseAdapter {
 		ViewHolder.tv_a3_address.setText(data.get(position).get("store_address"));
 		return convertView;
 	}
+	
 	public final class ViewHolder {  
         public ImageView im_a3_pic;
         public TextView tv_a3_storename;

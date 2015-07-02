@@ -345,6 +345,7 @@
                     android:background="#d6d6d6" />
 
                 <LinearLayout
+                    android:id="@+id/ll_dayspecial"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent">
 
@@ -523,17 +524,17 @@
                         android:textColor="#707070" />
                 </RelativeLayout>
 
-                <com.ZYKJ.buerhaitao.view.MyListView
-                    android:id="@+id/list_cainilike"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
-                </com.ZYKJ.buerhaitao.view.MyListView>
-
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="15dp"
                     android:background="#d6d6d6" />
+
+                <com.ZYKJ.buerhaitao.view.MyListView
+                    android:id="@+id/list_cainilike"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+                </com.ZYKJ.buerhaitao.view.MyListView>
             </LinearLayout>
 
             <!-- 每日好店 -->
@@ -579,17 +580,17 @@
                         android:textColor="#707070" />
                 </RelativeLayout>
 
-                <com.ZYKJ.buerhaitao.view.MyListView
-                    android:id="@+id/list_meirihaodian"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
-                </com.ZYKJ.buerhaitao.view.MyListView>
-
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="15dp"
                     android:background="#d6d6d6" />
+
+                <com.ZYKJ.buerhaitao.view.MyListView
+                    android:id="@+id/list_meirihaodian"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+                </com.ZYKJ.buerhaitao.view.MyListView>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

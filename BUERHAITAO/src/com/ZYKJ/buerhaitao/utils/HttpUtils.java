@@ -280,17 +280,28 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 16查询商店收藏
+	 * 收藏列表（产品）
 	 * 
 	 * @param res
-	 * @param page
-	 * @param per_page
+	 * @param key
 	 */
-	public static void getFavoriteStore(AsyncHttpResponseHandler res,
-			String page, String per_page) {
-		String url = base_url + "getFavoriteStore&page=" + page + "&per_page="
-				+ per_page;
-		client.get(url, res);
+	public static void getFavoriteProduct(AsyncHttpResponseHandler res,String key) {
+		String url = base_url + "index.php?act=member_favorites&op=favorites_list";
+		RequestParams requestParams = new RequestParams();
+		requestParams.put("key",key);
+		client.post(url, res);
+	}
+	/**
+	 * 收藏列表（店铺）
+	 * 
+	 * @param res
+	 * @param key
+	 */
+	public static void getFavoriteStore(AsyncHttpResponseHandler res,String key) {
+		String url = base_url + "index.php?act=member_favorites_store&op=favorites_list";
+		RequestParams requestParams = new RequestParams();
+		requestParams.put("key",key);
+		client.post(url, res);
 	}
 
 	/**
@@ -535,17 +546,18 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 29查询订单列表
+	 * 订单列表
 	 * 
 	 * @param res
 	 * @param order_state
-	 *            订单状态：0(已取消)10(默认):未付款;20:已付款;30:已发货;40:已收货;
+	 *            订单状态（待付款:10,待发货:20,待收货:30,已收货:40）
 	 */
-	public static void getOrderList(AsyncHttpResponseHandler res,
-			String order_state) {
-		String url = base_url + "getOrderList&order_state=" + order_state;
-		client.get(url, res);
-
+	public static void getOrderList(AsyncHttpResponseHandler res,String key,int order_state) {
+		String url = base_url + "index.php?act=member_order&op=order_list";
+		RequestParams params = new RequestParams();
+		params.put("key", key);
+		params.put("order_state", order_state);
+		client.post(url, params, res);
 	}
 
 	/**
@@ -795,9 +807,10 @@ public class HttpUtils {
 		String url = base_url + "index.php?act=member_predeposit&op=recharge_add";
 		RequestParams requestParams = new RequestParams();
 		requestParams.put("key", key);
+		requestParams.put("channel", channel );
 		requestParams.put("pdr_amount", pdr_amount);
-		requestParams.put("channel ", channel );
-		client.post(url, res);
+		client.post(url, requestParams, res);
+		
 	}
 	/**
 	 * 45 积分订单确认收货
@@ -1033,7 +1046,7 @@ public class HttpUtils {
 		client.post(url, params,res);
 	}
 	/**
-	 *  tiant 
+	 *  天天特价
 	 * @param curpage 当前页码
 	 * @param city_id 城市id
 	 * @param lng 经度
@@ -1043,6 +1056,16 @@ public class HttpUtils {
 		String url = base_url + "index.php?act=goods&op=day_special"+"&curpage="+curpage+"&city_id="+city_id+"&lng="+lng+"&lat="+lat;
 		client.get(url, res);
 		
+	}
+	
+	/**
+	 *  店铺详情
+	 * @param store_id 店铺ID
+	 * @param key 登录令牌（可选），登陆后提交令牌返回是否已经收藏该店铺
+	 */
+	public static void getStoreInfo(AsyncHttpResponseHandler res,String store_id,String key) {
+		String url = base_url + "index.php?act=store&op=store_info"+"&store_id="+store_id+"&key="+key;
+		client.get(url, res);
 	}
 	
 	public static String iterateParams(HashMap<String,String> params){

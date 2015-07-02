@@ -207,8 +207,9 @@
 	          android:textColor="@color/black" />
 	  </LinearLayout>
 
-	  <LinearLayout
-	      android:id="@+id/ll_haveget"
+	  
+      <LinearLayout
+	      android:id="@+id/ll_notransport"
 	      android:layout_width="wrap_content"
 	      android:layout_height="70dp"
 	      android:layout_weight="1"
@@ -220,16 +221,15 @@
 	          android:layout_gravity="center"
 	          android:layout_marginBottom="3dp"
 	          android:layout_marginTop="5dp"
-	          android:src="@drawable/haveget" />
+	          android:src="@drawable/notransport" />
 
 	      <TextView
 	          android:layout_width="wrap_content"
 	          android:layout_height="wrap_content"
 	          android:layout_gravity="center"
-	          android:text="@string/haveget"
+	          android:text="@string/notransport"
 	          android:textColor="@color/black" />
 	  </LinearLayout>
-
 	  <LinearLayout
 	      android:id="@+id/ll_noget"
 	      android:layout_width="wrap_content"
@@ -253,8 +253,10 @@
 	          android:textColor="@color/black" />
 	  </LinearLayout>
 
+	  
+	  
 	  <LinearLayout
-	      android:id="@+id/ll_notransport"
+	      android:id="@+id/ll_haveget"
 	      android:layout_width="wrap_content"
 	      android:layout_height="70dp"
 	      android:layout_weight="1"
@@ -266,13 +268,13 @@
 	          android:layout_gravity="center"
 	          android:layout_marginBottom="3dp"
 	          android:layout_marginTop="5dp"
-	          android:src="@drawable/notransport" />
+	          android:src="@drawable/haveget" />
 
 	      <TextView
 	          android:layout_width="wrap_content"
 	          android:layout_height="wrap_content"
 	          android:layout_gravity="center"
-	          android:text="@string/notransport"
+	          android:text="@string/haveget"
 	          android:textColor="@color/black" />
 	  </LinearLayout>
 	    
