@@ -83,7 +83,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 		// TODO Auto-generated method stub
 		super.onResume();
 		if (isLogin()) {
-			my_money.setText("￥"+getSharedPreferenceValue("predeposit"));
 			ISLOGIN=1;
 			HttpUtils.getPointsLog(res_Points, getSharedPreferenceValue("key"));
 			String headImgString=getSharedPreferenceValue("headImg_filename");
@@ -102,6 +101,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 			startActivity(intent_login1);
 			FirstLog=1;
 		}
+		
 	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -141,16 +141,19 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 		}else{
 			setListener(btn_login);
 		}
-		Tools.Log("key="+getSharedPreferenceValue("key"));
+//		Tools.Log("key="+getSharedPreferenceValue("key"));
+		HttpUtils.getMoney(res_getMoney, getSharedPreferenceValue("key"));
+		
 		//显示积分
-		if (getSharedPreferenceValue("pl_points")!=null) 
-		{
-			tv_my_points.setText(getSharedPreferenceValue("pl_points"));
-		}
-		else
-		{
+//		if (getSharedPreferenceValue("pl_points")!=null) 
+//		{
+//			tv_my_points.setText(getSharedPreferenceValue("pl_points"));
+//		}
+//		else
+//		{
 			HttpUtils.getPointsLog(res_Points, getSharedPreferenceValue("key"));
-		}
+//		}
+			
 	}
 	public void onClick(View v)
 	{
@@ -245,11 +248,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 			case R.id.btn_shaidanquan://晒单圈
 //				Toast.makeText(this, "晒单圈", Toast.LENGTH_LONG).show();
 				Intent intent_shaidanquan=new Intent();
-				
 				intent_shaidanquan.setClass(this, B5_3_MyShaiDanQuan.class);
-				
 //				intent_shaidanquan.setClass(this, MainActivity_we.class);
-				
 				startActivity(intent_shaidanquan);
 				break;
 			case R.id.btn_chackInShape://签到
@@ -366,6 +366,50 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 				tv_my_points.setText(getSharedPreferenceValue("pl_tatal_points"));
 				Tools.Log("res_Points_error="+error);
 //				Tools.Notic(B5_MyActivity.this, error+"", null);
+			}
+			
+		}
+	};
+	/**
+	 * 获取钱包余额
+	 */
+	JsonHttpResponseHandler res_getMoney = new JsonHttpResponseHandler()
+	{
+		
+		@Override
+		public void onSuccess(int statusCode, Header[] headers,
+				JSONObject response) {
+			// TODO Auto-generated method stub
+			super.onSuccess(statusCode, headers, response);
+			RequestDailog.closeDialog();
+			
+			Tools.Log("钱包="+response);
+			String error=null;
+			JSONObject datas=null;
+			try {
+				datas =response.getJSONObject("datas");
+				error = response.getString("error");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if (error==null)//成功
+			{
+				try {
+					String moneyString = datas.getString("predeposit");
+					my_money.setText("￥"+moneyString);
+					putSharedPreferenceValue("predeposit", moneyString);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else//失败 
+			{
+				my_money.setText("￥"+getSharedPreferenceValue("predeposit"));
+				
+//				Tools.Log("res_Points_error="+error);
 			}
 			
 		}

@@ -4,14 +4,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.ZYKJ.buerhaitao.R;
+import com.ZYKJ.buerhaitao.UI.PublishedActivity;
+import com.ZYKJ.buerhaitao.UI.PublishedActivity.PopupWindows;
+import com.ZYKJ.buerhaitao.utils.HttpUtils;
 import com.ZYKJ.buerhaitao.utils.Tools;
+import com.ZYKJ.buerhaitao.view.RequestDailog;
+import com.ZYKJ.buerhaitao.view.UIDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class GridViewAdatper_myshaidanquan extends BaseAdapter {
@@ -67,13 +74,33 @@ public class GridViewAdatper_myshaidanquan extends BaseAdapter {
 			pathString = obj.getString(position+"");
 			Tools.Log("pathString="+pathString);
 			ImageLoader.getInstance().displayImage(pathString, viewHolder.photo);
+			viewHolder.photo.setOnClickListener(new ShowPhoto(position,pathString));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		
 		return convertView;
+	}
+	/**
+	 * 点击缩略图之后，显示大图
+	 * @author zyk
+	 *
+	 */
+	class ShowPhoto implements View.OnClickListener {
+		int position;
+	    String pathString;
+		public ShowPhoto(int position,String pathString) {
+			this.position = position;
+			this.pathString = pathString;
+		}
+
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			UIDialog.ForShowPhoto(c,pathString);
+		}
+
 	}
 	private static class ViewHolder
     {

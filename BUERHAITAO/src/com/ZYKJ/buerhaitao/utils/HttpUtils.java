@@ -150,10 +150,8 @@ public class HttpUtils {
 	 * 
 	 * @param gc_id
 	 *            类别排序
-	 * @param store_id
+	 * @param gc_id
 	 *            店铺
-	 * @param search_text
-	 *            搜索关键字
 	 */
 	public static void getGoodsList(AsyncHttpResponseHandler res_getGoodsList, String params) {
 		String url = base_url + "index.php?act=goods&op=goods_list"+params;
@@ -214,11 +212,9 @@ public class HttpUtils {
 	 * @param res
 	 * @param store_id
 	 */
-	public static void getStoreGoodsClass(AsyncHttpResponseHandler res,
-			String store_id) {
-		String url = base_url + "getStoreGoodsClass&store_id=" + store_id;
+	public static void getStoreClass(AsyncHttpResponseHandler res) {
+		String url = base_url + "index.php?act=store&op=store_class";
 		client.get(url, res);
-
 	}
 
 	/**
@@ -581,18 +577,19 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 31取消订单
+	 * 取消订单
 	 * 
 	 * @param res
 	 * @param order_id
 	 * @param extend_msg
 	 */
 	public static void cancelOrder(AsyncHttpResponseHandler res,
-			String order_id, String extend_msg) {
-		String url = base_url + "cancelOrder&order_id=" + order_id
-				+ "&extend_msg=" + extend_msg;
-		client.get(url, res);
-		Log.i("landousurl", url);
+			String key, String order_id) {
+		String url = base_url + "index.php?act=member_order&op=order_cancel";
+		RequestParams params = new RequestParams();
+		params.put("key", key);
+		params.put("order_id", order_id);
+		client.post(url, params, res);
 	}
 
 	/**
@@ -742,7 +739,7 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 41 查询积分变更列表
+	 * 用户积分
 	 * @param res
 	 * @param page
 	 * @param per_page
@@ -750,6 +747,23 @@ public class HttpUtils {
 	public static void getPointsLog(AsyncHttpResponseHandler res,String key) {
 		String url = base_url + "index.php?act=member_points&op=points_log"+"&key="+key;
 		client.get(url, res);
+//		String url = base_url + "index.php?act=member_points&op=points_log";
+//		RequestParams requestParams =new RequestParams();
+//		requestParams.put("key", key);
+//		client.post(url, requestParams, res);
+		
+	}
+	/**
+	 * 用户钱包
+	 * @param res
+	 * @param page
+	 * @param per_page
+	 */
+	public static void getMoney(AsyncHttpResponseHandler res,String key) {
+		String url = base_url + "index.php?act=member_predeposit&op=view";
+		RequestParams params = new RequestParams();
+		params.put("key", key);
+		client.post(url, params, res);
 //		String url = base_url + "index.php?act=member_points&op=points_log";
 //		RequestParams requestParams =new RequestParams();
 //		requestParams.put("key", key);
@@ -1009,6 +1023,15 @@ public class HttpUtils {
 	 */
 	public static void shaidanquan_mypublish(AsyncHttpResponseHandler res, String key) {
 		String url = base_url + "index.php?act=member_circle&op=my_publish"+"&key="+key;
+		client.get(url, res);
+	}
+	/**
+	 * 晒单圈-我评论的
+	 * @param res
+	 * @param key
+	 */
+	public static void shaidanquan_myquote(AsyncHttpResponseHandler res, String key) {
+		String url = base_url + "index.php?act=member_circle&op=my_quote"+"&key="+key;
 		client.get(url, res);
 	}
 	/**

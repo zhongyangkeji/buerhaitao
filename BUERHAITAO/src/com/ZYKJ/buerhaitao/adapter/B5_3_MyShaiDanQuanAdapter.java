@@ -8,20 +8,32 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.view.animation.AnimationUtils;
+import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.ZYKJ.buerhaitao.R;
+import com.ZYKJ.buerhaitao.UI.PublishedActivity;
+import com.ZYKJ.buerhaitao.UI.TestPicActivity;
+import com.ZYKJ.buerhaitao.UI.PublishedActivity.PopupWindows;
 import com.ZYKJ.buerhaitao.utils.Tools;
 import com.ZYKJ.buerhaitao.view.NoScrollGridView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -96,7 +108,11 @@ public class B5_3_MyShaiDanQuanAdapter extends BaseAdapter {
 		}else {
 			Tools.Log("没有上传图片");
 		}
-    	
+         
+        
+        
+        
+        
 		String replys = data.get(position).get("replys").toString();//评论数
 		
 		viewHolder.tv_nickname.setText(data.get(position).get("member_name").toString());//昵称
@@ -183,5 +199,5 @@ public class B5_3_MyShaiDanQuanAdapter extends BaseAdapter {
 			
 			NoScrollGridView gridView;//显示上传图片
 	    }
-	
+	 
 }

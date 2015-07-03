@@ -10,6 +10,8 @@ public class Shop implements Serializable {
 	
 	private String store_id;// 店铺id
 	private String store_name;// 店铺名称
+	private String store_evaluate_count;
+	private String store_desccredit; 
 	private String sc_name;// 分类名
 	private String area_info;// 区域信息
 	private String store_address;// 地址
@@ -27,6 +29,18 @@ public class Shop implements Serializable {
 	}
 	public void setStore_name(String store_name) {
 		this.store_name = store_name;
+	}
+	public String getStore_evaluate_count() {
+		return store_evaluate_count;
+	}
+	public void setStore_evaluate_count(String store_evaluate_count) {
+		this.store_evaluate_count = store_evaluate_count;
+	}
+	public String getStore_desccredit() {
+		return store_desccredit;
+	}
+	public void setStore_desccredit(String store_desccredit) {
+		this.store_desccredit = store_desccredit;
 	}
 	public String getSc_name() {
 		return sc_name;

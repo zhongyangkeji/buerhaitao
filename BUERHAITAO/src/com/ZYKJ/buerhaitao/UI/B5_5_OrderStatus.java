@@ -7,12 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ZYKJ.buerhaitao.R;
@@ -24,7 +26,12 @@ import com.ZYKJ.buerhaitao.view.MyListView;
 import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.external.maxwin.view.XListView.IXListViewListener;
 import com.loopj.android.http.JsonHttpResponseHandler;
-
+/**
+ * 订单状态 页
+ * 订单状态（待付款:10,待发货:20,待收货:30,已收货:40）
+ * @author zyk
+ *
+ */
 public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener {
 	
 //  order_state 订单状态（待付款:10,待发货:20,待收货:30,已收货:40）
@@ -43,13 +50,17 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 	TextView tv_title;
 	View v101,v102,v103,v104;
 	
+	LinearLayout ll_daifukuan,ll_daifahuo,ll_daishouhuo,ll_yishouhuo;
+	
+	String key;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_b5_5_orderstatus);
 		iniView();
-		setListener(orderstatus_back);
+		setListener(orderstatus_back,ll_daifukuan,ll_daifahuo,ll_daishouhuo,ll_yishouhuo);
+		key = getSharedPreferenceValue("key");
 		status = getIntent().getIntExtra("STATUS", 0);
 		switch (status) {
 		case DAIFUKUAN:
@@ -58,7 +69,7 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 			v102.setVisibility(View.INVISIBLE);
 			v103.setVisibility(View.INVISIBLE);
 			v104.setVisibility(View.INVISIBLE);
-//			HttpUtils.getOrderList(res_getOrderList, getSharedPreferenceValue("key"), DAIFUKUAN);
+//			HttpUtils.getOrderList(res_getOrderList, key, DAIFUKUAN);
 		break;
 		case DAIFAHUO:
 			tv_title.setText("待发货");
@@ -85,14 +96,15 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 		default:
 			break;
 		}
-		adapter = new B5_5_OrderStatusAdapter(this,dataList,status);
+		
+		adapter = new B5_5_OrderStatusAdapter(this,dataList,status,key);
 		listview.setAdapter(adapter);
 		listview.setPullLoadEnable(true);
 		listview.setPullRefreshEnable(true);
 		listview.setXListViewListener(this, 0);
 		listview.setRefreshTime();
 		RequestDailog.showDialog(this, "正在加载数据，请稍后");
-		HttpUtils.getOrderList(res_getOrderList, getSharedPreferenceValue("key"), status);
+		HttpUtils.getOrderList(res_getOrderList, key, status);
 	}
 
 	private void iniView() {
@@ -104,6 +116,10 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 		v103 = findViewById(R.id.v103);
 		v104 = findViewById(R.id.v104);
 		listview = (MyListView) findViewById(R.id.listview_orderlist);
+		ll_daifukuan = (LinearLayout) findViewById(R.id.ll_daifukuan);
+		ll_daifahuo = (LinearLayout) findViewById(R.id.ll_daifahuo);
+		ll_daishouhuo = (LinearLayout) findViewById(R.id.ll_daishouhuo);
+		ll_yishouhuo = (LinearLayout) findViewById(R.id.ll_yishouhuo);
 	}
 	@Override
 	public void onClick(View v) {
@@ -111,6 +127,54 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 		switch (v.getId()) {
 		case R.id.orderstatus_back:
 			this.finish();
+			break;
+		case R.id.ll_daifukuan://待付款
+			tv_title.setText("待付款");
+			v101.setVisibility(View.VISIBLE);
+			v102.setVisibility(View.INVISIBLE);
+			v103.setVisibility(View.INVISIBLE);
+			v104.setVisibility(View.INVISIBLE);
+			status = DAIFUKUAN;
+			RequestDailog.showDialog(this, "正在加载数据，请稍后");
+			HttpUtils.getOrderList(res_getOrderList, key, status);
+			adapter = new B5_5_OrderStatusAdapter(this,dataList,status,key);
+			listview.setAdapter(adapter);
+			break;
+		case R.id.ll_daifahuo://待发货
+			tv_title.setText("待发货");
+			v101.setVisibility(View.INVISIBLE);
+			v102.setVisibility(View.VISIBLE);
+			v103.setVisibility(View.INVISIBLE);
+			v104.setVisibility(View.INVISIBLE);
+			status = DAIFAHUO;
+			RequestDailog.showDialog(this, "正在加载数据，请稍后");
+			HttpUtils.getOrderList(res_getOrderList, key, status);
+			adapter = new B5_5_OrderStatusAdapter(this,dataList,status,key);
+			listview.setAdapter(adapter);
+			break;
+		case R.id.ll_daishouhuo://待收货
+			tv_title.setText("待收货");
+			v101.setVisibility(View.INVISIBLE);
+			v102.setVisibility(View.INVISIBLE);
+			v103.setVisibility(View.VISIBLE);
+			v104.setVisibility(View.INVISIBLE);
+			status = DAISHOUHUO;
+			RequestDailog.showDialog(this, "正在加载数据，请稍后");
+			HttpUtils.getOrderList(res_getOrderList, key, status);
+			adapter = new B5_5_OrderStatusAdapter(this,dataList,status,key);
+			listview.setAdapter(adapter);
+			break;
+		case R.id.ll_yishouhuo://已收货
+			tv_title.setText("已收货");
+			v101.setVisibility(View.INVISIBLE);
+			v102.setVisibility(View.INVISIBLE);
+			v103.setVisibility(View.INVISIBLE);
+			v104.setVisibility(View.VISIBLE);
+			status = YISHOUHUO;
+			RequestDailog.showDialog(this, "正在加载数据，请稍后");
+			HttpUtils.getOrderList(res_getOrderList, key, status);
+			adapter = new B5_5_OrderStatusAdapter(this,dataList,status,key);
+			listview.setAdapter(adapter);
 			break;
 
 		default:
@@ -121,19 +185,20 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 	@Override
 	public void onRefresh(int id) {
 		// TODO Auto-generated method stub
-		
+		RequestDailog.showDialog(this, "正在加载数据，请稍后");
+		HttpUtils.getOrderList(res_getOrderList, key, status);
 	}
 	@Override
 	public void onLoadMore(int id) {
 		// TODO Auto-generated method stub
-		
+		RequestDailog.showDialog(this, "正在加载数据，请稍后");
+		HttpUtils.getOrderList(res_getOrderList, key, status);
 	}
 	/**
 	 * 获得订单列表
 	 */
 	JsonHttpResponseHandler res_getOrderList = new JsonHttpResponseHandler()
 	{
-
 		public void onSuccess(int statusCode, Header[] headers,
 				JSONObject response) {
 			// TODO Auto-generated method stub
@@ -144,6 +209,7 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 			JSONObject datas=null;
 			try {
 				 datas = response.getJSONObject("datas");
+//				 Tools.Log("datas="+datas);
 				 error = response.getString("error");
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -151,26 +217,29 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 			} 
 			if (error==null)//成功
 			{
-//				try {
-//					data.clear();
-//					org.json.JSONArray array = datas.getJSONArray("pro_list");//等收藏功能完善之后更改array的名字
-//					Tools.Log("res_pointsMall_array="+array);
-//					for (int i = 0; i < array.length(); i++) {
-//						JSONObject jsonItem = array.getJSONObject(i);
-//						Map<String, String> map = new HashMap();
-//						map.put("goods_name", jsonItem.getString("goods_name"));
-//						map.put("goods_image_url", jsonItem.getString("goods_image_url"));
-//						map.put("goods_price", jsonItem.getString("goods_price"));
-//						map.put("fav_time", jsonItem.getString("fav_time"));
-//						map.put("fav_id", jsonItem.getString("fav_id"));
-//						data.add(map);
-//					}
-//					adapter.notifyDataSetChanged();
-//				} 
-//				catch (org.json.JSONException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+				try {
+					dataList.clear();
+					JSONArray order_group_list = datas.getJSONArray("order_group_list");//
+					Tools.Log("order_group_list="+order_group_list);
+					for (int j = 0; j < order_group_list.length(); j++) {
+						Map<String, Object> map = new HashMap();
+						JSONObject order_group_list1 = (JSONObject) order_group_list.get(j);
+						JSONArray order_list = order_group_list1.getJSONArray("order_list");
+						JSONObject order_list1 =((JSONObject) order_list.get(0));
+						
+						map.put("store_name", order_list1.getString("store_name"));
+						map.put("order_id", order_list1.getString("order_id"));
+						map.put("order_amount", order_list1.getString("order_amount"));
+						map.put("extend_order_goods", order_list1.getJSONArray("extend_order_goods"));
+						dataList.add(map);
+					}
+					Tools.Log("dataList="+dataList);
+					adapter.notifyDataSetChanged();
+				} 
+				catch (org.json.JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}
 			else//失败 

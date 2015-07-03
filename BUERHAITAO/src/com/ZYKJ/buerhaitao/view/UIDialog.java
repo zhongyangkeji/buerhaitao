@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ZYKJ.buerhaitao.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * 一些ui中Dialog中的使用
@@ -68,46 +70,18 @@ public class UIDialog {
 				.findViewById(R.id.dialog_notic_text);
 		m_notic_content.setText(text);
 	}
-///**
-// * YesOrNo 选择
-// * 
-// */
-//	public static void YesOrNo(Context context,String text,
-//			OnClickListener lisener) {
-//		dialog = new AlertDialog.Builder(context).create();
-//		dialog.show();
-//		Window window = dialog.getWindow();
-//		// *** 主要就是在这里实现这种效果的.
-//		// 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
-//		window.setContentView(R.layout.dialog_yes_or_no);
-////yes
-//		Button btn_yes = (Button) window.findViewById(R.id.btn_yes);
-//		if (lisener == null) {
-//			lisener = new OnClickListener() {
-//				public void onClick(View v) {
-//					Intent intent_toYes=new Intent();
-//					intent_toYes.setClass(context, targetContext.getClass());
-//				}
-//			};
-//		}
-//		btn_yes.setOnClickListener(lisener);
-////no
-//		Button btn_no = (Button) window.findViewById(R.id.btn_no);
-//		if (lisener == null) {
-//			lisener = new OnClickListener() {
-//				public void onClick(View v) {
-//					UIDialog.closeDialog();
-//				}
-//			};
-//		}
-//		btn_no.setOnClickListener(lisener);
-//		
-//		// 设置内容
-//		TextView m_notic_content = (TextView) window
-//				.findViewById(R.id.dialog_notic_text);
-//		m_notic_content.setText(text);
-//	}	
-//	
+	/** 展示图片 */
+	public static void ForShowPhoto(Context context, String path) {
+		dialog = new AlertDialog.Builder(context).create();
+		dialog.show();
+		Window window = dialog.getWindow();
+		// *** 主要就是在这里实现这种效果的.
+		// 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
+		window.setContentView(R.layout.dialog_showphoto);
+		// 设置内容
+		ImageView iv_photo = (ImageView) window.findViewById(R.id.iv_photo);
+		ImageLoader.getInstance().displayImage(path, iv_photo);
+	}
 	
 	/**
 	 * 关闭dialog

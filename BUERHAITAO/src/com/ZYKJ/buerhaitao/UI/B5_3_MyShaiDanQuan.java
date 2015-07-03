@@ -113,6 +113,8 @@ public class B5_3_MyShaiDanQuan extends BaseActivity implements IXListViewListen
 		case R.id.ll_mycomment://我评论的
 			v2.setVisibility(View.VISIBLE);
 			v1.setVisibility(View.INVISIBLE);
+			RequestDailog.showDialog(this, "正在加载数据，请稍后");
+			HttpUtils.shaidanquan_myquote(res_shaidanquan_mypublish, getSharedPreferenceValue("key"));
 //			Toast.makeText(this, "我评论的",  Toast.LENGTH_LONG).show();
 		break;
 		

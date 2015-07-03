@@ -71,7 +71,6 @@ public class B5_11_PointsMallAdapter extends BaseAdapter {
 //		{
 //			btn_exchange.setBackgroundColor(R.drawable.shape_btn_background_grey);
 //		}
-		
 		ImageView iv_product=(ImageView) cellView.findViewById(R.id.iv_product);
 		pgoods_name=data.get(position).get("pgoods_name");
 		pgoods_body=data.get(position).get("pgoods_body");
