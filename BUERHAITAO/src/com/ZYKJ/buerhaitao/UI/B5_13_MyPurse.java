@@ -99,7 +99,6 @@ public class B5_13_MyPurse extends BaseActivity {
 		case R.id.dialog_modif_3:// 取消
 			UIDialog.closeDialog();
 			break;
-
 		default:
 			break;
 		}

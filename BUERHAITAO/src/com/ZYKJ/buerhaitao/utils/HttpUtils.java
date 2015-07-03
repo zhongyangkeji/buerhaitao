@@ -581,18 +581,19 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 31取消订单
+	 * 取消订单
 	 * 
 	 * @param res
 	 * @param order_id
 	 * @param extend_msg
 	 */
 	public static void cancelOrder(AsyncHttpResponseHandler res,
-			String order_id, String extend_msg) {
-		String url = base_url + "cancelOrder&order_id=" + order_id
-				+ "&extend_msg=" + extend_msg;
-		client.get(url, res);
-		Log.i("landousurl", url);
+			String key, String order_id) {
+		String url = base_url + "index.php?act=member_order&op=order_cancel";
+		RequestParams params = new RequestParams();
+		params.put("key", key);
+		params.put("order_id", order_id);
+		client.post(url, params, res);
 	}
 
 	/**

@@ -245,11 +245,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 			case R.id.btn_shaidanquan://晒单圈
 //				Toast.makeText(this, "晒单圈", Toast.LENGTH_LONG).show();
 				Intent intent_shaidanquan=new Intent();
-				
 				intent_shaidanquan.setClass(this, B5_3_MyShaiDanQuan.class);
-				
 //				intent_shaidanquan.setClass(this, MainActivity_we.class);
-				
 				startActivity(intent_shaidanquan);
 				break;
 			case R.id.btn_chackInShape://签到
