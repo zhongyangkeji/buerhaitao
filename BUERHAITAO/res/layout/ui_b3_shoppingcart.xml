@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <!-- 导入title -->
+
+        <include layout="@layout/layout_head" />
+
+        <TextView
+            style="@style/title_head"
+            android:text="购物车（18件）"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

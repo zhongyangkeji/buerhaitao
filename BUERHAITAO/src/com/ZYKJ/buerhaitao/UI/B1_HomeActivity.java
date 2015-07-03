@@ -55,7 +55,7 @@ public class B1_HomeActivity extends BaseActivity {
 	List<Map<String, String>> data1 = new ArrayList<Map<String, String>>();
 	//天天特价
 	ImageView im_b1_a1_pic;
-	TextView tv_b1_a1_chanpinname,tv_b1_a1_chanpinjianjie,tv_b1_a1_zhehoujia,tv_b1_a1_yuanjia;
+	TextView tv_b1_a1_chanpinname,tv_b1_a1_chanpinjianjie,tv_b1_a1_zhehoujia,tv_b1_a1_yuanjia,tv_goodsid;
 	LinearLayout ll_dayspecial;
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -143,13 +143,14 @@ public class B1_HomeActivity extends BaseActivity {
 					
 					//天天特价
 					org.json.JSONArray arr = datas.getJSONArray("day_special");
-					JSONObject jsonIt = array1.getJSONObject(0);
+					JSONObject jsonIt = arr.getJSONObject(0);
 					ImageLoader.getInstance().displayImage(jsonIt.getString("goods_image"), im_b1_a1_pic);
 					tv_b1_a1_chanpinname.setText(jsonIt.getString("goods_name"));
 					tv_b1_a1_chanpinjianjie.setText(jsonIt.getString("goods_jingle"));
 					tv_b1_a1_zhehoujia.setText(jsonIt.getString("goods_price"));
 					tv_b1_a1_yuanjia.setText(jsonIt.getString("goods_promotion_price"));
-					tv_b1_a1_yuanjia.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG |Paint.ANTI_ALIAS_FLAG);
+					tv_b1_a1_yuanjia.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+					tv_goodsid.setText(jsonIt.getString("goods_id").toString());
 				} 
 				catch (org.json.JSONException e) {
 					// TODO Auto-generated catch block
@@ -169,6 +170,7 @@ public class B1_HomeActivity extends BaseActivity {
 	};
 	
 	private void initView(){
+		tv_goodsid = (TextView)findViewById(R.id.tv_goodsid);
 		im_b1nvshi = (ImageView)findViewById(R.id.im_b1nvshi);
 		im_b1nanshi = (ImageView)findViewById(R.id.im_b1nanshi);
 		im_b1muying = (ImageView)findViewById(R.id.im_b1muying);
@@ -284,6 +286,7 @@ public class B1_HomeActivity extends BaseActivity {
 		//首页天天特价
 		case R.id.ll_dayspecial:
 			Intent itdayspec = new Intent();
+			itdayspec.putExtra("goods_id",tv_goodsid.getText());
 			itdayspec.setClass(B1_HomeActivity.this, Sp_GoodsInfoActivity.class);
 			startActivity(itdayspec);
 			break;

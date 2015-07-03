@@ -18,9 +18,9 @@ public class B0_StoreInfoAdapter extends BaseAdapter {
 	private Activity context;
 	List<Map<String, Object>> data;
 
-	public B0_StoreInfoAdapter(Activity context, List<Map<String, Object>> data) {
+	public B0_StoreInfoAdapter(Activity context, List<Map<String, Object>> data1) {
 		this.context = context;
-		this.data=data;
+		this.data=data1;
 	}
 	
 	@Override

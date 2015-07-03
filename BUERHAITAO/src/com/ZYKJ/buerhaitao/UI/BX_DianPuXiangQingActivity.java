@@ -36,7 +36,7 @@ public class BX_DianPuXiangQingActivity extends BaseActivity implements IXListVi
 	// 返回
 	private ImageButton im_storeback;
 	private MyListView listvsinf;
-	private List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+	private List<Map<String, Object>> datax = new ArrayList<Map<String, Object>>();
 //	private String re;
 	private B0_StoreInfoAdapter stoadapter;
 	//店铺ID
@@ -61,6 +61,7 @@ public class BX_DianPuXiangQingActivity extends BaseActivity implements IXListVi
 	private TextView tv_store_address;
 	//店铺电话
 	private ImageView im_store_phone;
+	public int a =0;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -79,8 +80,12 @@ public class BX_DianPuXiangQingActivity extends BaseActivity implements IXListVi
 		im_store_phone = (ImageView)findViewById(R.id.im_store_phone);
 		im_storeback = (ImageButton) findViewById(R.id.im_storeback);
 		listvsinf = (MyListView) findViewById(R.id.lv_store_info);
-		stoadapter = new B0_StoreInfoAdapter(BX_DianPuXiangQingActivity.this,data);
-		listvsinf.setAdapter(stoadapter);
+		if (a==0) {
+			
+		}else {
+			stoadapter = new B0_StoreInfoAdapter(BX_DianPuXiangQingActivity.this,datax);
+			listvsinf.setAdapter(stoadapter);
+		}
 		listvsinf.setPullLoadEnable(true);
 		listvsinf.setPullRefreshEnable(true);
 		listvsinf.setXListViewListener(this, 0);
@@ -134,9 +139,9 @@ public class BX_DianPuXiangQingActivity extends BaseActivity implements IXListVi
 //					.put("store_phone",obj.getString("store_phone"));
 //					.put("store_credit_text", obj.getString("store_credit_text"));
 //					.put("mb_sliders", obj.getString("mb_sliders"));
-
+					a=1;
 					JSONArray array = datas.getJSONArray("goods_list");
-					data.clear();
+					datax.clear();
 					for (int i = 0; i < array.length(); i++) {
 						JSONObject jsonItem = array.getJSONObject(i);
 						Map<String, Object> map = new HashMap<String, Object>(); 
@@ -151,7 +156,7 @@ public class BX_DianPuXiangQingActivity extends BaseActivity implements IXListVi
 						map.put("evaluation_count", jsonItem.getString("evaluation_count"));
 						map.put("goods_image_url", jsonItem.getString("goods_image_url"));
 						map.put("is_special", jsonItem.getInt("is_special"));
-						data.add(map);
+						datax.add(map);
 					}
 					stoadapter.notifyDataSetChanged();
 				} catch (org.json.JSONException e) {

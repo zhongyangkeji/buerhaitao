@@ -128,6 +128,12 @@
         <activity android:name="com.ZYKJ.buerhaitao.UI.Sp_GoodsInfoActivity">
             
         </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B3_ShoppingCartActivity">
+            
+        </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.Sp_a1_GoodsEvaluation">
+            
+        </activity>
         <activity android:name="B5_12_1_Certification"></activity>
         <activity android:name="B5_11_2_ExchangeRecord"></activity>
         <activity android:name="B5_3_MyShaiDanQuan"></activity>

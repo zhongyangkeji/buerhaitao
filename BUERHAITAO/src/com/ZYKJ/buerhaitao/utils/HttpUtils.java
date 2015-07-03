@@ -1072,6 +1072,26 @@ public class HttpUtils {
 		client.get(url, res);
 	}
 	
+	/**
+	 *  商品详情
+	 * @param goods_id 商品编号
+	 * @param
+	 */
+	public static void getGoodsInfo(AsyncHttpResponseHandler res,String goods_id) {
+		String url = base_url + "index.php?act=goods&op=goods_detail"+"&goods_id="+goods_id;
+		client.get(url, res);
+	}
+	
+	/**
+	 *  商品评价
+	 * @param goods_id 商品编号
+	 * @param
+	 */
+	public static void getGoodsEvaluation(AsyncHttpResponseHandler res,String goods_id) {
+		String url = base_url + "index.php?act=goods&op=more_evaluate"+"&goods_id="+goods_id;
+		client.get(url, res);
+	}
+	
 	public static String iterateParams(HashMap<String,String> params){
 		String parameter = "";
 		Iterator<String> iterator = params.keySet().iterator();

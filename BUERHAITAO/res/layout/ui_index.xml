@@ -376,6 +376,11 @@
                                 android:text="产品名称"
                                 android:textColor="#000"
                                 android:textSize="16sp" />
+                            <TextView 
+                                android:id="@+id/tv_goodsid"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"/>
                         </RelativeLayout>
 
                         <LinearLayout

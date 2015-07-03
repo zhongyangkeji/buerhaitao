@@ -19,7 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * @author lss 2015年6月24日  猜你喜欢Adapter
  *
  */
-public class B1_a2_CaiNiLikeAdapter  extends BaseAdapter {
+public class B1_a2_CaiNiLikeAdapter extends BaseAdapter {
 	private Activity context;
 	List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 
