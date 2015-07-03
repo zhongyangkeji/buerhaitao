@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -146,11 +147,11 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
         viewHolder.listView.setAdapter(adapter);
         
         viewHolder.btn_deletetheorder.setOnClickListener(new DeletetheorderListener(position,data.get(position).get("order_id").toString()));
-        
+        viewHolder.btn_paytheorder.setOnClickListener(new PaytheorderListener(position,data.get(position).get("order_id").toString()));
 		return convertView;
 	}
 	/**
-	 * 点击立即兑换按钮之后的跳转
+	 * 取消订单
 	 * @author zyk
 	 *
 	 */
@@ -165,8 +166,10 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			Tools.Log("key="+key);
+//			Tools.Log("key="+key);
 			RequestDailog.showDialog(c, "正在取订单，请稍后");
+//			Log.e("key", key+"");
+			Log.e("orderidString", orderidString);
 			HttpUtils.cancelOrder(res_cancelOrder, key, orderidString);
 //			Tools.Notic(c, "是否取消该订单？", new OnClickListener() {
 //				
@@ -177,6 +180,36 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 //			});
 		}
 
+	}
+	/**
+	 * 付款
+	 * @author zyk
+	 */
+	class PaytheorderListener implements View.OnClickListener {
+		int position;
+		String orderidString;
+		public PaytheorderListener(int position,String orderidString) {
+			this.position = position;
+			this.orderidString = orderidString;
+		}
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+//			Tools.Log("key="+key);
+			RequestDailog.showDialog(c, "正在取订单，请稍后");
+//			Log.e("key", key+"");
+			Log.e("orderidString", orderidString);
+			HttpUtils.cancelOrder(res_cancelOrder, key, orderidString);
+//			Tools.Notic(c, "是否取消该订单？", new OnClickListener() {
+//				
+//				@Override
+//				public void onClick(View arg0) {
+//					// TODO Auto-generated method stub
+//				}
+//			});
+		}
+		
 	}
 
 	private static class ViewHolder
@@ -221,13 +254,7 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 			
 			if (error==null)//成功
 			{
-				Tools.Notic(c, "取消成功,请刷新该页面查看剩余订单", new OnClickListener() {
-					
-					@Override
-					public void onClick(View arg0) {
-						// TODO Auto-generated method stub
-					}
-				});
+				Tools.Notic(c, "取消成功,请刷新该页面查看剩余订单", null);
 			}
 			else//失败 
 			{

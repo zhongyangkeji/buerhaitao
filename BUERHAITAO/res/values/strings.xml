@@ -54,7 +54,6 @@
     <!-- 我的 页面内文字 -->
     <string name="myactivity_tips">每一天，我们都期待新的不二朋友</string>
     <string name="myactivity_login">登陆</string>
-    <string name="my_money">￥0.00</string>
     <string name="my_money_tag">我的钱包</string>
     <string name="my_points_tag">积分</string>
     <string name="my_points">0</string>

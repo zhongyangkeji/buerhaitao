@@ -739,7 +739,7 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 41 查询积分变更列表
+	 * 用户积分
 	 * @param res
 	 * @param page
 	 * @param per_page
@@ -747,6 +747,23 @@ public class HttpUtils {
 	public static void getPointsLog(AsyncHttpResponseHandler res,String key) {
 		String url = base_url + "index.php?act=member_points&op=points_log"+"&key="+key;
 		client.get(url, res);
+//		String url = base_url + "index.php?act=member_points&op=points_log";
+//		RequestParams requestParams =new RequestParams();
+//		requestParams.put("key", key);
+//		client.post(url, requestParams, res);
+		
+	}
+	/**
+	 * 用户钱包
+	 * @param res
+	 * @param page
+	 * @param per_page
+	 */
+	public static void getMoney(AsyncHttpResponseHandler res,String key) {
+		String url = base_url + "index.php?act=member_predeposit&op=view";
+		RequestParams params = new RequestParams();
+		params.put("key", key);
+		client.post(url, params, res);
 //		String url = base_url + "index.php?act=member_points&op=points_log";
 //		RequestParams requestParams =new RequestParams();
 //		requestParams.put("key", key);
@@ -1006,6 +1023,15 @@ public class HttpUtils {
 	 */
 	public static void shaidanquan_mypublish(AsyncHttpResponseHandler res, String key) {
 		String url = base_url + "index.php?act=member_circle&op=my_publish"+"&key="+key;
+		client.get(url, res);
+	}
+	/**
+	 * 晒单圈-我评论的
+	 * @param res
+	 * @param key
+	 */
+	public static void shaidanquan_myquote(AsyncHttpResponseHandler res, String key) {
+		String url = base_url + "index.php?act=member_circle&op=my_quote"+"&key="+key;
 		client.get(url, res);
 	}
 	/**
