@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -43,6 +44,7 @@ public class B2_ClassifyActivity extends BaseActivity{
 	private RadioGroup category_list;
 	private RelativeLayout rl_sousuokuang;
 	private GridView product_grid;
+	private EditText search_input;
     private RadioGroup.LayoutParams mRadioParams;
     private List<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
 	
@@ -63,10 +65,10 @@ public class B2_ClassifyActivity extends BaseActivity{
 		category_list = (RadioGroup)findViewById(R.id.category_list);
 		product_grid = (GridView)findViewById(R.id.product_grid);
 		rl_sousuokuang = (RelativeLayout)findViewById(R.id.rl_sousuokuang);
+		search_input = (EditText)findViewById(R.id.search_input);
         mRadioParams = new RadioGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        cl_address.setOnClickListener(this);
-        rl_sousuokuang.setOnClickListener(this);
+		setListener(cl_address,rl_sousuokuang,search_input);
 	}
 	
 	/**
@@ -171,6 +173,7 @@ public class B2_ClassifyActivity extends BaseActivity{
 						public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 							String gc_id = list.get(position).get("gc_id");
 							Toast.makeText(B2_ClassifyActivity.this, gc_id, Toast.LENGTH_LONG).show();
+			    			B1_a4_SearchActivity.CHANNEL=0;
 							Intent intent = new Intent(B2_ClassifyActivity.this,B1_a4_SearchActivity.class);
 							intent.putExtra("gc_id", gc_id);
 							startActivity(intent);
@@ -185,13 +188,25 @@ public class B2_ClassifyActivity extends BaseActivity{
 
 	@Override
 	public void onClick(View view) {
+		Intent intent;
         switch (view.getId()){
             case R.id.classify_address:
+    			// 城市列表
+            	intent = new Intent();
+            	intent.setClass(B2_ClassifyActivity.this, CityListActivity.class);
+    			startActivity(intent);
                 break;
     		case R.id.rl_sousuokuang:
-    			Intent itsydps = new Intent();
-    			itsydps.setClass(B2_ClassifyActivity.this, B1_a4_SearchActivity.class);
-    			startActivity(itsydps);
+    			B1_a4_SearchActivity.CHANNEL=0;
+    			intent = new Intent();
+    			intent.setClass(B2_ClassifyActivity.this, B1_a4_SearchActivity.class);
+    			startActivity(intent);
+    			break;
+    		case R.id.search_input:
+    			B1_a4_SearchActivity.CHANNEL=0;
+    			intent = new Intent();
+    			intent.setClass(B2_ClassifyActivity.this, B1_a4_SearchActivity.class);
+    			startActivity(intent);
     			break;
         }
 	}

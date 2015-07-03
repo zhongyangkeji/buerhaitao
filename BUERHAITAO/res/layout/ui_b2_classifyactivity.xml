@@ -68,6 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
+                    android:focusable="false"
                     android:layout_toRightOf="@id/search_detail"
 	                android:hint="@string/classify_search"
                     android:textColor="#000"
