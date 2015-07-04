@@ -374,6 +374,7 @@
                                 android:layout_alignParentLeft="true"
                                 android:layout_centerVertical="true"
                                 android:text="产品名称"
+                                android:singleLine="true"
                                 android:textColor="#000"
                                 android:textSize="16sp" />
                             <TextView 

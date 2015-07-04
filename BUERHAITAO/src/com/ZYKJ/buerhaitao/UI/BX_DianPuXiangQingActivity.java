@@ -158,7 +158,7 @@ public class BX_DianPuXiangQingActivity extends BaseActivity implements IXListVi
 						map.put("is_special", jsonItem.getInt("is_special"));
 						datax.add(map);
 					}
-					stoadapter.notifyDataSetChanged();
+//					stoadapter.notifyDataSetChanged();
 				} catch (org.json.JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

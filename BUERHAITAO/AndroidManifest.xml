@@ -134,6 +134,10 @@
         <activity android:name="com.ZYKJ.buerhaitao.UI.Sp_a1_GoodsEvaluation">
             
         </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.Sp_a2_XingHao"
+            	  android:theme="@android:style/Theme.Translucent">
+            
+        </activity>
         <activity android:name="B5_12_1_Certification"></activity>
         <activity android:name="B5_11_2_ExchangeRecord"></activity>
         <activity android:name="B5_3_MyShaiDanQuan"></activity>

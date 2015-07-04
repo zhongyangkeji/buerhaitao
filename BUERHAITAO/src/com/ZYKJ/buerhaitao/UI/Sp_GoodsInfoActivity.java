@@ -78,8 +78,10 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 	private LinearLayout ll_ckgdpj;
 	//继续拖动，查看图文详情
 	private LinearLayout ll_chakantuwen;
-	//pingjiashu
+	//评价数
 	private String pingjia;
+	//加入购物车
+	private LinearLayout ll_sp_addincar;
 
 
 	
@@ -112,9 +114,10 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 		tv_chanpincanshu = (TextView)findViewById(R.id.tv_chanpincanshu);
 		ll_ckgdpj = (LinearLayout)findViewById(R.id.ll_ckgdpj);
 		ll_chakantuwen = (LinearLayout)findViewById(R.id.ll_chakantuwen);
+		ll_sp_addincar = (LinearLayout)findViewById(R.id.ll_sp_addincar);
 //		key = getSharedPreferenceValue("key");
 		tv_shichangjia.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-		setListener(im_sp_back,im_sp_gouwuche,ll_ckgdpj);
+		setListener(im_sp_back,im_sp_gouwuche,ll_ckgdpj,ll_sp_addincar,rl_chooseleixing);
 	}
 	
 	@Override
@@ -133,6 +136,18 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 			iteckpj.putExtra("goods_id",goods_id);
 			iteckpj.putExtra("sp_a1_title",pingjia);
 			startActivity(iteckpj);
+			break;
+		case R.id.ll_sp_addincar:
+			Intent itaddcar = new Intent(Sp_GoodsInfoActivity.this,Sp_a2_XingHao.class);
+//			itaddcar.putExtra("goods_id",goods_id);
+//			itaddcar.putExtra("sp_a1_title",pingjia);
+			Sp_GoodsInfoActivity.this.startActivity(itaddcar);  
+            
+			Sp_GoodsInfoActivity.this.overridePendingTransition(R.anim.activity_open,0); 
+			break;
+		case R.id.rl_chooseleixing:
+			Intent itaddcar1 = new Intent(Sp_GoodsInfoActivity.this,Sp_a2_XingHao.class);
+			startActivity(itaddcar1);
 			break;
 		default:
 			

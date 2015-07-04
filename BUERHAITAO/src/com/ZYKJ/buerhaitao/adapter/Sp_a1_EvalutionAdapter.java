@@ -16,6 +16,10 @@ import android.widget.TextView;
 import com.ZYKJ.buerhaitao.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+/**
+ * @author lss 2015年7月3日   商品评价Adapter
+ *
+ */
 public class Sp_a1_EvalutionAdapter extends BaseAdapter {
 	private Activity context;
 	List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
