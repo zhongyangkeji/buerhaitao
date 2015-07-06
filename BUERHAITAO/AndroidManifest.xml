@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ZYKJ.buerhaitao"
     android:versionCode="1"
@@ -7,6 +7,7 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="18" />
+
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -31,15 +32,17 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 拍照 -->
     <uses-permission android:name="android.permission.CAMERA" />
-    
-        <!-- 推送相关的权限 -->
+
+    <!-- 推送相关的权限 -->
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- 以下为推送权限（可选） -->
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
     <!-- QQ、QQ空间所需权限 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
-    
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.READ_SMS" />
@@ -120,38 +123,34 @@
         <activity android:name="com.ZYKJ.buerhaitao.UI.B1_a4_SearchActivity" >
         </activity>
         <!-- 首页分类 -->
-        <activity android:name="com.ZYKJ.buerhaitao.UI.B2_ClassifyActivity">
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B2_ClassifyActivity" >
         </activity>
-        <activity android:name="com.ZYKJ.buerhaitao.UI.BX_DianPuXiangQingActivity">
-            
+        <activity android:name="com.ZYKJ.buerhaitao.UI.BX_DianPuXiangQingActivity" >
         </activity>
-        <activity android:name="com.ZYKJ.buerhaitao.UI.Sp_GoodsInfoActivity">
-            
+        <activity android:name="com.ZYKJ.buerhaitao.UI.Sp_GoodsInfoActivity" >
         </activity>
-        <activity android:name="com.ZYKJ.buerhaitao.UI.B3_ShoppingCartActivity">
-            
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B3_ShoppingCartActivity" >
         </activity>
-        <activity android:name="com.ZYKJ.buerhaitao.UI.Sp_a1_GoodsEvaluation">
-            
+        <activity android:name="com.ZYKJ.buerhaitao.UI.Sp_a1_GoodsEvaluation" >
         </activity>
-        <activity android:name="com.ZYKJ.buerhaitao.UI.Sp_a2_XingHao"
-            	  android:theme="@android:style/Theme.Translucent">
-            
+        <activity
+            android:name="com.ZYKJ.buerhaitao.UI.Sp_a2_XingHao"
+            android:theme="@android:style/Theme.Translucent" >
         </activity>
-        <activity android:name="B5_12_1_Certification"></activity>
-        <activity android:name="B5_11_2_ExchangeRecord"></activity>
-        <activity android:name="B5_3_MyShaiDanQuan"></activity>
-        <activity android:name="PhotoActivity"></activity>
-        <activity android:name=".UI.B5_12_1_Certification"></activity>
-        <activity android:name=".UI.B5_11_2_ExchangeRecord"></activity>
-        <activity android:name=".UI.B5_3_MyShaiDanQuan"></activity>
-        <activity android:name=".UI.PhotoActivity"></activity>
-        <activity android:name="com.ZYKJ.buerhaitao.utils.BitmapCache"></activity>
-        <activity android:name="com.ZYKJ.buerhaitao.utils.ImageGridActivity"></activity>
-        <activity android:name=".UI.PublishedActivity"></activity>
-        <activity android:name=".UI.TestPicActivity"></activity>
-       <!-- 微社区 -->
-       <activity
+        <activity android:name="B5_12_1_Certification" />
+        <activity android:name="B5_11_2_ExchangeRecord" />
+        <activity android:name="B5_3_MyShaiDanQuan" />
+        <activity android:name="PhotoActivity" />
+        <activity android:name=".UI.B5_12_1_Certification" />
+        <activity android:name=".UI.B5_11_2_ExchangeRecord" />
+        <activity android:name=".UI.B5_3_MyShaiDanQuan" />
+        <activity android:name=".UI.PhotoActivity" />
+        <activity android:name="com.ZYKJ.buerhaitao.utils.BitmapCache" />
+        <activity android:name="com.ZYKJ.buerhaitao.utils.ImageGridActivity" />
+        <activity android:name=".UI.PublishedActivity" />
+        <activity android:name=".UI.TestPicActivity" />
+        <!-- 微社区 -->
+        <activity
             android:name="com.umeng.community.example.MainActivity_we"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
@@ -163,7 +162,7 @@
             android:name="com.umeng.comm.ui.activities.FindActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-       <!--  -->
+        <!--  -->
         <activity
             android:name="com.umeng.comm.ui.activities.UserInfoActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -216,9 +215,9 @@
 
         <!-- 引导页面activity -->
         <activity android:name="com.umeng.comm.ui.activities.GuideActivity" />
-       <!-- 友盟登录界面,不属于SDK -->
+        <!-- 友盟登录界面,不属于SDK -->
         <activity android:name="com.umeng.login.views.LoginActivity" />
-        
+
         <!-- QQ登录 -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -230,7 +229,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent100424468" />
+                <data android:scheme="tencent101146365" />
             </intent-filter>
         </activity>
         <activity
@@ -238,7 +237,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
-         <!-- 微信登录 -->
+        <!-- 微信登录 -->
         <activity
             android:name="com.umeng.community.example.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -259,27 +258,37 @@
 
                 <data android:scheme="package" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
         </receiver>
         <receiver android:name="com.umeng.message.UmengBroadcastReceiver" >
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.RECEIVE" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.umeng.community.example.intent.action.COMMAND" />
+                <action android:name="com.ZYKJ.buerhaitao.intent.action.COMMAND" />
             </intent-filter>
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.RE_ELECTION_V2" />
             </intent-filter>
         </receiver>
+        <receiver android:name="com.umeng.message.BootBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         <service
             android:name="com.umeng.message.UmengService"
             android:exported="true"
-            android:process=":umengService_v1" >
+            android:label="PushService"
+            android:process=":pushService_v1" >
             <intent-filter>
-                <action android:name="com.umeng.community.example.intent.action.START" />
+                <action android:name="com.ZYKJ.buerhaitao.intent.action.START" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.umeng.community.example.intent.action.COCKROACH" />
+                <action android:name="com.ZYKJ.buerhaitao.intent.action.COCKROACH" />
             </intent-filter>
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.PING" />
@@ -288,7 +297,7 @@
         <service
             android:name="org.android.agoo.service.ElectionService"
             android:exported="true"
-            android:process=":umengService_v1" >
+            android:process=":pushService_v1" >
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.ELECTION_V2" />
             </intent-filter>
@@ -296,42 +305,62 @@
         <service android:name="com.umeng.message.UmengIntentService" />
         <!-- V1.3.0添加的service，负责下载通知的资源 -->
         <service android:name="com.umeng.message.UmengDownloadResourceService" />
+
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="54d19086fd98c540a2001155" >
+            android:value="5597978467e58ed8f700c873" >
         </meta-data>
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="de08937649e99e3c81d7924b145b3f79" >
+            android:value="4ab5a47caff7b38b558ce6d0c3f0d30b" >
         </meta-data>
-        <!-- <meta-data
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Channel ID" >
+        </meta-data>
+        <!--
+        <meta-data
             android:name="UMENG_APPKEY"
             android:value="4eaee02c527015373b000003" >
         </meta-data>
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
             android:value="a102852523d3070310d74f676d128a3c" >
-        </meta-data> -->
-        <activity android:name=".UI.B5_13_MyPurse"></activity>
-        
-<!-- Ping++ SDK 注册 -->
-<activity
-    android:name="com.pingplusplus.android.PaymentActivity"
-    android:launchMode="singleTop"
-    android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-<!-- 微信支付注册 -->
-<activity-alias
-    android:name=".wxapi.WXPayEntryActivity"
-    android:exported="true"
-    android:targetActivity="com.pingplusplus.android.PaymentActivity" />
-<!-- 支付宝注册 -->
-<activity
-    android:name="com.alipay.sdk.app.H5PayActivity"
-    android:configChanges="orientation|keyboardHidden|navigation"
-    android:exported="false"
-    android:screenOrientation="behind" />
-<activity android:name=".UI.B5_10_MyCollection"></activity>
-<activity android:name=".UI.B5_5_OrderStatus"></activity>        
+        </meta-data>
+        -->
+        <activity android:name=".UI.B5_13_MyPurse" />
+
+        <!-- Ping++ SDK 注册 -->
+        <activity
+            android:name="com.pingplusplus.android.PaymentActivity"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 微信支付注册 -->
+        <activity-alias
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:targetActivity="com.pingplusplus.android.PaymentActivity" />
+        <!-- 支付宝注册 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" />
+        <activity android:name=".UI.B5_10_MyCollection" />
+        <activity android:name=".UI.B5_5_OrderStatus" />
+        <activity
+            android:name="com.umeng.socialize.view.ShareActivity"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:theme="@style/Theme.UMDialog"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>

@@ -82,7 +82,8 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 	private String pingjia;
 	//加入购物车
 	private LinearLayout ll_sp_addincar;
-
+	//商品分享
+	private LinearLayout ll_goods_fenxiang;
 
 	
 	
@@ -115,9 +116,10 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 		ll_ckgdpj = (LinearLayout)findViewById(R.id.ll_ckgdpj);
 		ll_chakantuwen = (LinearLayout)findViewById(R.id.ll_chakantuwen);
 		ll_sp_addincar = (LinearLayout)findViewById(R.id.ll_sp_addincar);
+		ll_goods_fenxiang = (LinearLayout)findViewById(R.id.ll_goods_fenxiang);
 //		key = getSharedPreferenceValue("key");
 		tv_shichangjia.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-		setListener(im_sp_back,im_sp_gouwuche,ll_ckgdpj,ll_sp_addincar,rl_chooseleixing);
+		setListener(im_sp_back,im_sp_gouwuche,ll_ckgdpj,ll_sp_addincar,rl_chooseleixing,ll_goods_fenxiang);
 	}
 	
 	@Override
@@ -149,11 +151,16 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 			Intent itaddcar1 = new Intent(Sp_GoodsInfoActivity.this,Sp_a2_XingHao.class);
 			startActivity(itaddcar1);
 			break;
+		case R.id.ll_goods_fenxiang:
+			// 设置分享内容
+						String fxnr = "友盟社会化组件（SDK）让移动应用快速整合社交分享功能，http://www.umeng.com/social";
+						String fxtp = "http://www.umeng.com/images/pic/banner_module_social.png";
+						FenXiang fx = new FenXiang(getApplicationContext(),Sp_GoodsInfoActivity.this,fxnr,fxtp);
+			break;
 		default:
 			
 			break;
 		}
-
 	}
 	
 	JsonHttpResponseHandler res_goodsinfo = new JsonHttpResponseHandler()

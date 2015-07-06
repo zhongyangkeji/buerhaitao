@@ -10,12 +10,16 @@ import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.data.AppValue;
 import com.ZYKJ.buerhaitao.utils.Tools;
+import com.umeng.message.PushAgent;
 
 
 public class A0_Welcome extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initView(R.layout.ui_welcome);
+		//消息推送
+		PushAgent mPushAgent = PushAgent.getInstance(A0_Welcome.this);
+		mPushAgent.enable();
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
 			public void run() {
