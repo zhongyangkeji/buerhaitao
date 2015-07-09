@@ -229,6 +229,7 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 						
 						map.put("store_name", order_list1.getString("store_name"));
 						map.put("order_id", order_list1.getString("order_id"));
+						map.put("pay_sn", order_list1.getString("pay_sn"));
 						map.put("order_amount", order_list1.getString("order_amount"));
 						map.put("extend_order_goods", order_list1.getJSONArray("extend_order_goods"));
 						dataList.add(map);

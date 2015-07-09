@@ -69,7 +69,7 @@ public class B5_3_MyShaiDanQuan extends BaseActivity implements IXListViewListen
 		initView();
 		setListener(myshaidanquan_back,btn_publish,ll_mypublish,ll_mycomment);
 		lv_shaidanquan_mypublish = (MyListView) findViewById(R.id.lv_myshaidanquan);
-		adapter = new B5_3_MyShaiDanQuanAdapter(B5_3_MyShaiDanQuan.this,data);
+		adapter = new B5_3_MyShaiDanQuanAdapter(B5_3_MyShaiDanQuan.this,data,getSharedPreferenceValue("key"));
 		lv_shaidanquan_mypublish.setAdapter(adapter);
 		lv_shaidanquan_mypublish.setPullLoadEnable(true);
 		lv_shaidanquan_mypublish.setPullRefreshEnable(true);
@@ -109,7 +109,6 @@ public class B5_3_MyShaiDanQuan extends BaseActivity implements IXListViewListen
 			HttpUtils.shaidanquan_mypublish(res_shaidanquan_mypublish, getSharedPreferenceValue("key"));
 //			Toast.makeText(this, "我发表的",  Toast.LENGTH_LONG).show();
 		break;
-			
 		case R.id.ll_mycomment://我评论的
 			v2.setVisibility(View.VISIBLE);
 			v1.setVisibility(View.INVISIBLE);
@@ -117,15 +116,11 @@ public class B5_3_MyShaiDanQuan extends BaseActivity implements IXListViewListen
 			HttpUtils.shaidanquan_myquote(res_shaidanquan_mypublish, getSharedPreferenceValue("key"));
 //			Toast.makeText(this, "我评论的",  Toast.LENGTH_LONG).show();
 		break;
-		
 		}
-
 	}
 	@Override
 	public void onRefresh(int id) {
 		// TODO Auto-generated method stub
-//		Tools.Log("v1.VISIBLE="+v1.getVisibility());
-//		Tools.Log("v2.VISIBLE="+v2.getVisibility());
 		if (v1.getVisibility()==0) //请求“我发表的”
 		{
 			RequestDailog.showDialog(this, "正在加载数据，请稍后");
@@ -155,7 +150,7 @@ public class B5_3_MyShaiDanQuan extends BaseActivity implements IXListViewListen
 			// TODO Auto-generated method stub
 			super.onSuccess(statusCode, headers, response);
 			RequestDailog.closeDialog();
-//			Tools.Log("110="+response);
+			Tools.Log("晒单圈="+response);
 			String error=null;
 			JSONObject datas=null;
 			try {
@@ -184,6 +179,7 @@ public class B5_3_MyShaiDanQuan extends BaseActivity implements IXListViewListen
 						map.put("avatar", jsonItem.getString("avatar"));
 						map.put("member_name", jsonItem.getString("member_name"));
 						map.put("member_id", jsonItem.getString("member_id"));
+						map.put("quote", jsonItem.getJSONArray("quote"));
 						data.add(map);
 					}
 					adapter.notifyDataSetChanged();

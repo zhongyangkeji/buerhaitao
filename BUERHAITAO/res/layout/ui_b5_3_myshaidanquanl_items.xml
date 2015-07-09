@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal" >
@@ -124,7 +124,7 @@
 
        </RelativeLayout>
 
-        <FrameLayout
+        <!-- <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dip" >
@@ -144,7 +144,7 @@
 
                 </RelativeLayout>
             </RelativeLayout>
-        </FrameLayout>
+        </FrameLayout> -->
 	<!-- 		<TextView 
 			    android:id="@+id/tv_checkallcomment"
 	            android:layout_width="wrap_content"
@@ -192,11 +192,9 @@
             </LinearLayout>
         </LinearLayout> -->
         <ListView 
-            android:id="@+id/lv_comment"
+           android:id="@+id/lv_comment"
            android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-            
-            ></ListView>
+           android:layout_height="wrap_content"/>
     <View 
         android:layout_width="match_parent"
         android:layout_height="5dp"/>

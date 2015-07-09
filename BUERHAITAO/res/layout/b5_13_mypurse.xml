@@ -113,7 +113,7 @@
 	    android:id="@+id/textView4"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:text="1.充值方式：支付宝充值、微信充值\n2.余额使用方式：支持此APP的所有支付\n3.此APP暂时不支持余额取现功能" />
+	    android:text="\t1.充值方式：支付宝充值、微信充值\n\t2.余额使用方式：支持此APP的所有支付\n\t3.此APP暂时不支持余额取现功能" />
 
 	<View 
 	        android:layout_width="match_parent"
