@@ -44,25 +44,34 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class B1_HomeActivity extends BaseActivity {
 	//首页中间八个大分类
-	ImageView im_b1nvshi,im_b1nanshi,im_b1muying,im_b1huazhuang,im_b1shouji,im_b1bangong,im_b1shenghuo,im_b1techan;
+	private ImageView im_b1nvshi,im_b1nanshi,im_b1muying,im_b1huazhuang,im_b1shouji,im_b1bangong,im_b1shenghuo,im_b1techan;
 	//天天特价,晒单圈,猜你喜欢，每日好店
-	RelativeLayout rl_b1_a1tttj,b5_3_shaidanquan,rl_b1_a2_cnxh,rl_b1_a3_mrhd;
+	private RelativeLayout rl_b1_a1tttj,b5_3_shaidanquan,rl_b1_a2_cnxh,rl_b1_a3_mrhd;
 	//搜索选择
-	RelativeLayout rl_sousuokuang;
+	private RelativeLayout rl_sousuokuang;
 	//每日好店
-	MyListView list_meirihaodian,list_cainilike;
-	List<Map<String, String>> data = new ArrayList<Map<String, String>>();
-	List<Map<String, String>> data1 = new ArrayList<Map<String, String>>();
+	private MyListView list_meirihaodian,list_cainilike;
+	private List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+	private List<Map<String, String>> data1 = new ArrayList<Map<String, String>>();
 	//天天特价
-	ImageView im_b1_a1_pic;
-	TextView tv_b1_a1_chanpinname,tv_b1_a1_chanpinjianjie,tv_b1_a1_zhehoujia,tv_b1_a1_yuanjia,tv_goodsid;
-	LinearLayout ll_dayspecial;
+	private ImageView im_b1_a1_pic;
+	private TextView tv_b1_a1_chanpinname,tv_b1_a1_chanpinjianjie,tv_b1_a1_zhehoujia,tv_b1_a1_yuanjia,tv_goodsid;
+	private LinearLayout ll_dayspecial;
+	private RelativeLayout rl_ditu;
+	private String cityname;
+	private TextView tv_cityname;//城市名称
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_index);
 		initView();
-		HttpUtils.getFirstList(res_getSyList, "88","80","100");
+		tv_cityname = (TextView)findViewById(R.id.tv_cityname);
+		if (getIntent().getStringExtra("cityname")==null) {
+			HttpUtils.getFirstList(res_getSyList, "88","80","100");
+		}else {
+			cityname = getIntent().getStringExtra("cityname");
+			tv_cityname.setText(cityname);
+		}
 	}
 	
 	JsonHttpResponseHandler res_getSyList = new JsonHttpResponseHandler()
@@ -192,7 +201,8 @@ public class B1_HomeActivity extends BaseActivity {
 		tv_b1_a1_zhehoujia = (TextView)findViewById(R.id.tv_b1_a1_zhehoujia);
 		tv_b1_a1_yuanjia = (TextView)findViewById(R.id.tv_b1_a1_yuanjia);
 		ll_dayspecial = (LinearLayout)findViewById(R.id.ll_dayspecial);
-		setListener(im_b1nvshi,im_b1nanshi,im_b1muying,im_b1huazhuang,im_b1shouji,im_b1bangong,im_b1shenghuo,im_b1techan,rl_b1_a1tttj,b5_3_shaidanquan,rl_b1_a2_cnxh,rl_b1_a3_mrhd,rl_sousuokuang,ll_dayspecial);
+		rl_ditu = (RelativeLayout)findViewById(R.id.rl_ditu);
+		setListener(im_b1nvshi,im_b1nanshi,im_b1muying,im_b1huazhuang,im_b1shouji,im_b1bangong,im_b1shenghuo,im_b1techan,rl_b1_a1tttj,b5_3_shaidanquan,rl_b1_a2_cnxh,rl_b1_a3_mrhd,rl_sousuokuang,ll_dayspecial,rl_ditu);
 	}
 
 	@Override
@@ -290,7 +300,12 @@ public class B1_HomeActivity extends BaseActivity {
 			itdayspec.setClass(B1_HomeActivity.this, Sp_GoodsInfoActivity.class);
 			startActivity(itdayspec);
 			break;
-		
+		//城市选择
+		case R.id.rl_ditu:
+			Intent itmap = new Intent();
+			itmap.setClass(B1_HomeActivity.this, B1_01_MapActivity.class);
+			startActivity(itmap);
+			break;		
 		case R.id.error_layout:// 错误页面的点击
 			//htttp请求
 			break;

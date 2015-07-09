@@ -347,5 +347,6 @@
 
     <!-- 社区名字 -->
     <string name="umeng_comm_name">微社区</string>
+    <string name="cannot_find_location">无法获取当前位</string>
   
 </resources>

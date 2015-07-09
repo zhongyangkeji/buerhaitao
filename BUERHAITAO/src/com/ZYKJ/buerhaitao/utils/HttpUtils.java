@@ -1158,6 +1158,26 @@ public class HttpUtils {
 		client.get(url, res);
 	}
 	
+	/**
+	 *  城市列表
+	 * @param goods_id 商品编号
+	 * @param
+	 */
+	public static void getCityList(AsyncHttpResponseHandler res) {
+		String url = base_url + "index.php?act=area&op=city_list";
+		client.get(url, res);
+	}
+	
+	/**
+	 *  城市名称
+	 * @param goods_id 商品编号
+	 * @param
+	 */
+	public static void getCityName(AsyncHttpResponseHandler res,String lng,String lat) {
+		String url = base_url + "index.php?act=area&op=location"+"&lng="+lng+"&lat="+lat;
+		client.get(url, res);
+	}
+	
 	public static String iterateParams(HashMap<String,String> params){
 		String parameter = "";
 		Iterator<String> iterator = params.keySet().iterator();

@@ -22,7 +22,7 @@
             android:layout_marginLeft="15dp" >
 
             <TextView
-                android:id="@+id/tv_ditu"
+                android:id="@+id/tv_cityname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -36,7 +36,7 @@
                 android:layout_height="10dp"
                 android:layout_marginLeft="3dp"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/tv_ditu"
+                android:layout_toRightOf="@id/tv_cityname"
                 android:src="@drawable/b1_ditusousuo" />
         </RelativeLayout>
 

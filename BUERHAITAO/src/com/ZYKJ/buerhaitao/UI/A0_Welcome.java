@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
@@ -40,10 +41,13 @@ public class A0_Welcome extends BaseActivity {
 				}
 
 				if (should_intro) {
+
+//					Toast.makeText(getApplicationContext(), "11111111", Toast.LENGTH_LONG).show();
 					Intent intent = new Intent(A0_Welcome.this,
 							A1_IntroActivity.class);
 					startActivity(intent);
 				} else {
+//					Toast.makeText(getApplicationContext(), "222222222", Toast.LENGTH_LONG).show();
 					Intent intent = new Intent(A0_Welcome.this, B0_MainActivity.class);
 					startActivity(intent);
 				}

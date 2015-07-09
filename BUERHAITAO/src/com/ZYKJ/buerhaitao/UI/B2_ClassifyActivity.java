@@ -192,9 +192,9 @@ public class B2_ClassifyActivity extends BaseActivity{
         switch (view.getId()){
             case R.id.classify_address:
     			// 城市列表
-            	intent = new Intent();
-            	intent.setClass(B2_ClassifyActivity.this, CityListActivity.class);
-    			startActivity(intent);
+//            	intent = new Intent();
+//            	intent.setClass(B2_ClassifyActivity.this, CityListActivity.class);
+//    			startActivity(intent);
                 break;
     		case R.id.rl_sousuokuang:
     			B1_a4_SearchActivity.CHANNEL=0;
