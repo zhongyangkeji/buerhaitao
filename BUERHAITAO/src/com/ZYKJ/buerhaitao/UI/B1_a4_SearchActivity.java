@@ -121,7 +121,6 @@ public class B1_a4_SearchActivity extends BaseActivity implements IXListViewList
 		im_a4_assess = (ImageView)findViewById(R.id.im_a4_assess);
 		ly_a4_category = (LinearLayout)findViewById(R.id.ly_a4_category);
 		ly_a4_assess = (LinearLayout)findViewById(R.id.ly_a4_assess);
-		a4_seachlist = (MyListView)findViewById(R.id.a4_seachlist);
 
 		a4_seachlist.setPullLoadEnable(true);
 		a4_seachlist.setPullRefreshEnable(true);
@@ -286,8 +285,13 @@ public class B1_a4_SearchActivity extends BaseActivity implements IXListViewList
 	@Override
 	public void onItemClick(AdapterView<?> groupView, View currentView, int position, long id) {
 		/*店铺、宝贝详情*/
-		Goods good = goods.get(position-1);
-		Toast.makeText(B1_a4_SearchActivity.this, good.getGoods_id(), Toast.LENGTH_LONG).show();
+		if(CHANNEL == 0){
+			Goods good = goods.get(position-1);
+			Toast.makeText(B1_a4_SearchActivity.this, good.getGoods_id(), Toast.LENGTH_LONG).show();
+		}else{
+			Shop shop = shops.get(position-1);
+			Toast.makeText(B1_a4_SearchActivity.this, shop.getStore_id(), Toast.LENGTH_LONG).show();
+		}
 	}
 	
 	@Override

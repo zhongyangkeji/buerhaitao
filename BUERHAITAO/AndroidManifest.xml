@@ -136,6 +136,8 @@
         <!-- 首页分类 -->
         <activity android:name="com.ZYKJ.buerhaitao.UI.B2_ClassifyActivity" >
         </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.B4_StoreActivity" >
+        </activity>
         <activity android:name="com.ZYKJ.buerhaitao.UI.BX_DianPuXiangQingActivity" >
         </activity>
         <activity android:name="com.ZYKJ.buerhaitao.UI.Sp_GoodsInfoActivity" >
@@ -339,7 +341,7 @@
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
             android:value="a102852523d3070310d74f676d128a3c" >
-        </meta-data>
+        </meta-data>
         -->
         <activity android:name=".UI.B5_13_MyPurse" />
 
