@@ -12,18 +12,23 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.UI.B5_13_MyPurse;
+import com.ZYKJ.buerhaitao.UI.B5_5_OrderDetail;
 import com.ZYKJ.buerhaitao.UI.B5_MyActivity;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
 import com.ZYKJ.buerhaitao.utils.Tools;
@@ -96,7 +101,6 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
             viewHolder.btn_tocomment = (Button) convertView.findViewById(R.id.btn_tocomment);
             viewHolder.btn_tuihuanhuo = (Button) convertView.findViewById(R.id.btn_tuihuanhuo);
             viewHolder.btn_querenshouhuo = (Button) convertView.findViewById(R.id.btn_querenshouhuo);
-            
             viewHolder.listView = (ListView) convertView.findViewById(R.id.listview_goodslist);
             convertView.setTag(viewHolder);
         }
@@ -162,7 +166,11 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
         
         viewHolder.btn_deletetheorder.setOnClickListener(new DeletetheorderListener(position,data.get(position).get("order_id").toString()));
         viewHolder.btn_paytheorder.setOnClickListener(new PaytheorderListener(position,pay_sn));
-		return convertView;
+        viewHolder.listView.setOnItemClickListener(new GetOrderDetail(position,data.get(position).get("order_id").toString(),status,pay_sn));
+        viewHolder.btn_tuihuanhuo.setOnClickListener(new TuiHuan(position,data.get(position).get("store_phone").toString()));
+        viewHolder.btn_querenshouhuo.setOnClickListener(new QueRen(position,data.get(position).get("order_id").toString()));
+        
+        return convertView;
 	}
 	/**
 	 * 取消订单
@@ -176,7 +184,6 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 			this.position = position;
 			this.orderidString = orderidString;
 		}
-
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
@@ -184,7 +191,19 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 			RequestDailog.showDialog(c, "正在取订单，请稍后");
 //			Log.e("key", key+"");
 			Log.e("orderidString", orderidString);
-			HttpUtils.cancelOrder(res_cancelOrder, key, orderidString);
+			
+			switch (status) {
+			case DAIFUKUAN://待付款中的取消订单
+				HttpUtils.cancelOrder(res_cancelOrder, key, orderidString);
+				break;
+			case DAIFAHUO://待发货中的取消订单
+				HttpUtils.cancelOrder_paid(res_cancelOrder, key, orderidString);
+				break;
+
+			default:
+				break;
+			}
+			
 //			Tools.Notic(c, "是否取消该订单？", new OnClickListener() {
 //				
 //				@Override
@@ -236,6 +255,91 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 		}
 		
 	}
+	/**
+	 * 跳转到订单详情
+	 * @author zyk
+	 */
+	class GetOrderDetail implements ListView.OnItemClickListener {
+		int position;
+		String order_id;
+		String pay_sn;
+		int status;
+		public GetOrderDetail(int position,String order_id,int status,String pay_sn) {
+			this.position = position;
+			this.order_id = order_id;
+			this.pay_sn = pay_sn;
+			this.status = status;
+		}
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			// TODO Auto-generated method stub
+			Intent intent_to_detail  = new Intent(c,B5_5_OrderDetail.class);
+			intent_to_detail.putExtra("order_id", order_id);
+			intent_to_detail.putExtra("status", status);
+			intent_to_detail.putExtra("pay_sn", pay_sn);
+			c.startActivity(intent_to_detail);
+			
+		}
+		
+	}
+	/**
+	 * 退换货
+	 * @author zyk
+	 */
+	class TuiHuan implements View.OnClickListener {
+		int position;
+		String phone;
+		public TuiHuan(int position,String phone) {
+			this.position = position;
+			this.phone = phone;
+		}
+		@Override
+		public void onClick(View v) {
+			UIDialog.ForTwoBtn(c, new String[] { "店铺电话:"+phone,"取消" }, new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					switch (v.getId()) {
+					case R.id.dialog_modif_1:// 给店家打电话
+						UIDialog.closeDialog();
+						 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
+			                // 通知activtity处理传入的call服务
+			             c.startActivity(intent);
+						break;
+					case R.id.dialog_modif_2:// 取消
+						UIDialog.closeDialog();
+						break;
+
+					default:
+						break;
+					}
+				}
+			});
+		}
+		
+	}
+	/**
+	 * 确认订单
+	 * @author zyk
+	 */
+	class QueRen implements View.OnClickListener {
+		int position;
+		String order_id;
+		public QueRen(int position,String order_id) {
+			this.position = position;
+			this.order_id = order_id;
+		}
+		@Override
+		public void onClick(View v) {
+			Toast.makeText(c, "123", 400).show();
+			Tools.Log("key="+key);
+			Tools.Log("order_id="+order_id);
+			RequestDailog.showDialog(c, "正在确认订单");
+			HttpUtils.receiveGoods(res_receiveGoods, key, order_id);
+		}
+		
+	}
 
 	private static class ViewHolder
     {
@@ -276,7 +380,6 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 			if (error==null)//成功
 			{
 				Tools.Notic(c, "取消成功,请刷新该页面查看剩余订单", null);
@@ -290,7 +393,6 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 			
 		}
 	};
-	
 	/**
 	 * 付款
 	 */
@@ -307,12 +409,12 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 			JSONObject datas=null;
 			try {
 				 datas = response.getJSONObject("datas");
-				 error = response.getString("error");
+				 error = datas.getString("error");
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if (error==null)//成功
+			if (error.equals(null))//成功
 			{
 				Intent intent = new Intent();
 	            String packageName = c.getPackageName();
@@ -325,6 +427,48 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 			{
 				Tools.Log("res_Points_error="+error+"");
 //				Tools.Notic(B5_MyActivity.this, error+"", null);
+			}
+			
+		}
+		
+		
+	};
+	/**
+	 * 订单确认收货
+	 */
+	JsonHttpResponseHandler res_receiveGoods = new JsonHttpResponseHandler()
+	{
+		
+		@Override
+		public void onSuccess(int statusCode, Header[] headers,JSONObject response) {
+			// TODO Auto-generated method stub
+			super.onSuccess(statusCode, headers, response);
+			RequestDailog.closeDialog();
+			Log.e("确认收货", response+"");
+			String error=null;
+			JSONObject datas=null;
+			try {
+				datas = response.getJSONObject("datas");
+				error = datas.getString("error");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (error==null)//成功
+			{
+				Tools.Notic(c, "您已经确认收货", new OnClickListener() {
+					
+					@Override
+					public void onClick(View arg0) {
+						// TODO Auto-generated method stub
+						c.finish();
+					}
+				});
+			}
+			else//失败 
+			{
+				Tools.Log("res_Points_error="+error+"");
+				Tools.Notic(c, error+"", null);
 			}
 			
 		}

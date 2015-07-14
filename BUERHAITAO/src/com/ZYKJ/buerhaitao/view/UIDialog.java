@@ -45,6 +45,25 @@ public class UIDialog {
 		m_btn_2.setOnClickListener(lisener);
 		m_btn_3.setOnClickListener(lisener);
 	}
+	/** 2按键按钮dialog */
+	public static void ForTwoBtn(Context context, String[] showtxt,
+			OnClickListener lisener) {
+		dialog = new AlertDialog.Builder(context).create();
+		dialog.show();
+		Window window = dialog.getWindow();
+		// *** 主要就是在这里实现这种效果的.
+		// 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
+		window.setContentView(R.layout.dialog_modif_two);
+		
+		Button m_btn_1 = (Button) window.findViewById(R.id.dialog_modif_1);
+		Button m_btn_2 = (Button) window.findViewById(R.id.dialog_modif_2);
+		
+		m_btn_1.setText(showtxt[0]);
+		m_btn_2.setText(showtxt[1]);
+		
+		m_btn_1.setOnClickListener(lisener);
+		m_btn_2.setOnClickListener(lisener);
+	}
 
 	/** notic提示dialog */
 	public static void ForNotic(Context context, String text,

@@ -118,17 +118,17 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 			Tools.Log("没有上传图片");
 		}
         
-        //点赞
+        //点赞按钮操作
         String circle_id = data.get(position).get("circle_id").toString();
-        
         viewHolder.iv_zan.setOnClickListener(new Zan(position,key,circle_id));
         
         JSONArray array = (JSONArray) data.get(position).get("quote");
-        
-        adapter = new B5_3_MyShaiDanQuanPinglunAdapter(c,array);
-        viewHolder.lv_comment.setAdapter(adapter);
         //评论
         viewHolder.iv_comment.setOnClickListener(new Comment(position,key,circle_id));
+       
+        //评论的adapter
+        adapter = new B5_3_MyShaiDanQuanPinglunAdapter(c,array,key,circle_id);
+        viewHolder.lv_comment.setAdapter(adapter);
         //根据评论数的多少来确定评论显示的高度
         B5_3_MyShaiDanQuanPinglunAdapter listAdapter = (B5_3_MyShaiDanQuanPinglunAdapter) viewHolder.lv_comment.getAdapter();  
         if (listAdapter == null) { 
@@ -140,10 +140,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
             listItem.measure(0, 0); 
             totalHeight += listItem.getMeasuredHeight(); 
         } 
-
+        //设置评论的高度
         ViewGroup.LayoutParams params = viewHolder.lv_comment.getLayoutParams(); 
         params.height = totalHeight + (viewHolder.lv_comment.getDividerHeight() * (listAdapter.getCount())); 
-//        ((MarginLayoutParams)params).setMargins(10, 10, 10, 10);
         viewHolder.lv_comment.setLayoutParams(params); 
         
        
@@ -162,7 +161,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 //		viewHolder.comment0.setOnClickListener(new Comment(position));
 		ImageLoader.getInstance().displayImage(data.get(position).get("avatar").toString(), viewHolder.iv_head_img);
 //		ImageLoader.getInstance().displayImage(data.get(position).get("image").toString(), viewHolder.iv_head_img);
-		
 		return convertView;
 	}
 	/**

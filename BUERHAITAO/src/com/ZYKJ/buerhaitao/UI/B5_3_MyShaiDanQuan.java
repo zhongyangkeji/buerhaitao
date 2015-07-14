@@ -126,7 +126,9 @@ public class B5_3_MyShaiDanQuan extends BaseActivity implements IXListViewListen
 			RequestDailog.showDialog(this, "正在加载数据，请稍后");
 			HttpUtils.shaidanquan_mypublish(res_shaidanquan_mypublish, getSharedPreferenceValue("key"));
 		}else {
-			Toast.makeText(this, "我评论的", 500).show();
+//			Toast.makeText(this, "我评论的", 500).show();
+			RequestDailog.showDialog(this, "正在加载数据，请稍后");
+			HttpUtils.shaidanquan_myquote(res_shaidanquan_mypublish, getSharedPreferenceValue("key"));
 		}
 	}
 	@Override
@@ -137,7 +139,9 @@ public class B5_3_MyShaiDanQuan extends BaseActivity implements IXListViewListen
 			RequestDailog.showDialog(this, "正在加载数据，请稍后");
 			HttpUtils.shaidanquan_mypublish(res_shaidanquan_mypublish, getSharedPreferenceValue("key"));
 		}else {
-			Toast.makeText(this, "我评论的", 500).show();
+//			Toast.makeText(this, "我评论的", 500).show();
+			RequestDailog.showDialog(this, "正在加载数据，请稍后");
+			HttpUtils.shaidanquan_myquote(res_shaidanquan_mypublish, getSharedPreferenceValue("key"));
 		}
 	}
 	/**

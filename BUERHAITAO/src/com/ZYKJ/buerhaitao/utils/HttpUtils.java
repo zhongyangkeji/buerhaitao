@@ -577,7 +577,7 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 取消订单
+	 * 取消订单(未付款)
 	 * 
 	 * @param res
 	 * @param order_id
@@ -591,17 +591,35 @@ public class HttpUtils {
 		params.put("order_id", order_id);
 		client.post(url, params, res);
 	}
-
 	/**
-	 * 32确认收货
+	 * 取消订单(已付款)
 	 * 
 	 * @param res
 	 * @param order_id
+	 * @param extend_msg
 	 */
-	public static void receiveGoods(AsyncHttpResponseHandler res,
-			String order_id) {
-		String url = base_url + "receiveGoods&order_id=" + order_id;
-		client.get(url, res);
+	public static void cancelOrder_paid(AsyncHttpResponseHandler res,
+			String key, String order_id) {
+		String url = base_url + "index.php?act=member_order&op=order_cancel_refund";
+		RequestParams params = new RequestParams();
+		params.put("key", key);
+		params.put("order_id", order_id);
+		client.post(url, params, res);
+	}
+
+	/**
+	 * 订单确认收货
+	 * 
+	 * @param res
+	 * @param key
+	 * @param order_id
+	 */
+	public static void receiveGoods(AsyncHttpResponseHandler res,String key,String order_id) {
+		String url = base_url + "index.php?act=member_order&op=order_receive";
+		RequestParams params = new RequestParams();
+		params.put("key", key);
+		params.put("order_id", order_id);
+		client.post(url, params, res);
 	}
 
 	/**
@@ -902,9 +920,9 @@ public class HttpUtils {
 	 * @param res
 	 * @param order_id
 	 */
-	public static void getOrderDetail(AsyncHttpResponseHandler res,
+	public static void getOrderDetail(AsyncHttpResponseHandler res,String key,
 			String order_id) {
-		String url = base_url + "getOrderDetail&order_id=" + order_id;
+		String url = base_url + "index.php?act=member_order&op=show_order"+"&key="+key+"&order_id="+order_id;
 		client.get(url, res);
 
 	}

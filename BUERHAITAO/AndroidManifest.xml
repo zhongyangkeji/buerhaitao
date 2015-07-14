@@ -374,6 +374,7 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".UI.B5_5_OrderDetail"></activity>
     </application>
 
 </manifest>

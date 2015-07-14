@@ -1,5 +1,6 @@
 package com.ZYKJ.buerhaitao.adapter;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,6 +10,7 @@ import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,8 +18,14 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
+import com.ZYKJ.buerhaitao.utils.HttpUtils;
+import com.ZYKJ.buerhaitao.utils.Tools;
+import com.ZYKJ.buerhaitao.view.RequestDailog;
+import com.activeandroid.util.Log;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 
 
@@ -29,13 +37,16 @@ public class B5_3_MyShaiDanQuanPinglunAdapter extends BaseAdapter {
 	private LayoutInflater listContainer;
 	ViewHolder viewHolder = null;
 	String commentString;
+	String key,circle_id,reply_replyname,reply_id,member_name;
 //	ListView lv_comment;
 	GridViewAdatper_myshaidanquan photosadapter;
 
-	public B5_3_MyShaiDanQuanPinglunAdapter(Activity c, JSONArray quote) {
+	public B5_3_MyShaiDanQuanPinglunAdapter(Activity c, JSONArray quote ,String key ,String circle_id) {
 		this.c = c;
 		this.quote = quote;
 		listContainer = LayoutInflater.from(c);
+		this.key = key;
+		this.circle_id = circle_id;
 	}
 	@Override
 	public int getCount() {
@@ -82,10 +93,10 @@ public class B5_3_MyShaiDanQuanPinglunAdapter extends BaseAdapter {
             viewHolder = (ViewHolder)convertView.getTag();
         }
         try {
-        	String member_name = ((JSONObject)quote.get(position)).getString("member_name");
+        	member_name = ((JSONObject)quote.get(position)).getString("member_name");
         	String reply_content = ((JSONObject)quote.get(position)).getString("reply_content");
-        	String reply_replyname = ((JSONObject)quote.get(position)).getString("reply_replyname");
-        	
+        	reply_replyname = ((JSONObject)quote.get(position)).getString("reply_replyname");
+        	reply_id = ((JSONObject)quote.get(position)).getString("reply_id");
         	if (reply_replyname.equals("")) {//如果是直接回复圈主，则不显示“回复”，被回复的人的昵称
         		viewHolder.tv_huifu.setVisibility(View.GONE);
         		viewHolder.tv_reply_replyname.setVisibility(View.GONE);
@@ -99,24 +110,32 @@ public class B5_3_MyShaiDanQuanPinglunAdapter extends BaseAdapter {
         	// TODO Auto-generated catch block
         	e.printStackTrace();
         }
-		return convertView;
+        convertView.setOnClickListener(new CommentIt(position,key,reply_id,member_name));//每一条评论的点击事件
+		
+        
+        return convertView;
 	}
 	
-//	class Comment implements View.OnClickListener {
-//		int position;
-//		public Comment(int position) {
-//			this.position = position;
-//		}
-//		@Override
-//		public void onClick(View arg0) {
-//			// TODO Auto-generated method stub
-//			final AlertDialog.Builder builder = new AlertDialog.Builder(c);
-//			final AlertDialog aDialog=builder.create();  
-//			aDialog.show();
-//			
+	class CommentIt implements View.OnClickListener {
+		int position;
+		String key,member_name,reply_id;
+		public CommentIt(int position,String key,String reply_id,String member_name ) {
+			this.position = position;
+			this.key = key;
+			this.reply_id = reply_id;
+			this.member_name = member_name;
+		}
+		@Override
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			final AlertDialog.Builder builder = new AlertDialog.Builder(c);
+			final AlertDialog aDialog=builder.create();  
+			aDialog.show();
+			
 //			Window window = aDialog.getWindow();
-//			window.setContentView(R.layout.dialog_type_in);
+//			window.setContentView(R.layout.dialog_type_in_comment);
 //			aDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);//呼出输入法
+//			window.setGravity(Gravity.BOTTOM);//设置弹出框位于屏幕底部
 //			final EditText mEditText=(EditText) window.findViewById(R.id.et_type_in);
 //			Button btn_changeName=(Button) window.findViewById(R.id.btn_changeName);
 //			btn_changeName.setOnClickListener(new OnClickListener() {
@@ -124,21 +143,73 @@ public class B5_3_MyShaiDanQuanPinglunAdapter extends BaseAdapter {
 //				public void onClick(View arg0) {
 //					// TODO Auto-generated method stub
 //					commentString=mEditText.getText().toString().trim();
-//					 if (commentString.equals("")) {
-////						 Toast.makeText(c, "昵称不能为空", Toast.LENGTH_LONG).show();
-//						 aDialog.dismiss();
-//					}else{
-////						btn_login.setText(usernameString);//设置昵称并请求服务器
-//						aDialog.dismiss();
-//						//评论的网络请求
-////						HttpUtils.editname(res_editName, usernameString, getSharedPreferenceValue("key"));
-////						RequestDailog.showDialog(B5_MyActivity.this, "正在修改昵称，请稍后");
-//					}
-//					
+//					Log.e("key=",key);
+//					Log.e("circle_id=",circle_id);
+//					Log.e("commentString=",commentString);
+//					Log.e("reply_replyid=",reply_replyid);
+//					Log.e("reply_replyname=",reply_replyname);
+//					HttpUtils.comment(res_comment_it, key, circle_id, commentString, reply_replyid, reply_replyname);
+//					aDialog.dismiss();
 //				}
 //			});
-//		}
-//	}
+			Window window = aDialog.getWindow();
+			window.setContentView(R.layout.dialog_type_in_comment);
+			window.setGravity(Gravity.BOTTOM);
+			aDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);//呼出输入法
+			final EditText mEditText=(EditText) window.findViewById(R.id.et_type_in);
+			Button btn_changeName=(Button) window.findViewById(R.id.btn_changeName);
+			btn_changeName.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					commentString=mEditText.getText().toString().trim();
+					Tools.Log("key="+key);
+					Tools.Log("circle_id="+circle_id);
+					Tools.Log("commentString="+commentString);
+					Tools.Log("reply_id="+reply_id);
+					Tools.Log("reply_replyname="+reply_replyname);
+					HttpUtils.comment(res_comment_it, key, circle_id, commentString, reply_id, member_name);
+					aDialog.dismiss();
+				}
+			});
+			
+		}
+		 /**
+			 * 评论
+			 */
+			JsonHttpResponseHandler res_comment_it = new JsonHttpResponseHandler()
+			{
+				public void onSuccess(int statusCode, Header[] headers,
+						JSONObject response) {
+					// TODO Auto-generated method stub
+					super.onSuccess(statusCode, headers, response);
+					RequestDailog.closeDialog();
+					Tools.Log("评论123="+response);
+					String error=null;
+					JSONObject datas=null;
+					try {
+						 datas = response.getJSONObject("datas");
+						 error = datas.getString("error");
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+					if (error==null)//成功
+					{
+						Tools.Notic(c, "评论成功", null);
+					}
+					else//失败 
+					{
+						Tools.Log("res_Points_error="+error+"");
+						Tools.Notic(c, error, null);
+					}
+					
+				}
+				
+				
+			};
+		
+	}
 	
 	 private static class ViewHolder
 	    {
@@ -147,5 +218,5 @@ public class B5_3_MyShaiDanQuanPinglunAdapter extends BaseAdapter {
 			TextView tv_reply_replyname;//被评论者的昵称
 			TextView tv_reply_content;//评论的内容
 	    }
-	 
+
 }
