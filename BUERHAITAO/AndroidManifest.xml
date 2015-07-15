@@ -107,22 +107,6 @@
         </activity>
         <activity android:name="com.ZYKJ.buerhaitao.UI.B5_9_1_getArea" >
         </activity>
-        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_1_NvShiFuZhuang" >
-        </activity>
-        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_2_NanShiFuZhuang" >
-        </activity>
-        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_3_MuYing" >
-        </activity>
-        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_4_HuaZhuangPin" >
-        </activity>
-        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_5_ShouJiShuMa" >
-        </activity>
-        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_6_BanGongJiaDian" >
-        </activity>
-        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_7_ShengHuoFuWu" >
-        </activity>
-        <activity android:name="com.ZYKJ.buerhaitao.UI.B1_8_TeChan" >
-        </activity>
         <activity android:name="com.ZYKJ.buerhaitao.UI.B1_a1_TianTianTeJia" >
         </activity>
         <activity android:name="com.ZYKJ.buerhaitao.UI.B5_3_ShaiDanQuan" >

@@ -1135,6 +1135,18 @@ public class HttpUtils {
 		client.get(url, res);
 	}
 	
+	/**
+	 *  购物车详情
+	 * @param key 当前登录令牌
+	 * @param
+	 */
+	public static void getShoppingCarInfoList(AsyncHttpResponseHandler res, String key) {
+		String url = base_url + "index.php?act=member_cart&op=cart_list";
+		RequestParams params = new RequestParams();
+		params.put("key",key);
+		client.post(url, params,res);
+	}
+	
 	public static String iterateParams(HashMap<String,String> params){
 		String parameter = "";
 		Iterator<String> iterator = params.keySet().iterator();

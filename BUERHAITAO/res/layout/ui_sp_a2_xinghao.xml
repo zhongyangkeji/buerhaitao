@@ -26,6 +26,7 @@
             android:layout_height="fill_parent"
             android:layout_marginTop="30dp"
             android:background="#fff"
+            android:layout_marginBottom="55dp"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -49,24 +50,40 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_chanpinprice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="￥28.00-31.00"
                     android:textColor="#FD4900" />
 
                 <TextView
+                    android:id="@+id/tv_kucun"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="库存12312件"
                     android:textColor="#444849" />
 
+                <LinearLayout 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+                    
                 <TextView
+                    android:id="@+id/tv_qxzlx"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="请选择 机身颜色 套餐类型"
+                    android:text="请选择 商品属性"
                     android:textColor="#444849" />
+                <TextView
+                    android:id="@+id/tv_qxzlx1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text=""
+                    android:textColor="#444849" />
+                </LinearLayout>
             </LinearLayout>
 
             <View
@@ -84,26 +101,39 @@
                     android:orientation="vertical" >
 
                     <TextView
+                        android:id="@+id/tiaomu1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="10dp"
                         android:text="机身颜色"
                         android:textColor="#444849"
-                        android:textSize="16sp" />
+                        android:textSize="16sp" 
+                        android:visibility="gone"/>
 
                     <LinearLayout
+                        android:id="@+id/tiaomu1_zi"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content" 
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="10dp">
-                        <TextView 
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone">
+                        <GridView 
+        					android:id="@+id/gview"
+        					android:layout_width="match_parent"
+        					android:layout_height="wrap_content"
+        					android:numColumns="auto_fit"    
+							android:columnWidth="80dp"
+							android:stretchMode="columnWidth">
+                            
+                        </GridView>
+                        <!-- <TextView 
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:text="白色"
                             android:gravity="center"
                             android:background="@drawable/body_cont_bg"
-                            android:padding="5dp"/>
+                            android:padding="5dp"/> -->
                     </LinearLayout>
                     
             	<View
@@ -112,25 +142,38 @@
                 	android:layout_marginTop="10dp"
                 	android:background="#E0E0E0" />
             	<TextView
+            	    	android:id="@+id/tiaomu2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="10dp"
                         android:text="套餐类型"
                         android:textColor="#444849"
-                        android:textSize="16sp" />
+                        android:textSize="16sp" 
+                        android:visibility="gone"/>
 
                     <LinearLayout
+            	    	android:id="@+id/tiaomu2_zi"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content" 
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="10dp">
-                        <TextView 
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone">
+                        <GridView 
+        					android:id="@+id/gview1"
+        					android:layout_width="match_parent"
+        					android:layout_height="wrap_content"
+        					android:numColumns="auto_fit"    
+							android:columnWidth="80dp"
+							android:stretchMode="columnWidth">
+                            
+                        </GridView>
+                        <!-- <TextView 
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:text="官方标配"
                             android:gravity="center"
-                            android:background="@drawable/body_cont_bg"/>
+                            android:background="@drawable/body_cont_bg"/> -->
                     </LinearLayout>
                 
                 </LinearLayout>
@@ -158,6 +201,7 @@
             	android:layout_height="55dp"
             	android:layout_weight="1">
             	<TextView 
+            	    android:id="@+id/tv_addcar"
             	    android:layout_width="fill_parent"
             	    android:layout_height="fill_parent"
             	    android:background="#FFCC00"

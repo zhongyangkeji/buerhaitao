@@ -344,7 +344,7 @@
                     android:layout_marginLeft="15dp"
                     android:background="#d6d6d6" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ll_dayspecial"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent">
@@ -355,11 +355,12 @@
                         android:layout_height="80dp"
                         android:layout_margin="10dp"
                         android:src="@drawable/buerhaitao" />
-
+                    
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="87dp"
                         android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@id/im_b1_a1_pic"
                         android:orientation="vertical" >
 
                         <RelativeLayout
@@ -422,15 +423,99 @@
                                 android:text="￥98" />
 
                             <ImageView
+                                android:id="@+id/im_moreinfo"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="fill_parent"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="10dp"
                                 android:src="@drawable/b1_a2_shenglve" />
                         </RelativeLayout>
                     </LinearLayout>
-                </LinearLayout>
+                    <LinearLayout 
+                        android:id="@+id/ll_moreinfolayout"
+                        android:layout_width="120dp"
+                        android:layout_height="fill_parent"
+                        android:background="#F5F5F5"
+                        android:layout_alignParentRight="true"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+                        <LinearLayout 
+                            android:layout_width="fill_parent"
+                            android:layout_height="0.0dp"
+                            android:layout_weight="10">
+                            <TextView 
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:textSize="16sp"
+                                android:text="店铺名称"/>
+                        </LinearLayout>
+                        <View 
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:background="#D9D9D9"/>
+                        <LinearLayout 
+                            android:layout_width="fill_parent"
+                            android:layout_height="0.0dp"
+                            android:layout_weight="7">
+                            <TextView 
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:text="库存："/>
+                            <TextView 
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="#FA9334"
+                                android:text="890件"/>
+                        </LinearLayout>
+                        <LinearLayout 
+                            android:layout_width="fill_parent"
+                            android:layout_height="0.0dp"
+                            android:layout_weight="7">
+                            <TextView 
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:text="销量："/>
+                            <TextView 
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="#FA9334"
+                                android:text="1231件"/>                            
+                        </LinearLayout>
+                        <LinearLayout 
+                            android:layout_width="fill_parent"
+                            android:layout_height="0.0dp"
+                            android:layout_weight="7">
+                            <TextView 
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:text="浏览量："/>
+                            <TextView 
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="#FA9334"
+                                android:text="42132次"/>
+                            
+                        </LinearLayout>
+                    </LinearLayout>
+                    
+                </RelativeLayout>
             </LinearLayout>
 
             <!-- 晒单圈 -->

@@ -25,7 +25,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,9 +53,10 @@ public class B1_HomeActivity extends BaseActivity {
 	private List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 	private List<Map<String, String>> data1 = new ArrayList<Map<String, String>>();
 	//天天特价
-	private ImageView im_b1_a1_pic;
+	private ImageView im_b1_a1_pic,im_moreinfo;
 	private TextView tv_b1_a1_chanpinname,tv_b1_a1_chanpinjianjie,tv_b1_a1_zhehoujia,tv_b1_a1_yuanjia,tv_goodsid;
-	private LinearLayout ll_dayspecial;
+	private LinearLayout ll_moreinfolayout;
+	private RelativeLayout ll_dayspecial;
 	private RelativeLayout rl_ditu;
 	private String cityname;
 	private TextView tv_cityname;//城市名称
@@ -200,9 +200,11 @@ public class B1_HomeActivity extends BaseActivity {
 		tv_b1_a1_chanpinjianjie = (TextView)findViewById(R.id.tv_b1_a1_chanpinjianjie);
 		tv_b1_a1_zhehoujia = (TextView)findViewById(R.id.tv_b1_a1_zhehoujia);
 		tv_b1_a1_yuanjia = (TextView)findViewById(R.id.tv_b1_a1_yuanjia);
-		ll_dayspecial = (LinearLayout)findViewById(R.id.ll_dayspecial);
+		ll_dayspecial = (RelativeLayout)findViewById(R.id.ll_dayspecial);
 		rl_ditu = (RelativeLayout)findViewById(R.id.rl_ditu);
-		setListener(im_b1nvshi,im_b1nanshi,im_b1muying,im_b1huazhuang,im_b1shouji,im_b1bangong,im_b1shenghuo,im_b1techan,rl_b1_a1tttj,b5_3_shaidanquan,rl_b1_a2_cnxh,rl_b1_a3_mrhd,rl_sousuokuang,ll_dayspecial,rl_ditu);
+		im_moreinfo = (ImageView)findViewById(R.id.im_moreinfo);
+		ll_moreinfolayout = (LinearLayout)findViewById(R.id.ll_moreinfolayout);
+		setListener(im_b1nvshi,im_b1nanshi,im_b1muying,im_b1huazhuang,im_b1shouji,im_b1bangong,im_b1shenghuo,im_b1techan,rl_b1_a1tttj,b5_3_shaidanquan,rl_b1_a2_cnxh,rl_b1_a3_mrhd,rl_sousuokuang,ll_dayspecial,rl_ditu,im_moreinfo,ll_moreinfolayout);
 	}
 
 	@Override
@@ -211,51 +213,35 @@ public class B1_HomeActivity extends BaseActivity {
 		switch (v.getId()) {
 		//女士服装
 		case R.id.im_b1nvshi:
-			Intent itnvshi = new Intent();
-			itnvshi.setClass(B1_HomeActivity.this, B1_1_NvShiFuZhuang.class);
-			startActivity(itnvshi);
+			BaDaFenLei("1099");
 			break;
 		//男士服装
 		case R.id.im_b1nanshi:
-			Intent itnanshi = new Intent();
-			itnanshi.setClass(B1_HomeActivity.this, B1_2_NanShiFuZhuang.class);
-			startActivity(itnanshi);
+			BaDaFenLei("1100");
 			break;
 		//母婴
 		case R.id.im_b1muying:
-			Intent itmuying = new Intent();
-			itmuying.setClass(B1_HomeActivity.this, B1_3_MuYing.class);
-			startActivity(itmuying);
+			BaDaFenLei("1063");
 			break;
 		//化妆品
 		case R.id.im_b1huazhuang:
-			Intent ithuazhuang = new Intent();
-			ithuazhuang.setClass(B1_HomeActivity.this, B1_4_HuaZhuangPin.class);
-			startActivity(ithuazhuang);
+			BaDaFenLei("1064");
 			break;
 		//手机数码
 		case R.id.im_b1shouji:
-			Intent itshouji = new Intent();
-			itshouji.setClass(B1_HomeActivity.this, B1_5_ShouJiShuMa.class);
-			startActivity(itshouji);
+			BaDaFenLei("1065");
 			break;
 		//办公家电
 		case R.id.im_b1bangong:
-			Intent itbangong = new Intent();
-			itbangong.setClass(B1_HomeActivity.this, B1_6_BanGongJiaDian.class);
-			startActivity(itbangong);
+			BaDaFenLei("1066");
 			break;
 		//生活服务
 		case R.id.im_b1shenghuo:
-			Intent itshenghuo = new Intent();
-			itshenghuo.setClass(B1_HomeActivity.this, B1_7_ShengHuoFuWu.class);
-			startActivity(itshenghuo);
+			BaDaFenLei("1067");
 			break;
 		//特产
 		case R.id.im_b1techan:
-			Intent ittechan = new Intent();
-			ittechan.setClass(B1_HomeActivity.this, B1_8_TeChan.class);
-			startActivity(ittechan);
+			BaDaFenLei("1068");
 			break;
 		//天天特价
 		case R.id.rl_b1_a1tttj:
@@ -306,6 +292,12 @@ public class B1_HomeActivity extends BaseActivity {
 			itmap.setClass(B1_HomeActivity.this, B1_01_MapActivity.class);
 			startActivity(itmap);
 			break;		
+		case R.id.im_moreinfo:
+			ll_moreinfolayout.setVisibility(View.VISIBLE);
+			break;
+		case R.id.ll_moreinfolayout:
+			ll_moreinfolayout.setVisibility(View.GONE);
+			break;
 		case R.id.error_layout:// 错误页面的点击
 			//htttp请求
 			break;
@@ -348,5 +340,12 @@ public class B1_HomeActivity extends BaseActivity {
 //		startActivity(intent);
 		Toast.makeText(this, type, Toast.LENGTH_LONG).show();
 	}
-
+	
+	//八大分类
+	public void BaDaFenLei(String gc_id){
+		B1_a4_SearchActivity.CHANNEL=0;
+		Intent intent = new Intent(B1_HomeActivity.this,B1_a4_SearchActivity.class);
+		intent.putExtra("gc_id", gc_id);
+		startActivity(intent);
+	}
 }
