@@ -153,7 +153,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 //		{
 			HttpUtils.getPointsLog(res_Points, getSharedPreferenceValue("key"));
 //		}
-			
 	}
 	public void onClick(View v)
 	{
@@ -166,7 +165,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 				UIDialog.closeDialog();
 				/**
 				 * 刚开始，我自己也不知道ACTION_PICK是干嘛的，后来直接看Intent源码，
-				 * 可以发现里面很多东西，Intent是个很强大的东西，大家一定仔细阅读下
+				 * 可以发现里面很多东西,Intent是个很强大的东西，大家一定仔细阅读下
 				 */
 				Intent intent_toXIANGCE = new Intent(Intent.ACTION_PICK, null);
 				/**

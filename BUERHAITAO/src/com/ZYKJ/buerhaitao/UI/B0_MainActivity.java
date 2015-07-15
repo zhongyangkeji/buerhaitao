@@ -46,13 +46,13 @@ public class B0_MainActivity extends BaseTabActivity {
 		intent_1 = new Intent(this, B1_HomeActivity.class);//相当于IndexActivity
 		intent_2 = new Intent(this, B2_ClassifyActivity.class);
 		intent_3 = new Intent(this, B3_ShoppingCartActivity.class);
-//		intent_4 = new Intent(this, SetActivity.class);
+		intent_4 = new Intent(this, B4_StoreActivity.class);
 		intent_5 = new Intent(this, B5_MyActivity.class);
 
 		m_tab.addTab(buildTagSpec("test1", 0, intent_1));
 		m_tab.addTab(buildTagSpec("test2", 1, intent_2));
 		m_tab.addTab(buildTagSpec("test3", 2, intent_3));
-//		m_tab.addTab(buildTagSpec("test4", 3, intent_4));
+		m_tab.addTab(buildTagSpec("test4", 3, intent_4));
 		m_tab.addTab(buildTagSpec("test5", 4, intent_5));
 
 		mRadioGroup = (RadioGroup) findViewById(R.id.tab_rgroup);
@@ -70,13 +70,9 @@ public class B0_MainActivity extends BaseTabActivity {
 					m_tab.setCurrentTabByTag("test2");
 				} else if (checkedId == mraRadioButton_shopcar.getId()) {
 					m_tab.setCurrentTabByTag("test3");
-				} 
-				else if (checkedId == mradRadioButton_store.getId()) 
-				{
+				} else if (checkedId == mradRadioButton_store.getId()) {
 					m_tab.setCurrentTabByTag("test4");
-				}
-				else if (checkedId == mradRadioButton_my.getId()) 
-				{
+				} else if (checkedId == mradRadioButton_my.getId()) {
 					m_tab.setCurrentTabByTag("test5");
 				}
 			}

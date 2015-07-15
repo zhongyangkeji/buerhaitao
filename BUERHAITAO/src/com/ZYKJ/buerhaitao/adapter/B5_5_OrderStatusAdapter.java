@@ -10,21 +10,32 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
+import com.ZYKJ.buerhaitao.UI.B5_13_MyPurse;
+import com.ZYKJ.buerhaitao.UI.B5_5_OrderDetail;
+import com.ZYKJ.buerhaitao.UI.B5_MyActivity;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
 import com.ZYKJ.buerhaitao.utils.Tools;
 import com.ZYKJ.buerhaitao.view.RequestDailog;
+import com.ZYKJ.buerhaitao.view.UIDialog;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.pingplusplus.android.PaymentActivity;
 
 public class B5_5_OrderStatusAdapter extends BaseAdapter {
 	
@@ -38,6 +49,11 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
     private static final int DAISHOUHUO = 30;
     private static final int YISHOUHUO  = 40;
 	
+	String price,pay_sn;                                     //订单金额
+    private static final String CHANNEL_WECHAT = "wx";//通过微信支付
+    private static final String CHANNEL_ALIPAY = "alipay";//通过支付宝支付
+    private static final int REQUEST_CODE_PAYMENT = 1;
+    
     B5_5_OrderStatuslistviewAdapter adapter;
     
 
@@ -85,7 +101,6 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
             viewHolder.btn_tocomment = (Button) convertView.findViewById(R.id.btn_tocomment);
             viewHolder.btn_tuihuanhuo = (Button) convertView.findViewById(R.id.btn_tuihuanhuo);
             viewHolder.btn_querenshouhuo = (Button) convertView.findViewById(R.id.btn_querenshouhuo);
-            
             viewHolder.listView = (ListView) convertView.findViewById(R.id.listview_goodslist);
             convertView.setTag(viewHolder);
         }
@@ -139,16 +154,23 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 			default:
 				break;
 		}
+        
+        pay_sn = data.get(position).get("pay_sn").toString();
+        price = data.get(position).get("order_amount").toString();
         viewHolder.tv_storename.setText(data.get(position).get("store_name").toString());//店铺名
         JSONArray extend_order_goods = (JSONArray) ((Map) data.get(position)).get("extend_order_goods");
         viewHolder.tv_ordergoodsnumber.setText("共有"+extend_order_goods.length()+"件商品");//订单中商品的数量
-        viewHolder.tv_orderprice.setText("实付:￥"+data.get(position).get("order_amount").toString());
+        viewHolder.tv_orderprice.setText("实付:￥"+price);
         adapter = new B5_5_OrderStatuslistviewAdapter(c,extend_order_goods);
         viewHolder.listView.setAdapter(adapter);
         
         viewHolder.btn_deletetheorder.setOnClickListener(new DeletetheorderListener(position,data.get(position).get("order_id").toString()));
-        viewHolder.btn_paytheorder.setOnClickListener(new PaytheorderListener(position,data.get(position).get("order_id").toString()));
-		return convertView;
+        viewHolder.btn_paytheorder.setOnClickListener(new PaytheorderListener(position,pay_sn));
+        viewHolder.listView.setOnItemClickListener(new GetOrderDetail(position,data.get(position).get("order_id").toString(),status,pay_sn));
+        viewHolder.btn_tuihuanhuo.setOnClickListener(new TuiHuan(position,data.get(position).get("store_phone").toString()));
+        viewHolder.btn_querenshouhuo.setOnClickListener(new QueRen(position,data.get(position).get("order_id").toString()));
+        
+        return convertView;
 	}
 	/**
 	 * 取消订单
@@ -162,7 +184,6 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 			this.position = position;
 			this.orderidString = orderidString;
 		}
-
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
@@ -170,7 +191,19 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 			RequestDailog.showDialog(c, "正在取订单，请稍后");
 //			Log.e("key", key+"");
 			Log.e("orderidString", orderidString);
-			HttpUtils.cancelOrder(res_cancelOrder, key, orderidString);
+			
+			switch (status) {
+			case DAIFUKUAN://待付款中的取消订单
+				HttpUtils.cancelOrder(res_cancelOrder, key, orderidString);
+				break;
+			case DAIFAHUO://待发货中的取消订单
+				HttpUtils.cancelOrder_paid(res_cancelOrder, key, orderidString);
+				break;
+
+			default:
+				break;
+			}
+			
 //			Tools.Notic(c, "是否取消该订单？", new OnClickListener() {
 //				
 //				@Override
@@ -187,27 +220,123 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 	 */
 	class PaytheorderListener implements View.OnClickListener {
 		int position;
-		String orderidString;
-		public PaytheorderListener(int position,String orderidString) {
+		String pay_sn;
+		public PaytheorderListener(int position,String pay_sn) {
 			this.position = position;
-			this.orderidString = orderidString;
+			this.pay_sn = pay_sn;
 		}
-		
 		@Override
 		public void onClick(View v) {
+			UIDialog.ForThreeBtn(c, new String[] { "微信", "支付宝","取消" }, new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					switch (v.getId()) {
+					case R.id.dialog_modif_1:// 微信
+						UIDialog.closeDialog();
+						Log.e("key=", key);
+						Log.e("pay_sn=", pay_sn);
+						Log.e("CHANNEL_WECHAT=", CHANNEL_WECHAT);
+						HttpUtils.payTheOrder(res_payTheOrder, key, pay_sn, CHANNEL_WECHAT);
+						break;
+					case R.id.dialog_modif_2:// 支付宝
+						UIDialog.closeDialog();
+						HttpUtils.payTheOrder(res_payTheOrder, key, pay_sn, CHANNEL_ALIPAY);
+						break;
+					case R.id.dialog_modif_3:// 取消
+						UIDialog.closeDialog();
+						break;
+
+					default:
+						break;
+					}
+				}
+			});
+		}
+		
+	}
+	/**
+	 * 跳转到订单详情
+	 * @author zyk
+	 */
+	class GetOrderDetail implements ListView.OnItemClickListener {
+		int position;
+		String order_id;
+		String pay_sn;
+		int status;
+		public GetOrderDetail(int position,String order_id,int status,String pay_sn) {
+			this.position = position;
+			this.order_id = order_id;
+			this.pay_sn = pay_sn;
+			this.status = status;
+		}
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
 			// TODO Auto-generated method stub
-//			Tools.Log("key="+key);
-			RequestDailog.showDialog(c, "正在取订单，请稍后");
-//			Log.e("key", key+"");
-			Log.e("orderidString", orderidString);
-			HttpUtils.cancelOrder(res_cancelOrder, key, orderidString);
-//			Tools.Notic(c, "是否取消该订单？", new OnClickListener() {
-//				
-//				@Override
-//				public void onClick(View arg0) {
-//					// TODO Auto-generated method stub
-//				}
-//			});
+			Intent intent_to_detail  = new Intent(c,B5_5_OrderDetail.class);
+			intent_to_detail.putExtra("order_id", order_id);
+			intent_to_detail.putExtra("status", status);
+			intent_to_detail.putExtra("pay_sn", pay_sn);
+			c.startActivity(intent_to_detail);
+			
+		}
+		
+	}
+	/**
+	 * 退换货
+	 * @author zyk
+	 */
+	class TuiHuan implements View.OnClickListener {
+		int position;
+		String phone;
+		public TuiHuan(int position,String phone) {
+			this.position = position;
+			this.phone = phone;
+		}
+		@Override
+		public void onClick(View v) {
+			UIDialog.ForTwoBtn(c, new String[] { "店铺电话:"+phone,"取消" }, new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					switch (v.getId()) {
+					case R.id.dialog_modif_1:// 给店家打电话
+						UIDialog.closeDialog();
+						 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
+			                // 通知activtity处理传入的call服务
+			             c.startActivity(intent);
+						break;
+					case R.id.dialog_modif_2:// 取消
+						UIDialog.closeDialog();
+						break;
+
+					default:
+						break;
+					}
+				}
+			});
+		}
+		
+	}
+	/**
+	 * 确认订单
+	 * @author zyk
+	 */
+	class QueRen implements View.OnClickListener {
+		int position;
+		String order_id;
+		public QueRen(int position,String order_id) {
+			this.position = position;
+			this.order_id = order_id;
+		}
+		@Override
+		public void onClick(View v) {
+			Toast.makeText(c, "123", 400).show();
+			Tools.Log("key="+key);
+			Tools.Log("order_id="+order_id);
+			RequestDailog.showDialog(c, "正在确认订单");
+			HttpUtils.receiveGoods(res_receiveGoods, key, order_id);
 		}
 		
 	}
@@ -251,7 +380,6 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 			if (error==null)//成功
 			{
 				Tools.Notic(c, "取消成功,请刷新该页面查看剩余订单", null);
@@ -265,6 +393,127 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 			
 		}
 	};
-	
+	/**
+	 * 付款
+	 */
+	JsonHttpResponseHandler res_payTheOrder = new JsonHttpResponseHandler()
+	{
 
+		@Override
+		public void onSuccess(int statusCode, Header[] headers,JSONObject response) {
+			// TODO Auto-generated method stub
+			super.onSuccess(statusCode, headers, response);
+			RequestDailog.closeDialog();
+			Log.e("付款", response+"");
+			String error=null;
+			JSONObject datas=null;
+			try {
+				 datas = response.getJSONObject("datas");
+				 error = datas.getString("error");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (error.equals(null))//成功
+			{
+				Intent intent = new Intent();
+	            String packageName = c.getPackageName();
+	            ComponentName componentName = new ComponentName(packageName, packageName + ".wxapi.WXPayEntryActivity");
+	            intent.setComponent(componentName);
+	            intent.putExtra(PaymentActivity.EXTRA_CHARGE, response.toString());
+	            c.startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+			}
+			else//失败 
+			{
+				Tools.Log("res_Points_error="+error+"");
+//				Tools.Notic(B5_MyActivity.this, error+"", null);
+			}
+			
+		}
+		
+		
+	};
+	/**
+	 * 订单确认收货
+	 */
+	JsonHttpResponseHandler res_receiveGoods = new JsonHttpResponseHandler()
+	{
+		
+		@Override
+		public void onSuccess(int statusCode, Header[] headers,JSONObject response) {
+			// TODO Auto-generated method stub
+			super.onSuccess(statusCode, headers, response);
+			RequestDailog.closeDialog();
+			Log.e("确认收货", response+"");
+			String error=null;
+			JSONObject datas=null;
+			try {
+				datas = response.getJSONObject("datas");
+				error = datas.getString("error");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (error==null)//成功
+			{
+				Tools.Notic(c, "您已经确认收货", new OnClickListener() {
+					
+					@Override
+					public void onClick(View arg0) {
+						// TODO Auto-generated method stub
+						c.finish();
+					}
+				});
+			}
+			else//失败 
+			{
+				Tools.Log("res_Points_error="+error+"");
+				Tools.Notic(c, error+"", null);
+			}
+			
+		}
+		
+		
+	};
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        //支付页面返回处理
+        if (requestCode == REQUEST_CODE_PAYMENT) {
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getExtras().getString("pay_result");
+                /* 处理返回值
+                 * "success" - payment succeed
+                 * "fail"    - payment failed
+                 * "cancel"  - user canceld
+                 * "invalid" - payment plugin not installed
+                 */
+//                Tools.Log("支付结果="+result);
+//                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
+//                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
+//                showMsg(result, errorMsg, extraMsg);
+                if (result.equals("success")) {
+					Tools.Notic(c, "您已经付款成功", new OnClickListener() {
+						
+						@Override
+						public void onClick(View arg0) {
+							// TODO Auto-generated method stub
+							Intent intent_toMy = new Intent(c,B5_MyActivity.class);
+							c.startActivity(intent_toMy);
+							c.finish();
+						}
+					});
+				}else if (result.equals("fail")) {
+					Tools.Notic(c, "支付失败，请重试", null);
+				}else if (result.equals("cancel")) {
+					Tools.Notic(c, "支付取消", null);
+				}else if (result.equals("invalid")) {
+					Tools.Notic(c, "支付失败，请重新支付", null);
+					
+				}
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+            	Tools.Notic(c, "支付取消", null);
+            }
+        }
+    }
 }

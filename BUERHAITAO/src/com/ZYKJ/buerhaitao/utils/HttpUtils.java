@@ -577,7 +577,7 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 取消订单
+	 * 取消订单(未付款)
 	 * 
 	 * @param res
 	 * @param order_id
@@ -591,17 +591,35 @@ public class HttpUtils {
 		params.put("order_id", order_id);
 		client.post(url, params, res);
 	}
-
 	/**
-	 * 32确认收货
+	 * 取消订单(已付款)
 	 * 
 	 * @param res
 	 * @param order_id
+	 * @param extend_msg
 	 */
-	public static void receiveGoods(AsyncHttpResponseHandler res,
-			String order_id) {
-		String url = base_url + "receiveGoods&order_id=" + order_id;
-		client.get(url, res);
+	public static void cancelOrder_paid(AsyncHttpResponseHandler res,
+			String key, String order_id) {
+		String url = base_url + "index.php?act=member_order&op=order_cancel_refund";
+		RequestParams params = new RequestParams();
+		params.put("key", key);
+		params.put("order_id", order_id);
+		client.post(url, params, res);
+	}
+
+	/**
+	 * 订单确认收货
+	 * 
+	 * @param res
+	 * @param key
+	 * @param order_id
+	 */
+	public static void receiveGoods(AsyncHttpResponseHandler res,String key,String order_id) {
+		String url = base_url + "index.php?act=member_order&op=order_receive";
+		RequestParams params = new RequestParams();
+		params.put("key", key);
+		params.put("order_id", order_id);
+		client.post(url, params, res);
 	}
 
 	/**
@@ -826,9 +844,24 @@ public class HttpUtils {
 		RequestParams requestParams = new RequestParams();
 		requestParams.put("key", key);
 		requestParams.put("channel", channel );
-		requestParams.put("pdr_amount", pdr_amount);
+		requestParams.put("pdramount", pdr_amount);
 		client.post(url, requestParams, res);
 		
+	}
+	/**
+	 * 订单支付
+	 * 
+	 * @param res
+	 */
+	public static void payTheOrder(AsyncHttpResponseHandler res, String key, String pay_sn,String channel ) {
+		String url = base_url + "index.php?act=member_payment&op=pay"+"&key="+key+"&pay_sn="+pay_sn+"&channel="+channel;
+		client.get(url, res);
+//		String url = base_url + "index.php?act=member_payment&op=pay";
+//		RequestParams params = new RequestParams();
+//		params.put("key", key);
+//		params.put("pay_sn", pay_sn);
+//		params.put("channel", channel);
+//		client.post(url, params, res);
 	}
 	/**
 	 * 45 积分订单确认收货
@@ -887,9 +920,9 @@ public class HttpUtils {
 	 * @param res
 	 * @param order_id
 	 */
-	public static void getOrderDetail(AsyncHttpResponseHandler res,
+	public static void getOrderDetail(AsyncHttpResponseHandler res,String key,
 			String order_id) {
-		String url = base_url + "getOrderDetail&order_id=" + order_id;
+		String url = base_url + "index.php?act=member_order&op=show_order"+"&key="+key+"&order_id="+order_id;
 		client.get(url, res);
 
 	}
@@ -1033,6 +1066,34 @@ public class HttpUtils {
 	public static void shaidanquan_myquote(AsyncHttpResponseHandler res, String key) {
 		String url = base_url + "index.php?act=member_circle&op=my_quote"+"&key="+key;
 		client.get(url, res);
+	}
+	/**
+	 * 晒单圈-点赞
+	 * @param res
+	 * @param key
+	 */
+	public static void zan(AsyncHttpResponseHandler res, String key,String circle_id) {
+		String url = base_url + "index.php?act=member_circle&op=praise";
+		RequestParams params = new RequestParams();
+		params.put("key", key);
+		params.put("circle_id", circle_id);
+		client.post(url, params, res);
+	}
+	/**
+	 * 晒单圈-评论
+	 * @param res
+	 * @param key
+	 */
+	public static void comment(AsyncHttpResponseHandler res, String key,
+			String circle_id,String content,String reply_replyid,String reply_replyname) {
+		String url = base_url + "index.php?act=member_circle&op=quote";
+		RequestParams params = new RequestParams();
+		params.put("key", key);
+		params.put("circle_id", circle_id);
+		params.put("content", content );
+		params.put("reply_replyid", reply_replyid);
+		params.put("reply_replyname", reply_replyname);
+		client.post(url, params, res);
 	}
 	/**
 	 * 上传身份证

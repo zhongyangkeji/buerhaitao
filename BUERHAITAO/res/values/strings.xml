@@ -152,6 +152,8 @@
 <!--我的收藏 -->
 <string name="edit">编辑</string>
 <string name="product">产品</string>
+<!-- 订单相关 -->
+<string name="orderdetail">订单详情</string>
 
 <!-- 微社区 -->
     <string name="feed_detail">feed详情页面</string>

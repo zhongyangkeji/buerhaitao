@@ -54,6 +54,13 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 	
 	String key;
 	@Override
+		protected void onResume() {
+			// TODO Auto-generated method stub
+			super.onResume();
+			HttpUtils.getOrderList(res_getOrderList, key, status);
+		}
+	
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
@@ -191,7 +198,7 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 	@Override
 	public void onLoadMore(int id) {
 		// TODO Auto-generated method stub
-		RequestDailog.showDialog(this, "正在加载数据，请稍后");
+//		RequestDailog.showDialog(this, "正在加载数据，请稍后");
 		HttpUtils.getOrderList(res_getOrderList, key, status);
 	}
 	/**
@@ -228,12 +235,14 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 						JSONObject order_list1 =((JSONObject) order_list.get(0));
 						
 						map.put("store_name", order_list1.getString("store_name"));
+						map.put("store_phone", order_list1.getString("store_phone"));
 						map.put("order_id", order_list1.getString("order_id"));
+						map.put("pay_sn", order_list1.getString("pay_sn"));
 						map.put("order_amount", order_list1.getString("order_amount"));
 						map.put("extend_order_goods", order_list1.getJSONArray("extend_order_goods"));
 						dataList.add(map);
 					}
-					Tools.Log("dataList="+dataList);
+//					Tools.Log("dataList="+dataList);
 					adapter.notifyDataSetChanged();
 				} 
 				catch (org.json.JSONException e) {
