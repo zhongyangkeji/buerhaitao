@@ -88,7 +88,7 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_shangpinxiangqing);
 		initView();
-		HttpUtils.getGoodsInfo(res_goodsinfo, "100024");
+		HttpUtils.getGoodsInfo(res_goodsinfo, "100001");
 	}
 	
 	private void initView(){
