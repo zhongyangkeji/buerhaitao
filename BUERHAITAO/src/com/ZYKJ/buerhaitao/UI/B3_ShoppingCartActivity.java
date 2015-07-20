@@ -1,9 +1,7 @@
 package com.ZYKJ.buerhaitao.UI;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -12,18 +10,16 @@ import org.json.JSONObject;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.adapter.B3_ShpppingCartAdapter;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
-import com.ZYKJ.buerhaitao.data.ChildrenItem;
 import com.ZYKJ.buerhaitao.data.GroupItem;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
 import com.ZYKJ.buerhaitao.utils.Tools;
@@ -40,12 +36,11 @@ public class B3_ShoppingCartActivity extends BaseActivity{
 	//购物车list
 	private ExpandableListView expandableList;
 	//购物车数据
-	List<Map<String, String>> data = new ArrayList<Map<String, String>>();
-	List<Map<String, String>> data1 = new ArrayList<Map<String, String>>();
 	private B3_ShpppingCartAdapter adapter;
 	private List<GroupItem> dataList = new ArrayList<GroupItem>();
 	private int groupCount;
-	private Button showBtn;
+	private TextView tv_jiesuan;
+	private String[] listcount;
 	
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,29 +51,16 @@ public class B3_ShoppingCartActivity extends BaseActivity{
 	
 	private void initView(){
 		/*tv_sp_title = (TextView)findViewById(R.id.tv_sp_title);
-		
-		setListener(im_sp_back,im_sp_gouwuche);*/
+		*/
 		expandableList = (ExpandableListView)findViewById(R.id.list_shoppingcar);
 		expandableList.setGroupIndicator(null);
-		showBtn = (Button) findViewById(R.id.showBtn);
-		showBtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				showCheckedItems();
-			}
-		});
-		initData();
-		HttpUtils.getShoppingCarInfoList(res_ShoppingCarInfo,getSharedPreferenceValue("key"));
-		adapter = new B3_ShpppingCartAdapter(this, dataList);
-		expandableList.setAdapter(adapter);
-
-		groupCount = expandableList.getCount();
-
-		for (int i = 0; i < groupCount; i++) {
-
-			expandableList.expandGroup(i);
-
-		}
+		tv_jiesuan = (TextView)findViewById(R.id.tv_jiesuan);
+		
+		setListener(tv_jiesuan);
+//		HttpUtils.getShoppingCarInfoList(res_ShoppingCarInfo,getSharedPreferenceValue("key"));
+		HttpUtils.getShoppingCarInfoList(res_ShoppingCarInfo,"3ae653eb52824dbc4ba977de343e2e12");
+		
+		
 		
 		
 	}
@@ -87,8 +69,9 @@ public class B3_ShoppingCartActivity extends BaseActivity{
 	public void onClick(View v) {
 		super.onClick(v);
 		switch (v.getId()) {
-		/*case R.id.im_sp_back:
-			break;*/
+		case R.id.tv_jiesuan:
+			showCheckedItems();
+			break;
 		default:
 			
 			break;
@@ -127,28 +110,39 @@ public class B3_ShoppingCartActivity extends BaseActivity{
 	 * @throws
 	 */
 	private void initData() {
-		List<ChildrenItem> list1 = new ArrayList<ChildrenItem>();
-		list1.add(new ChildrenItem("1子id", "1子name"));
-		list1.add(new ChildrenItem("2子id", "2子name"));
-		list1.add(new ChildrenItem("3子id", "3子name"));
+		
+		adapter = new B3_ShpppingCartAdapter(this, dataList);
+		expandableList.setAdapter(adapter);
+
+		groupCount = expandableList.getCount();
+
+		for (int i = 0; i < groupCount; i++) {
+
+			expandableList.expandGroup(i);
+
+		}
+		/*List<ChildrenItem> list1 = new ArrayList<ChildrenItem>();
+		list1.add(new ChildrenItem("1子id", "1子name","1"));
+		list1.add(new ChildrenItem("2子id", "2子name","1"));
+		list1.add(new ChildrenItem("3子id", "3子name","1"));
 
 		GroupItem groupItem1 = new GroupItem("1组id", "1组name", list1);
 		dataList.add(groupItem1);
 
 		List<ChildrenItem> list2 = new ArrayList<ChildrenItem>();
-		list2.add(new ChildrenItem("4子id", "4子name"));
-		list2.add(new ChildrenItem("5子id", "5子name"));
+		list2.add(new ChildrenItem("4子id", "4子name","1"));
+		list2.add(new ChildrenItem("5子id", "5子name","1"));
 
 		GroupItem groupItem2 = new GroupItem("2组id", "2组name", list2);
 		dataList.add(groupItem2);
 
 		List<ChildrenItem> list3 = new ArrayList<ChildrenItem>();
-		list3.add(new ChildrenItem("6子id", "6子name"));
-		list3.add(new ChildrenItem("7子id", "7子name"));
-		list3.add(new ChildrenItem("8子id", "8子name"));
+		list3.add(new ChildrenItem("6子id", "6子name","1"));
+		list3.add(new ChildrenItem("7子id", "7子name","1"));
+		list3.add(new ChildrenItem("8子id", "8子name","1"));
 
 		GroupItem groupItem3 = new GroupItem("3组id", "3组name", list3);
-		dataList.add(groupItem3);
+		dataList.add(groupItem3);*/
 	}
 	
 	/**
@@ -173,13 +167,20 @@ public class B3_ShoppingCartActivity extends BaseActivity{
 			if (error==null)//成功
 			{
 				try {
-					data.clear();
-					data1.clear();
 					JSONArray array = datas.getJSONArray("cart_list");
+					dataList=com.alibaba.fastjson.JSONArray.parseArray(array.toString(), GroupItem.class);
+
+					initData();
+					
+					
+					/*
 					for (int i = 0; i < array.length(); i++) {
 						
 						JSONObject jsonItem = array.getJSONObject(i);
-						
+						Map<String, String> map = new HashMap();
+						map.put("store_id", jsonItem.getString("store_id"));
+						map.put("store_name", jsonItem.getString("store_name"));
+						data.add(map);
 						
 						JSONArray storearry = jsonItem.getJSONArray("store_list");
 						for (int j = 0; j < storearry.length(); j++) {
@@ -204,26 +205,7 @@ public class B3_ShoppingCartActivity extends BaseActivity{
 							data1.add(map1);
 						}
 						
-						Map<String, String> map = new HashMap();
-						map.put("store_id", jsonItem.getString("store_id"));
-						map.put("store_name", jsonItem.getString("store_name"));
-						data.add(map);
 						
-					}
-					
-					
-					/*for (int i = 0; i < array.length(); i++) {
-						JSONObject jsonItem = array.getJSONObject(i);
-						Map<String, String> map = new HashMap();
-						map.put("pgoods_id", jsonItem.getString("pgoods_id"));
-						map.put("pgoods_image_small", jsonItem.getString("pgoods_image_small"));
-						map.put("pgoods_image_old", jsonItem.getString("pgoods_image_old"));
-						map.put("ex_state", jsonItem.getString("ex_state"));
-						map.put("pgoods_points", jsonItem.getString("pgoods_points"));
-						map.put("pgoods_body", jsonItem.getString("pgoods_body"));
-						map.put("pgoods_name", jsonItem.getString("pgoods_name"));
-						map.put("pgoods_image", jsonItem.getString("pgoods_image"));
-						data.add(map);
 					}*/
 					
 					adapter.notifyDataSetChanged();

@@ -8,45 +8,48 @@ import java.util.List;
  */
 public class GroupItem {
 
-	private String id;
-	private String name;
-	private List<ChildrenItem> childrenItems;
+	private String store_id;
+	private String store_name;
+	private List<ChildrenItem> store_list;
 	
 	
 	public GroupItem() {
 	}
 
 	
-	public GroupItem(String id,String name,List<ChildrenItem> childrenItems) {
-		this.id = id;
-		this.name = name;
-		this.childrenItems = childrenItems;
-	}
-	
-	public String getId() {
-		return id;
+	public GroupItem(String store_id,String store_name,List<ChildrenItem> childrenItems) {
+		this.store_id = store_id;
+		this.store_name = store_name;
+		this.store_list = childrenItems;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public List<ChildrenItem> getStore_list() {
+		return store_list;
 	}
 
 
-	public List<ChildrenItem> getChildrenItems() {
-		return childrenItems;
+	public void setStore_list(List<ChildrenItem> store_list) {
+		this.store_list = store_list;
 	}
 
 
-	public void setChildrenItems(List<ChildrenItem> childrenItems) {
-		this.childrenItems = childrenItems;
+	public String getStore_id() {
+		return store_id;
+	}
+
+
+	public void setStore_id(String store_id) {
+		this.store_id = store_id;
+	}
+
+
+	public String getStore_name() {
+		return store_name;
+	}
+
+
+	public void setStore_name(String store_name) {
+		this.store_name = store_name;
 	}
 
 	

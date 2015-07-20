@@ -29,6 +29,7 @@
             android:layout_height="fill_parent" >
 
             <ImageView
+                android:id="@+id/im_shangpuimg"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_vertical"
@@ -55,10 +56,10 @@
                         android:text="沙发水电费水电费三分玩儿玩儿玩儿" />
 
                     <TextView
+                        android:id="@+id/tv_spec"
                         android:layout_width="wrap_content"
                         android:layout_height="0.0dp"
-                        android:layout_weight="1.5"
-                        android:text="产品规格：颜色：枣红色 尺寸：XL" />
+                        android:layout_weight="1.5"/>
 
                     <RelativeLayout
                         android:layout_width="fill_parent"
@@ -66,6 +67,7 @@
                         android:layout_weight="1" >
 
                         <TextView
+                            android:id="@+id/tv_goods_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
@@ -74,6 +76,7 @@
                             android:textColor="#704384" />
 
                         <TextView
+                            android:id="@+id/tv_goods_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
