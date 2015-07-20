@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.adapter.B1_a2_CaiNiLikeAdapter;
 import com.ZYKJ.buerhaitao.adapter.B1_a3_MeiRiHaoDianAdapter;
+import com.ZYKJ.buerhaitao.adapter.HorizontalListViewAdapter;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
 import com.ZYKJ.buerhaitao.utils.Tools;
@@ -50,6 +52,7 @@ public class B1_HomeActivity extends BaseActivity {
 	private RelativeLayout rl_sousuokuang;
 	//每日好店
 	private MyListView list_meirihaodian,list_cainilike;
+	private ListView listviewHorizontal;
 	private List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 	private List<Map<String, String>> data1 = new ArrayList<Map<String, String>>();
 	//天天特价
@@ -60,6 +63,8 @@ public class B1_HomeActivity extends BaseActivity {
 	private RelativeLayout rl_ditu;
 	private String cityname;
 	private TextView tv_cityname;//城市名称
+	private TextView tv_updateNumber;//晒单圈更新数
+	private List<Map<String, String>> data2 = new ArrayList<Map<String, String>>();
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,7 +86,7 @@ public class B1_HomeActivity extends BaseActivity {
 			// TODO Auto-generated method stub
 			super.onSuccess(statusCode, headers, response);
 			RequestDailog.closeDialog();
-			Tools.Log("res_getAddress="+response);
+			Tools.Log("首页="+response);
 			String error=null;
 			JSONObject datas=null;
 			try {
@@ -160,6 +165,24 @@ public class B1_HomeActivity extends BaseActivity {
 					tv_b1_a1_yuanjia.setText(jsonIt.getString("goods_promotion_price"));
 					tv_b1_a1_yuanjia.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 					tv_goodsid.setText(jsonIt.getString("goods_id").toString());
+					
+					//晒单圈
+					data2.clear();
+					org.json.JSONArray array3 = datas.getJSONArray("circle");
+					tv_updateNumber.setText(array3.length()+"条新内容更新");
+					for (int i = 0; i < array3.length(); i++) {
+						JSONObject jsonItem1 = array3.getJSONObject(i);
+						Map<String, String> map1 = new HashMap<String, String>();
+						map1.put("member_name", jsonItem1.getString("member_name"));
+						map1.put("description", jsonItem1.getString("description"));
+						map1.put("praise", jsonItem1.getString("praise"));
+						map1.put("replys", jsonItem1.getString("replys"));
+						map1.put("image", jsonItem1.getString("image"));
+						map1.put("avatar", jsonItem1.getString("avatar"));					
+						data2.add(map1);
+					}
+					HorizontalListViewAdapter horizontalListViewAdapter = new HorizontalListViewAdapter(B1_HomeActivity.this, data2);
+					listviewHorizontal.setAdapter(horizontalListViewAdapter);
 				} 
 				catch (org.json.JSONException e) {
 					// TODO Auto-generated catch block
@@ -200,10 +223,12 @@ public class B1_HomeActivity extends BaseActivity {
 		tv_b1_a1_chanpinjianjie = (TextView)findViewById(R.id.tv_b1_a1_chanpinjianjie);
 		tv_b1_a1_zhehoujia = (TextView)findViewById(R.id.tv_b1_a1_zhehoujia);
 		tv_b1_a1_yuanjia = (TextView)findViewById(R.id.tv_b1_a1_yuanjia);
+		tv_updateNumber = (TextView)findViewById(R.id.tv_updateNumber);
 		ll_dayspecial = (RelativeLayout)findViewById(R.id.ll_dayspecial);
 		rl_ditu = (RelativeLayout)findViewById(R.id.rl_ditu);
 		im_moreinfo = (ImageView)findViewById(R.id.im_moreinfo);
 		ll_moreinfolayout = (LinearLayout)findViewById(R.id.ll_moreinfolayout);
+		listviewHorizontal =(ListView)findViewById(R.id.horizon_listview);
 		setListener(im_b1nvshi,im_b1nanshi,im_b1muying,im_b1huazhuang,im_b1shouji,im_b1bangong,im_b1shenghuo,im_b1techan,rl_b1_a1tttj,b5_3_shaidanquan,rl_b1_a2_cnxh,rl_b1_a3_mrhd,rl_sousuokuang,ll_dayspecial,rl_ditu,im_moreinfo,ll_moreinfolayout);
 	}
 
@@ -299,7 +324,7 @@ public class B1_HomeActivity extends BaseActivity {
 			ll_moreinfolayout.setVisibility(View.GONE);
 			break;
 		case R.id.error_layout:// 错误页面的点击
-			//htttp请求
+			//http请求
 			break;
 		}
 

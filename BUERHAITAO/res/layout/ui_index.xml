@@ -522,7 +522,7 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="165dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
@@ -532,7 +532,7 @@
                 <RelativeLayout
                     android:id="@+id/b5_3_shaidanquan"
                     android:layout_width="fill_parent"
-                    android:layout_height="38dp" >
+                    android:layout_height="wrap_content" >
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -553,6 +553,7 @@
                         android:src="@drawable/arrow_right" />
 
                     <TextView
+                        android:id="@+id/tv_updateNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -560,16 +561,26 @@
                         android:text="N条新内容更新"
                         android:textColor="#707070" />
                 </RelativeLayout>
-				<com.ZYKJ.buerhaitao.customview.B5_3_ShowView
+				<!-- <com.ZYKJ.buerhaitao.customview.B5_3_ShowView
                     android:id="@+id/slideshowView"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:background="@drawable/body_cont_bg" />
+                    android:background="@drawable/body_cont_bg" /> -->
+                 <!--    <com.ZYKJ.buerhaitao.view.HorizontalListView  
+				        android:id="@+id/horizon_listview"  
+				        android:layout_width="fill_parent"  
+				        android:layout_height="fill_parent">  
+    				</com.ZYKJ.buerhaitao.view.HorizontalListView>  --> 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="15dp"
                     android:background="#d6d6d6" />
+		                <ListView
+		                    android:id="@+id/horizon_listview"
+		                    android:layout_width="fill_parent"
+		                    android:layout_height="wrap_content" >
+		                </ListView>
             </LinearLayout>
 
             <!-- 猜你喜欢 -->
