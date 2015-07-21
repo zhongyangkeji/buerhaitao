@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.UI.B5_13_MyPurse;
+import com.ZYKJ.buerhaitao.UI.B5_5_Comment_order;
 import com.ZYKJ.buerhaitao.UI.B5_5_OrderDetail;
 import com.ZYKJ.buerhaitao.UI.B5_MyActivity;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
@@ -169,6 +171,7 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
         viewHolder.listView.setOnItemClickListener(new GetOrderDetail(position,data.get(position).get("order_id").toString(),status,pay_sn));
         viewHolder.btn_tuihuanhuo.setOnClickListener(new TuiHuan(position,data.get(position).get("store_phone").toString()));
         viewHolder.btn_querenshouhuo.setOnClickListener(new QueRen(position,data.get(position).get("order_id").toString()));
+        viewHolder.btn_tocomment.setOnClickListener(new PingJia(position,extend_order_goods,price,data.get(position).get("order_id").toString()));
         
         return convertView;
 	}
@@ -340,10 +343,34 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 		}
 		
 	}
+	/**
+	 * 评价订单
+	 * @author zyk
+	 */
+	class PingJia implements View.OnClickListener {
+		int position;
+		JSONArray extend_order_goods;
+		String price;
+		String order_id;
+		public PingJia(int position,JSONArray extend_order_goods,String price,String order_id) {
+			this.position = position;
+			this.extend_order_goods = extend_order_goods;
+			this.price = price;
+			this.order_id = order_id;
+		}
+		@Override
+		public void onClick(View v) {
+			Intent intent_comment = new Intent(c,B5_5_Comment_order.class);
+			intent_comment.putExtra("extend_order_goods",extend_order_goods.toString());
+			intent_comment.putExtra("price",price);
+			intent_comment.putExtra("order_id",order_id);
+			c.startActivity(intent_comment);
+		}
+		
+	}
 
 	private static class ViewHolder
     {
-         
         TextView tv_storename;
         TextView tv_orderprice;
         TextView tv_ordergoodsnumber;

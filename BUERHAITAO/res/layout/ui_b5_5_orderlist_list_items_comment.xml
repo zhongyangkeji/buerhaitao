@@ -62,16 +62,73 @@
             android:layout_width="wrap_content"
             android:layout_height="1dp"
         />
+
+<RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/relativeLayout3"
+        android:background="@color/white" >
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="商品评分" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/big_ratingbar"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="10dp"
+            android:numStars="5"
+            android:stepSize="1" />
+
+    </RelativeLayout>
     <RelativeLayout 
          android:layout_width="wrap_content"
          android:layout_height="wrap_content">
+    <EditText
+        android:id="@+id/et_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="13dp"
+        android:layout_toLeftOf="@+id/v1"
+        android:ems="10"
+        android:hint="亲，写点儿什么吧，您的意见对其他淘友有很大帮助！" />
 
     <View
         android:id="@+id/v1"
         android:layout_width="10dp"
         android:layout_height="30dp"
-        android:layout_centerVertical="true" />
+        android:layout_alignBottom="@+id/iv_takePhoto"
+        android:layout_toLeftOf="@+id/iv_takePhoto" />
+
+    <ImageView
+        android:id="@+id/iv_takePhoto"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/camera" />
         
     </RelativeLayout>
-
+	<View 
+	    android:layout_width="match_parent"
+        android:layout_height="3dp"/>
 </LinearLayout>

@@ -656,17 +656,21 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 35 订单评价
+	 * 订单评价
 	 * 
 	 * @param res
-	 * @param anony
+	 * @param key 
+	 * @param order_id 订单id 
+	 * @param goods 商品评价
 	 */
 	public static void orderEvaluation(AsyncHttpResponseHandler res,
-			String order_id, String anony, String other) {
-		String url = base_url + "orderEvaluation&anony=" + anony + "&order_id="
-				+ order_id + other;
-		client.get(url, res);
-		Log.i("landousurl", url);
+			String key, String order_id, String goods[][]) {
+		String url = base_url + "index.php?act=member_evaluate&op=save";
+		RequestParams params = new RequestParams();
+		params.put("key", key);
+		params.put("order_id", order_id);
+		params.put("goods", goods);
+		client.post(url, params, res);
 	}
 
 	/**
@@ -981,6 +985,26 @@ public class HttpUtils {
 //		String url = base_url + "index.php?act=member_circle&op=image_upload";
 		client.post(url, params, res);
 	}
+	/**
+	 * 上传评论图片
+	 * @param res
+	 * @param key
+	 * @param name
+	 */
+	
+	public static void upPhoto(AsyncHttpResponseHandler res, String key,String name,File file ) {
+		RequestParams params = new RequestParams();
+		try {
+			params.put("key", key);
+			params.put("name", name);
+			params.put("avatar",file);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // Upload a File
+		String url = base_url + "index.php?act=member_evaluate&op=image_upload";
+		client.post(url, params, res);
+	}
 	
 	/**
 	 * 54 猜你喜欢
@@ -1048,6 +1072,15 @@ public class HttpUtils {
 		params.put("image",image);
 		String url = base_url + "index.php?act=member_circle&op=publish";
 		client.post(url, params, res);
+	}
+	/**
+	 * 晒单圈-首页
+	 * @param res
+	 * @param key
+	 */
+	public static void shaidanquan_shouye(AsyncHttpResponseHandler res, String key,String order ) {
+		String url = base_url + "index.php?act=member_circle&op=list"+"&key="+key+"&order="+order;
+		client.get(url, res);
 	}
 	/**
 	 * 晒单圈-我发布的
