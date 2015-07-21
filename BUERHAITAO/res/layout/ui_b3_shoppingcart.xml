@@ -26,19 +26,20 @@
         <LinearLayout
             android:id="@+id/gwcdb"
             android:layout_width="fill_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_alignParentBottom="true" >
 
             <LinearLayout
                 android:layout_width="50dp"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:background="#FFF"
                 android:gravity="center" >
 
                 <ImageView
+                    android:id="@+id/im_checkall"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/ck_checked" />
+                    android:src="@drawable/ck_unchecked" />
             </LinearLayout>
 
             <TextView
@@ -51,7 +52,7 @@
 
             <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="60dp" >
+                android:layout_height="50dp" >
 
                 <TextView
                     android:id="@+id/tv_jiesuan"
@@ -80,11 +81,12 @@
                     	    android:layout_gravity="center_vertical"
                     	    android:text="合计："/>
                     	<TextView 
+                    	    android:id="@+id/tv_sumgoods"
                     	    android:layout_width="wrap_content"
                     	    android:layout_height="wrap_content"
                     	    android:layout_gravity="center_vertical"
                     	    android:textColor="#6D438B"
-                    	    android:text="￥250"/>
+                    	    android:text="￥0.00"/>
                 	</LinearLayout>             
 
                 	<LinearLayout

@@ -5,26 +5,37 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.data.ChildrenItem;
 import com.ZYKJ.buerhaitao.data.GroupItem;
-import com.ZYKJ.buerhaitao.data.HttpAction;
+import com.ZYKJ.buerhaitao.utils.HttpUtils;
+import com.ZYKJ.buerhaitao.utils.Tools;
+import com.ZYKJ.buerhaitao.view.RequestDailog;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
@@ -34,7 +45,6 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 	private List<String> checkedChildren = new ArrayList<String>();
 	// 父列表项的选中状态：value值为1（选中）、2（部分选中）、3（未选中）
 	private Map<String, Integer> groupCheckedStateMap = new HashMap<String, Integer>();
-	int num=0;//数量
 	//默认layout，编辑layout
 	LinearLayout ll_b3shopmoren,ll_b3shopedit;
 	//单个商品数量
@@ -42,35 +52,35 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 	//加减数量
 	Button jiabt,jianbt;
 	int bianjistate = 0;
-	TextView tv_bianji;
+	TextView tv_bianji,tv_del;
 	Map<Integer, Boolean> listcarld;
+	Activity activity;
+	Context context;
+//	CheckBox dadcheck;
+	int ischecked;
+	ChangedPrice changedprice;
+	IsAllChecked isallchecked;
+	float allprice=0;//总价格
+//	CheckBox childrenCB;
+	int allcheckstate;
+	float qwe = 0;
+	int sumtiaoshu;
+	JieSuanCount jiesuancount;
+	int childcheck=0;
+	CheckBox childrenCB;
 
-	public B3_ShpppingCartAdapter(Context context, List<GroupItem> dataList) {
+	public B3_ShpppingCartAdapter(Context context, List<GroupItem> dataList,int ischecked,int sumtiaoshu,ChangedPrice changedprice,IsAllChecked isallchecked,JieSuanCount jiesuancount) {
 		this.dataList = dataList;
+		this.context = context;
+		this.ischecked =ischecked;
+		this.changedprice = changedprice;
+		this.isallchecked = isallchecked;
+		this.sumtiaoshu = sumtiaoshu;
+		this.jiesuancount = jiesuancount;
 		inflater = LayoutInflater.from(context);	
 		listcarld = new HashMap<Integer, Boolean>();
-		// 默认设置所有的父列表项和子列表项都为选中状态
-		int groupCount = getGroupCount();
-		for (int groupPosition = 0; groupPosition < groupCount; groupPosition++) {
-			try {
-				GroupItem groupItem = dataList.get(groupPosition);
-				if (groupItem == null || groupItem.getStore_list() == null
-						|| groupItem.getStore_list().isEmpty()) {
-					groupCheckedStateMap.put(groupItem.getStore_id(), 3);
-					continue;
-				}	
-				groupCheckedStateMap.put(groupItem.getStore_id(), 1);
-				List<ChildrenItem> childrenItems = groupItem.getStore_list();
-				for (ChildrenItem childrenItem : childrenItems) {
-					checkedChildren.add(childrenItem.getCart_id());			
-				}
-				listcarld.put(groupPosition,false);
-
-			} catch (Exception e) {
-
-			}
-		}
-		
+		// 默认设置所有的父列表项和子列表项的选中状态(1为全选)
+		setIschecked(ischecked);		
 	}
 
 	@Override
@@ -90,7 +100,7 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public View getChildView(final int groupPosition, int childPosition,boolean isLastChild, View convertView, final ViewGroup parent) {
-		ChildrenItem childrenItem = (ChildrenItem) getChild(groupPosition,
+		final ChildrenItem childrenItem = (ChildrenItem) getChild(groupPosition,
 				childPosition);
 
 		ChildViewHolder viewHolder = null;
@@ -98,7 +108,6 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 			viewHolder = new ChildViewHolder();
 			convertView = inflater.inflate(R.layout.ui_b3_shoppingcartitem,null);
 			viewHolder.childrenNameTV = (TextView) convertView.findViewById(R.id.children_name);
-			viewHolder.childrenCB = (CheckBox) convertView.findViewById(R.id.children_cb);
 			viewHolder.im_shangpuimg = (ImageView) convertView.findViewById(R.id.im_shangpuimg);
 			viewHolder.tv_spec = (TextView)convertView.findViewById(R.id.tv_spec);
 			viewHolder.tv_goods_price = (TextView)convertView.findViewById(R.id.tv_goods_price);
@@ -113,13 +122,36 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 		jianbt = (Button)convertView.findViewById(R.id.jianbt);
 		ll_b3shopmoren = (LinearLayout)convertView.findViewById(R.id.ll_b3shopmoren);
 		ll_b3shopedit = (LinearLayout)convertView.findViewById(R.id.ll_b3shopedit);
+		childrenCB = (CheckBox) convertView.findViewById(R.id.children_cb);
+		tv_del = (TextView)convertView.findViewById(R.id.tv_del);
+		tv_del.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				new AlertDialog.Builder(context)
+				.setMessage("确认要删除该商品么？")
+				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						HttpUtils.getDelete(res_delete,"3ae653eb52824dbc4ba977de343e2e12",childrenItem.getCart_id());
+						B3_ShpppingCartAdapter.this.notifyDataSetChanged();
+					}
+				})
+				.setNegativeButton("取消", null)  
+				.show(); 
+				
+			}
+		});
 
 		viewHolder.childrenNameTV.setText(childrenItem.getStore_name());
 		ImageLoader.getInstance().displayImage(childrenItem.getGoods_image_url(), viewHolder.im_shangpuimg);
 		viewHolder.tv_spec.setText(childrenItem.getGoods_spec());
 		viewHolder.tv_goods_price.setText(childrenItem.getGoods_price());
 		viewHolder.tv_goods_num.setText("x"+childrenItem.getGoods_num());
+		editconunt.setText(childrenItem.getGoods_num());
 		final String childrenId = childrenItem.getCart_id();
+		//编辑功能切换
 		if (listcarld.get(groupPosition)==true) {
 			ll_b3shopmoren.setVisibility(View.GONE);
 			ll_b3shopedit.setVisibility(View.VISIBLE);
@@ -127,12 +159,70 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 			ll_b3shopmoren.setVisibility(View.VISIBLE);
 			ll_b3shopedit.setVisibility(View.GONE);
 		}
+
 		
-		viewHolder.childrenCB
-				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		//数量修改
+		jiabt.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				int goodnum = Integer.parseInt(childrenItem.getGoods_num());
+				String nums = (Integer.toString(goodnum+1));
+				childrenItem.setGoods_num(nums);
+				editconunt.setText(childrenItem.getGoods_num());;
+				HttpUtils.getAddGoods(res_add,"3ae653eb52824dbc4ba977de343e2e12",childrenItem.getCart_id(),childrenItem.getGoods_num());
+				B3_ShpppingCartAdapter.this.notifyDataSetChanged();
+				if (childrenCB.isChecked()==true) {
+					float price  =Float.parseFloat(childrenItem.getGoods_price());
+						allprice = allprice+price;
+						changedprice.ChangePr(allprice);
+				}
+			}
+		});
+		jianbt.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				int goodnum = Integer.parseInt(childrenItem.getGoods_num());
+				if (goodnum<2) {
+					Toast.makeText(context, "受不了了，宝贝不能再减少了哦~", Toast.LENGTH_LONG).show();
+				}else {
+					String nums = (Integer.toString(goodnum-1));
+					childrenItem.setGoods_num(nums);
+					editconunt.setText(childrenItem.getGoods_num());
+					HttpUtils.getAddGoods(res_add,"3ae653eb52824dbc4ba977de343e2e12",childrenItem.getCart_id(),childrenItem.getGoods_num());
+					B3_ShpppingCartAdapter.this.notifyDataSetChanged();
+					if (childrenCB.isChecked()==true) {
+						float price = Float.parseFloat(childrenItem.getGoods_price());
+						allprice = allprice-price;
+						changedprice.ChangePr(allprice);
+					}
+				}
+			}
+		});
+		
+		childrenCB.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				if (childcheck==0) {
+					childcheck=1;
+					float price = Float.parseFloat(childrenItem.getGoods_price())*Float.parseFloat(childrenItem.getGoods_num());
+					allprice = allprice+price;
+					changedprice.ChangePr(allprice);
+				}else {
+					childcheck=0;
+					float price = Float.parseFloat(childrenItem.getGoods_price())*Float.parseFloat(childrenItem.getGoods_num());
+					allprice = allprice-price;
+					changedprice.ChangePr(allprice);
+				}
+				
+			}
+		});
+		
+		childrenCB.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 					@Override
 					public void onCheckedChanged(CompoundButton buttonView,
-							boolean isChecked) {
+							boolean isChecked) {			
 						if (isChecked) {
 							if (!checkedChildren.contains(childrenId)) {
 								checkedChildren.add(childrenId);
@@ -140,19 +230,17 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 						} else {
 							checkedChildren.remove(childrenId);
 						}
-
 						setGroupItemCheckedState(dataList.get(groupPosition));
-
+						CheckIsAllCheck();
+						jiesuancount.JieSuanCount(checkedChildren.size());
 						B3_ShpppingCartAdapter.this.notifyDataSetChanged();
 					}
 				});
-
 		if (checkedChildren.contains(childrenId)) {
-			viewHolder.childrenCB.setChecked(true);
+			childrenCB.setChecked(true);
 		} else {
-			viewHolder.childrenCB.setChecked(false);
+			childrenCB.setChecked(false);
 		}
-
 		return convertView;
 	}
 
@@ -204,7 +292,8 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 			} else {
 				viewHolder = (GroupViewHolder) convertView.getTag();
 			}
-			
+
+//			dadcheck = (CheckBox) convertView.findViewById(R.id.dadcheck);
 			tv_bianji = (TextView)convertView.findViewById(R.id.tv_bianji);
 			tv_bianji.setOnClickListener(new OnClickListener() {
 				
@@ -229,19 +318,22 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 					
 				}
 			});
-
 			viewHolder.groupCBLayout.setOnClickListener(new GroupCBLayoutOnClickListener(groupItem));
+//			viewHolder.groupCBLayout.setOnClickListener(new GroupCBLayoutOnClickListener(groupItem));
 			viewHolder.groupNameTV.setText(groupItem.getStore_name());
 			int state = groupCheckedStateMap.get(groupItem.getStore_id());
 			switch (state) {
 			case 1:
+//				dadcheck.setChecked(true);
 				viewHolder.groupCBImg.setImageResource(R.drawable.ck_checked);
 				break;
 			case 2:
+//				dadcheck.setChecked(false);
 //				viewHolder.groupCBImg.setImageResource(R.drawable.ck_partial_checked);
 				viewHolder.groupCBImg.setImageResource(R.drawable.ck_unchecked);
 				break;
 			case 3:
+//				dadcheck.setChecked(false);
 				viewHolder.groupCBImg.setImageResource(R.drawable.ck_unchecked);
 				break;
 			default:
@@ -260,7 +352,7 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
-		return false;
+		return true;
 	}
 
 	private void setGroupItemCheckedState(GroupItem groupItem) {
@@ -296,7 +388,6 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 
 	final static class ChildViewHolder {
 		TextView childrenNameTV;
-		CheckBox childrenCB;
 		ImageView im_shangpuimg; 
 		TextView tv_spec;
 		TextView tv_goods_price;
@@ -317,6 +408,7 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 			List<ChildrenItem> childrenItems = groupItem.getStore_list();
 			if (childrenItems == null || childrenItems.isEmpty()) {
 				groupCheckedStateMap.put(groupItem.getStore_id(), 3);
+//				dadcheck.setChecked(false);
 				return;
 			}
 			int checkedCount = 0;
@@ -330,9 +422,23 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 			if (checkedCount == childrenItems.size()) {
 				checked = false;
 				groupCheckedStateMap.put(groupItem.getStore_id(), 3);
+//				dadcheck.setChecked(false);
+				//店铺全选的价格修改
+				for (int i = 0; i < childrenItems.size(); i++) {
+					allprice = allprice - Float.parseFloat(childrenItems.get(i).getGoods_price())*Float.parseFloat(childrenItems.get(i).getGoods_num());
+				}
+				changedprice.ChangePr(allprice);
+				
+				
 			} else {
 				checked = true;
 				groupCheckedStateMap.put(groupItem.getStore_id(), 1);
+//				dadcheck.setChecked(true);
+				//店铺全选的价格修改
+				for (int i = 0; i < childrenItems.size(); i++) {
+					allprice = allprice + Float.parseFloat(childrenItems.get(i).getGoods_price())*Float.parseFloat(childrenItems.get(i).getGoods_num());
+				}
+				changedprice.ChangePr(allprice);
 			}
 
 			for (ChildrenItem childrenItem : childrenItems) {
@@ -345,10 +451,46 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 					checkedChildren.remove(holderKey);
 				}
 			}
-
+			CheckIsAllCheck();
+			jiesuancount.JieSuanCount(checkedChildren.size());
 			B3_ShpppingCartAdapter.this.notifyDataSetChanged();
 		}
 	}
+	
+	/**
+	 * 删除购物车商品
+	 */
+	JsonHttpResponseHandler res_delete = new JsonHttpResponseHandler()
+	{
+		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+			super.onSuccess(statusCode, headers, response);
+			RequestDailog.closeDialog();
+			String error=null;
+			JSONObject datas=null;
+			try {
+				datas = response.getJSONObject("datas");
+
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			B3_ShpppingCartAdapter.this.notifyDataSetChanged();
+		};
+	};
+	
+	/**
+	 * 添加购物车商品
+	 */
+	JsonHttpResponseHandler res_add = new JsonHttpResponseHandler()
+	{
+		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+			super.onSuccess(statusCode, headers, response);
+			RequestDailog.closeDialog();
+			
+			B3_ShpppingCartAdapter.this.notifyDataSetChanged();
+		};
+	};
+	
 
 	public List<String> getCheckedRecords() {
 		return checkedChildren;
@@ -356,6 +498,69 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 
 	public List<String> getCheckedChildren() {
 		return checkedChildren;
-	}	
+	}
 
+	public int getIschecked() {
+		return ischecked;
+		
+	}
+
+	public void setIschecked(int ischecked) {
+		int groupCount = getGroupCount();
+		for (int groupPosition = 0; groupPosition < groupCount; groupPosition++) {
+			try {
+				GroupItem groupItem = dataList.get(groupPosition);
+				if (groupItem == null || groupItem.getStore_list() == null
+						|| groupItem.getStore_list().isEmpty()) {
+					groupCheckedStateMap.put(groupItem.getStore_id(), 3);
+					continue;
+				}	
+				if (ischecked==0) {
+					groupCheckedStateMap.put(groupItem.getStore_id(), 3);
+					List<ChildrenItem> childrenItems = groupItem.getStore_list();
+					for (ChildrenItem childrenItem : childrenItems) {
+						checkedChildren.clear();		
+					}
+					listcarld.put(groupPosition,false);					
+				}else {
+					groupCheckedStateMap.put(groupItem.getStore_id(), 1);
+					List<ChildrenItem> childrenItems = groupItem.getStore_list();
+					for (ChildrenItem childrenItem : childrenItems) {
+						checkedChildren.add(childrenItem.getCart_id());			
+					}
+					listcarld.put(groupPosition,false);
+
+				}
+
+			} catch (Exception e) {
+
+			}
+		}
+		this.ischecked = ischecked;
+		
+	}	
+	
+	//用于刷新Activity价格
+	public interface ChangedPrice{
+		void ChangePr(Float totalprice);
+	}
+	//用于判断是否全选
+	public interface IsAllChecked{
+		void IsAllCheck(int allcheck);
+	}
+	//用于判断结算的条数
+	public interface JieSuanCount{
+		void JieSuanCount(int count);
+	}
+	
+	//检查是否全选
+	public void CheckIsAllCheck(){
+//		int a = checkedChildren.size();
+//		Toast.makeText(context, ""+a, Toast.LENGTH_LONG).show();
+		if (sumtiaoshu==checkedChildren.size()) {
+			isallchecked.IsAllCheck(1);
+		}else {
+			isallchecked.IsAllCheck(0);
+		}
+	}
 }

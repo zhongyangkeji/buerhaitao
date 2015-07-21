@@ -10,15 +10,20 @@ import org.json.JSONObject;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
+import com.ZYKJ.buerhaitao.adapter.B3_JieSuanAdapter;
 import com.ZYKJ.buerhaitao.adapter.B3_ShpppingCartAdapter;
+import com.ZYKJ.buerhaitao.adapter.B3_ShpppingCartAdapter.ChangedPrice;
+import com.ZYKJ.buerhaitao.adapter.B3_ShpppingCartAdapter.IsAllChecked;
+import com.ZYKJ.buerhaitao.adapter.B3_ShpppingCartAdapter.JieSuanCount;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.data.GroupItem;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
@@ -30,7 +35,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
  * @author lss 2015年7月1日 购物车
  *
  */
-public class B3_ShoppingCartActivity extends BaseActivity{
+public class B3_ShoppingCartActivity extends BaseActivity implements ChangedPrice,IsAllChecked,JieSuanCount{
 	//标题
 // 	private TextView tv_sp_title;
 	//购物车list
@@ -39,9 +44,12 @@ public class B3_ShoppingCartActivity extends BaseActivity{
 	private B3_ShpppingCartAdapter adapter;
 	private List<GroupItem> dataList = new ArrayList<GroupItem>();
 	private int groupCount;
-	private TextView tv_jiesuan;
-	private String[] listcount;
-	
+	private TextView tv_jiesuan;//结算（0）
+	private TextView tv_sumgoods;//总价
+	private ImageView im_checkall;//全选
+	int ischeck=0;//1是全选，0是取消全选
+	String fhgoodsum;
+	int sumtiaoshu = 0;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,8 +63,10 @@ public class B3_ShoppingCartActivity extends BaseActivity{
 		expandableList = (ExpandableListView)findViewById(R.id.list_shoppingcar);
 		expandableList.setGroupIndicator(null);
 		tv_jiesuan = (TextView)findViewById(R.id.tv_jiesuan);
+		tv_sumgoods = (TextView)findViewById(R.id.tv_sumgoods);
+		im_checkall = (ImageView)findViewById(R.id.im_checkall);
 		
-		setListener(tv_jiesuan);
+		setListener(tv_jiesuan,im_checkall);
 //		HttpUtils.getShoppingCarInfoList(res_ShoppingCarInfo,getSharedPreferenceValue("key"));
 		HttpUtils.getShoppingCarInfoList(res_ShoppingCarInfo,"3ae653eb52824dbc4ba977de343e2e12");
 		
@@ -68,9 +78,34 @@ public class B3_ShoppingCartActivity extends BaseActivity{
 	@Override
 	public void onClick(View v) {
 		super.onClick(v);
+	
 		switch (v.getId()) {
 		case R.id.tv_jiesuan:
-			showCheckedItems();
+			if (tv_jiesuan.getText()=="结算（0）") {
+				Toast.makeText(getApplicationContext(), "您还没有选择商品哦！", Toast.LENGTH_LONG).show();
+			}else {
+				Intent itmrhd = new Intent();
+				itmrhd.setClass(B3_ShoppingCartActivity.this, B3_ShoppingJieSuan.class);
+				startActivity(itmrhd);
+			}
+//			showCheckedItems();
+			break;
+		case R.id.im_checkall:
+			if (ischeck==1) {
+				ischeck=0;
+				tv_sumgoods.setText("0.00");
+				im_checkall.setImageResource(R.drawable.ck_unchecked);
+				adapter.setIschecked(0);
+				adapter.notifyDataSetChanged();
+				
+			}else {
+				ischeck=1;
+				tv_sumgoods.setText(fhgoodsum);
+				im_checkall.setImageResource(R.drawable.ck_checked);
+				adapter.setIschecked(1);
+				adapter.notifyDataSetChanged();
+//				initData();
+			}
 			break;
 		default:
 			
@@ -110,8 +145,11 @@ public class B3_ShoppingCartActivity extends BaseActivity{
 	 * @throws
 	 */
 	private void initData() {
-		
-		adapter = new B3_ShpppingCartAdapter(this, dataList);
+		for (int i = 0; i < dataList.size(); i++) {
+			sumtiaoshu =  sumtiaoshu + dataList.get(i).getStore_list().size();
+		}
+//		Toast.makeText(getApplicationContext(), ""+sumtiaoshu, Toast.LENGTH_LONG).show();
+		adapter = new B3_ShpppingCartAdapter(this, dataList,ischeck,sumtiaoshu,this,this,this);
 		expandableList.setAdapter(adapter);
 
 		groupCount = expandableList.getCount();
@@ -121,6 +159,8 @@ public class B3_ShoppingCartActivity extends BaseActivity{
 			expandableList.expandGroup(i);
 
 		}
+//		List<String> checkedChildren = adapter.getCheckedChildren();
+//		Toast.makeText(getApplicationContext(), "结算("+String.valueOf(checkedChildren.size()), Toast.LENGTH_LONG).show();
 		/*List<ChildrenItem> list1 = new ArrayList<ChildrenItem>();
 		list1.add(new ChildrenItem("1子id", "1子name","1"));
 		list1.add(new ChildrenItem("2子id", "2子name","1"));
@@ -169,7 +209,8 @@ public class B3_ShoppingCartActivity extends BaseActivity{
 				try {
 					JSONArray array = datas.getJSONArray("cart_list");
 					dataList=com.alibaba.fastjson.JSONArray.parseArray(array.toString(), GroupItem.class);
-
+					fhgoodsum = datas.getString("sum");
+//					tv_sumgoods.setText(fhgoodsum);
 					initData();
 					
 					
@@ -226,4 +267,27 @@ public class B3_ShoppingCartActivity extends BaseActivity{
 		};
 		
 	};
+
+	//价格的更改显示
+	@Override
+	public void ChangePr(Float totalprice) {
+		tv_sumgoods.setText(Float.toString(totalprice));
+	}
+
+	//全选的更改显示
+	@Override
+	public void IsAllCheck(int allcheck) {
+		if (allcheck==1) {
+			im_checkall.setImageResource(R.drawable.ck_checked);
+		}else {
+
+			im_checkall.setImageResource(R.drawable.ck_unchecked);
+		}
+	}
+	
+	//结算条数的显示
+	public void JieSuanCount(int count){
+		tv_jiesuan.setText("结算（"+count+"）");
+	}
+
 }
