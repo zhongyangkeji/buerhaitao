@@ -70,9 +70,6 @@ public class B3_ShoppingCartActivity extends BaseActivity implements ChangedPric
 //		HttpUtils.getShoppingCarInfoList(res_ShoppingCarInfo,getSharedPreferenceValue("key"));
 		HttpUtils.getShoppingCarInfoList(res_ShoppingCarInfo,"3ae653eb52824dbc4ba977de343e2e12");
 		
-		
-		
-		
 	}
 	
 	@Override
@@ -278,9 +275,10 @@ public class B3_ShoppingCartActivity extends BaseActivity implements ChangedPric
 	@Override
 	public void IsAllCheck(int allcheck) {
 		if (allcheck==1) {
+			ischeck=1;
 			im_checkall.setImageResource(R.drawable.ck_checked);
 		}else {
-
+			ischeck=0;
 			im_checkall.setImageResource(R.drawable.ck_unchecked);
 		}
 	}

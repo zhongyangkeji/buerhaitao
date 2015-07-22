@@ -543,6 +543,7 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 	//用于刷新Activity价格
 	public interface ChangedPrice{
 		void ChangePr(Float totalprice);
+		
 	}
 	//用于判断是否全选
 	public interface IsAllChecked{
