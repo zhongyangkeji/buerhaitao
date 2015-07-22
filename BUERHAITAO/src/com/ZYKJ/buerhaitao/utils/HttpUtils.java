@@ -240,6 +240,32 @@ public class HttpUtils {
 		String url = base_url + "delFavoriteGoods&goods_id=" + goods_id;
 		client.get(url, res);
 	}
+	/**
+	 * 删除商品收藏
+	 * 
+	 * @param res
+	 * @param key 
+	 */
+	public static void delProduct(AsyncHttpResponseHandler res,String key,String fav_id) {
+		String url = base_url + "index.php?act=member_favorites&op=favorites_del";
+		RequestParams params = new RequestParams();
+		params.put("key", key);
+		params.put("fav_id", fav_id);
+		client.post(url, params, res);
+	}
+	/**
+	 * 删除店铺收藏
+	 * 
+	 * @param res
+	 * @param key 
+	 */
+	public static void delStore(AsyncHttpResponseHandler res,String store_id,String key) {
+		String url = base_url + "index.php?act=member_favorites_store&op=favorites_del";
+		RequestParams params = new RequestParams();
+		params.put("store_id",store_id);
+		params.put("key", key);
+		client.post(url, params, res);
+	}
 
 	/**
 	 * 13查询商品收藏
@@ -289,7 +315,7 @@ public class HttpUtils {
 		String url = base_url + "index.php?act=member_favorites&op=favorites_list";
 		RequestParams requestParams = new RequestParams();
 		requestParams.put("key",key);
-		client.post(url, res);
+		client.post(url, requestParams, res);
 	}
 	/**
 	 * 收藏列表（店铺）
@@ -299,9 +325,9 @@ public class HttpUtils {
 	 */
 	public static void getFavoriteStore(AsyncHttpResponseHandler res,String key) {
 		String url = base_url + "index.php?act=member_favorites_store&op=favorites_list";
-		RequestParams requestParams = new RequestParams();
-		requestParams.put("key",key);
-		client.post(url, res);
+		RequestParams params = new RequestParams();
+		params.put("key",key);
+		client.post(url, params, res);
 	}
 
 	/**

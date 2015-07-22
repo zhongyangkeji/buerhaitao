@@ -14,12 +14,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.adapter.B5_10_MyCollectionAdapter;
-import com.ZYKJ.buerhaitao.adapter.B5_11_PointsMallAdapter;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
 import com.ZYKJ.buerhaitao.utils.Tools;
@@ -37,27 +35,32 @@ public class B5_10_MyCollection extends BaseActivity implements IXListViewListen
 	ImageButton mycollection_back;//返回
 	TextView tv_edit;//编辑
 	LinearLayout ll_product,ll_store;//产品，商铺
-	RelativeLayout rl_delete;//删除按钮
+//	RelativeLayout rl_delete;//删除按钮
 	View v1,v2;
 	MyListView listview;
 	B5_10_MyCollectionAdapter adapter;
+	B5_10_MyCollectionAdapter adapter_store;
 	List<Map<String, String>> data = new ArrayList<Map<String,String>>();
+	List<Map<String, String>> data_store = new ArrayList<Map<String,String>>();
 	Boolean  isEdit = false;
+	String key;
+	String tagProduct,tagStore;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		initView(R.layout.ui_5_10_mycolection);
+		key = getSharedPreferenceValue("key");
 		mycollection_back = (ImageButton) findViewById(R.id.mycollection_back);
 		tv_edit = (TextView) findViewById(R.id.tv_edit);
 		ll_product = (LinearLayout) findViewById(R.id.ll_product);
 		ll_store = (LinearLayout) findViewById(R.id.ll_store);
-		rl_delete = (RelativeLayout) findViewById(R.id.rl_delete);
+//		rl_delete = (RelativeLayout) findViewById(R.id.rl_delete);
 		setListener(mycollection_back,tv_edit,ll_product,ll_store);
 		v1=findViewById(R.id.v1_s);
 		v2=findViewById(R.id.v2_s);
 		listview = (MyListView) findViewById(R.id.listview_colllection);
-		adapter = new B5_10_MyCollectionAdapter(B5_10_MyCollection.this,data,isEdit);
+		adapter = new B5_10_MyCollectionAdapter(B5_10_MyCollection.this,data,isEdit,key);
 		listview.setAdapter(adapter);
 		listview.setPullLoadEnable(true);
 		listview.setPullRefreshEnable(true);
@@ -65,6 +68,8 @@ public class B5_10_MyCollection extends BaseActivity implements IXListViewListen
 		listview.setRefreshTime();
 		RequestDailog.showDialog(this, "正在加载数据，请稍后");
 		HttpUtils.getFavoriteProduct(res_getFavoriteProduct, getSharedPreferenceValue("key"));
+		tagProduct = "1";
+		tagStore   = "0";
 	}
 	@Override
 	public void onClick(View v) {
@@ -77,33 +82,60 @@ public class B5_10_MyCollection extends BaseActivity implements IXListViewListen
 			if (isEdit == true) {
 				tv_edit.setText("编辑");
 				isEdit = false;
-				rl_delete.setVisibility(View.GONE);
+//				rl_delete.setVisibility(View.GONE);
 			}else {
 				isEdit = true;
 				tv_edit.setText("完成");
-				rl_delete.setVisibility(View.VISIBLE);
-				rl_delete.bringToFront();//显示在最上层
+//				rl_delete.setVisibility(View.VISIBLE);
+//				rl_delete.bringToFront();//显示在最上层
 			}
-			Tools.Log("编辑");
-			adapter = new B5_10_MyCollectionAdapter(B5_10_MyCollection.this,data,isEdit);
-			listview.setAdapter(adapter);
-			
+			if (tagProduct.equals("1")) 
+			{
+				adapter = new B5_10_MyCollectionAdapter(B5_10_MyCollection.this,data,isEdit,key);
+				listview.setAdapter(adapter);
+			}
+			else if (tagStore.equals("1")) {
+				adapter_store = new B5_10_MyCollectionAdapter(B5_10_MyCollection.this,data_store,isEdit,key);
+				listview.setAdapter(adapter_store);
+			}
 			break;
 		case R.id.ll_product://产品
-			Tools.Log("产品");
+			tagProduct = "1";
+			tagStore   = "0";
 			v2.setVisibility(View.INVISIBLE);
 			v1.setVisibility(View.VISIBLE);
+			listview = (MyListView) findViewById(R.id.listview_colllection);
+			adapter = new B5_10_MyCollectionAdapter(B5_10_MyCollection.this,data,isEdit,key);
+			listview.setAdapter(adapter);
 			RequestDailog.showDialog(this, "正在加载数据，请稍后");
 			HttpUtils.getFavoriteProduct(res_getFavoriteProduct, getSharedPreferenceValue("key"));
 			
 			break;
 		case R.id.ll_store://商铺
-			Tools.Log("商铺");
+			tagProduct = "0";
+			tagStore   = "1";
 			v2.setVisibility(View.VISIBLE);
 			v1.setVisibility(View.INVISIBLE);
 			RequestDailog.showDialog(this, "正在加载数据，请稍后");
+			listview = (MyListView) findViewById(R.id.listview_colllection);
+			adapter_store = new B5_10_MyCollectionAdapter(B5_10_MyCollection.this,data_store,isEdit,key);
+			listview.setAdapter(adapter_store);
 			HttpUtils.getFavoriteStore(res_getFavoriteStore, getSharedPreferenceValue("key"));
 			break;
+//		case R.id.rl_delete://删除
+//			String idStrings = "";
+//			if (v1.getVisibility()==View.INVISIBLE)//删除产品 
+//			{
+//				idStrings = adapter.getidStrings()[0];
+//			}
+//			else 								   //删除店铺
+//			{								   
+//				idStrings = adapter.getidStrings()[0];
+//			}
+//			Log.e("idStrings", idStrings+"");
+////			RequestDailog.showDialog(this, "正在加载数据，请稍后");
+////			HttpUtils.getFavoriteStore(res_getFavoriteStore, getSharedPreferenceValue("key"));
+//			break;
 
 		default:
 			break;
@@ -132,12 +164,12 @@ public class B5_10_MyCollection extends BaseActivity implements IXListViewListen
 			// TODO Auto-generated method stub
 			super.onSuccess(statusCode, headers, response);
 			RequestDailog.closeDialog();
-			Tools.Log("产品response="+response);
+			Tools.Log("收藏产品="+response);
 			String error=null;
 			JSONObject datas=null;
 			try {
 				 datas = response.getJSONObject("datas");
-				 error = response.getString("error");
+				 error = datas.getString("error");
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -146,16 +178,18 @@ public class B5_10_MyCollection extends BaseActivity implements IXListViewListen
 			{
 				try {
 					data.clear();
-					org.json.JSONArray array = datas.getJSONArray("pro_list");//等收藏功能完善之后更改array的名字
-					Tools.Log("res_pointsMall_array="+array);
+					org.json.JSONArray array = datas.getJSONArray("favorites_list");//等收藏功能完善之后更改array的名字
 					for (int i = 0; i < array.length(); i++) {
 						JSONObject jsonItem = array.getJSONObject(i);
 						Map<String, String> map = new HashMap();
+						map.put("tag","Product");
 						map.put("goods_name", jsonItem.getString("goods_name"));
 						map.put("goods_image_url", jsonItem.getString("goods_image_url"));
+						map.put("goods_id", jsonItem.getString("goods_id"));
 						map.put("goods_price", jsonItem.getString("goods_price"));
 						map.put("fav_time", jsonItem.getString("fav_time"));
 						map.put("fav_id", jsonItem.getString("fav_id"));
+						map.put("store_id", jsonItem.getString("store_id"));
 						data.add(map);
 					}
 					adapter.notifyDataSetChanged();
@@ -181,7 +215,6 @@ public class B5_10_MyCollection extends BaseActivity implements IXListViewListen
 	 */
 	JsonHttpResponseHandler res_getFavoriteStore = new JsonHttpResponseHandler()
 	{
-		
 		public void onSuccess(int statusCode, Header[] headers,
 				JSONObject response) {
 			// TODO Auto-generated method stub
@@ -192,7 +225,7 @@ public class B5_10_MyCollection extends BaseActivity implements IXListViewListen
 			JSONObject datas=null;
 			try {
 				datas = response.getJSONObject("datas");
-				error = response.getString("error");
+				error = datas.getString("error");
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -200,22 +233,19 @@ public class B5_10_MyCollection extends BaseActivity implements IXListViewListen
 			if (error==null)//成功
 			{
 				try {
-					data.clear();
+					data_store.clear();
 					org.json.JSONArray array = datas.getJSONArray("favorites_list");//等收藏功能完善之后更改array的名字
 					for (int i = 0; i < array.length(); i++) {
 						JSONObject jsonItem = array.getJSONObject(i);
 						Map<String, String> map = new HashMap();
+						map.put("tag", "Store");
 						map.put("store_id", jsonItem.getString("store_id"));
 						map.put("store_name", jsonItem.getString("store_name"));
 						map.put("fav_time_text", jsonItem.getString("fav_time_text"));
-						map.put("fav_time", jsonItem.getString("fav_time"));
-						map.put("goods_count", jsonItem.getString("goods_count"));
-						map.put("store_collect ", jsonItem.getString("store_collect "));
-						map.put("store_avatar", jsonItem.getString("store_avatar"));
 						map.put("store_avatar_url", jsonItem.getString("store_avatar_url"));
-						data.add(map);
+						data_store.add(map);
 					}
-					adapter.notifyDataSetChanged();
+					adapter_store.notifyDataSetChanged();
 				} 
 				catch (org.json.JSONException e) {
 					// TODO Auto-generated catch block
