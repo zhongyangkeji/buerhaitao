@@ -13,22 +13,18 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
-import com.ZYKJ.buerhaitao.UI.B5_13_MyPurse;
 import com.ZYKJ.buerhaitao.UI.B5_5_Comment_order;
 import com.ZYKJ.buerhaitao.UI.B5_5_OrderDetail;
 import com.ZYKJ.buerhaitao.UI.B5_MyActivity;
@@ -51,7 +47,7 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
     private static final int DAISHOUHUO = 30;
     private static final int YISHOUHUO  = 40;
 	
-	String price,pay_sn;                                     //订单金额
+	String price,pay_sn,store_phone,canBeComment;                                     //订单金额
     private static final String CHANNEL_WECHAT = "wx";//通过微信支付
     private static final String CHANNEL_ALIPAY = "alipay";//通过支付宝支付
     private static final int REQUEST_CODE_PAYMENT = 1;
@@ -144,8 +140,10 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 			case YISHOUHUO:
 				viewHolder.tv_orderstatus.setText("买家已收货");
 				if (data.get(position).get("if_evaluation").toString().equals("true")) {
+					canBeComment = "can";
 					viewHolder.btn_tocomment.setVisibility(View.VISIBLE);//待评价根据服务器取出的数据进行判断，判断订单是否已经被评价过
 				}else {
+					canBeComment = "cannot";
 					viewHolder.btn_tocomment.setVisibility(View.INVISIBLE);//待评价根据服务器取出的数据进行判断，判断订单是否已经被评价过
 				}
 				viewHolder.btn_delete_this.setVisibility(View.VISIBLE);
@@ -161,19 +159,42 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 		}
         pay_sn = data.get(position).get("pay_sn").toString();
         price = data.get(position).get("order_amount").toString();
+        store_phone= data.get(position).get("store_phone").toString();
         viewHolder.tv_storename.setText(data.get(position).get("store_name").toString());//店铺名
         JSONArray extend_order_goods = (JSONArray) ((Map) data.get(position)).get("extend_order_goods");
         viewHolder.tv_ordergoodsnumber.setText("共有"+extend_order_goods.length()+"件商品");//订单中商品的数量
         viewHolder.tv_orderprice.setText("实付:￥"+price);
+        
         adapter = new B5_5_OrderStatuslistviewAdapter(c,extend_order_goods);
         viewHolder.listView.setAdapter(adapter);
         
+        //根据商品数的多少来确定评论显示的高度
+        B5_5_OrderStatuslistviewAdapter listAdapter = (B5_5_OrderStatuslistviewAdapter) viewHolder.listView.getAdapter();  
+        if (listAdapter == null) { 
+            return null; 
+        } 
+        int totalHeight = 0; 
+        for (int i = 0; i < listAdapter.getCount(); i++) { 
+            View listItem = listAdapter.getView(i, null, viewHolder.listView); 
+            listItem.measure(0, 0); 
+            totalHeight += listItem.getMeasuredHeight(); 
+        } 
+        //设置商品显示的的高度
+        ViewGroup.LayoutParams params = viewHolder.listView.getLayoutParams(); 
+        params.height = totalHeight + (viewHolder.listView.getDividerHeight() * (listAdapter.getCount())); 
+        viewHolder.listView.setLayoutParams(params); 
+        
+        
         viewHolder.btn_deletetheorder.setOnClickListener(new DeletetheorderListener(position,data.get(position).get("order_id").toString()));
         viewHolder.btn_paytheorder.setOnClickListener(new PaytheorderListener(position,pay_sn));
-        viewHolder.listView.setOnItemClickListener(new GetOrderDetail(position,data.get(position).get("order_id").toString(),status,pay_sn));
+        
+        //跳转到订单详情
+        viewHolder.listView.setOnItemClickListener(new GetOrderDetail(position,data.get(position).get("order_id").toString(),status,pay_sn,store_phone,canBeComment,price,extend_order_goods));
+        
         viewHolder.btn_tuihuanhuo.setOnClickListener(new TuiHuan(position,data.get(position).get("store_phone").toString()));
         viewHolder.btn_querenshouhuo.setOnClickListener(new QueRen(position,data.get(position).get("order_id").toString()));
         viewHolder.btn_tocomment.setOnClickListener(new PingJia(position,extend_order_goods,price,data.get(position).get("order_id").toString()));
+        viewHolder.btn_delete_this.setOnClickListener(new DeleteTheOrder(data.get(position).get("order_id").toString()));
         return convertView;
 	}
 	/**
@@ -192,29 +213,28 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 //			Tools.Log("key="+key);
-			RequestDailog.showDialog(c, "正在取订单，请稍后");
-//			Log.e("key", key+"");
-			Log.e("orderidString", orderidString);
 			
-			switch (status) {
-			case DAIFUKUAN://待付款中的取消订单
-				HttpUtils.cancelOrder(res_cancelOrder, key, orderidString);
-				break;
-			case DAIFAHUO://待发货中的取消订单
-				HttpUtils.cancelOrder_paid(res_cancelOrder, key, orderidString);
-				break;
-
-			default:
-				break;
-			}
-			
-//			Tools.Notic(c, "是否取消该订单？", new OnClickListener() {
-//				
-//				@Override
-//				public void onClick(View arg0) {
-//					// TODO Auto-generated method stub
-//				}
-//			});
+			Tools.Notic(c, "是否取消该订单？", new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					UIDialog.closeDialog();
+//					RequestDailog.showDialog(c, "正在取订单，请稍后");
+					switch (status) 
+					{
+					case DAIFUKUAN://待付款中的取消订单
+						HttpUtils.cancelOrder(res_cancelOrder, key, orderidString);
+						break;
+					case DAIFAHUO://待发货中的取消订单
+						HttpUtils.cancelOrder_paid(res_cancelOrder, key, orderidString);
+						break;
+						
+					default:
+						break;
+					}
+					
+				}
+			});
 		}
 
 	}
@@ -267,12 +287,20 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 		int position;
 		String order_id;
 		String pay_sn;
+		String store_phone;
+		String canBeComment;
+		String price;
+		JSONArray extend_order_goods;
 		int status;
-		public GetOrderDetail(int position,String order_id,int status,String pay_sn) {
+		public GetOrderDetail(int position,String order_id,int status,String pay_sn,String store_phone,String canBeComment,String price,JSONArray extend_order_goods) {
 			this.position = position;
 			this.order_id = order_id;
 			this.pay_sn = pay_sn;
 			this.status = status;
+			this.store_phone = store_phone;
+			this.canBeComment = canBeComment;
+			this.extend_order_goods = extend_order_goods;
+			this.price = price;
 		}
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
@@ -282,6 +310,10 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 			intent_to_detail.putExtra("order_id", order_id);
 			intent_to_detail.putExtra("status", status);
 			intent_to_detail.putExtra("pay_sn", pay_sn);
+			intent_to_detail.putExtra("store_phone", store_phone);
+			intent_to_detail.putExtra("canBeComment", canBeComment);
+			intent_to_detail.putExtra("price", price);
+			intent_to_detail.putExtra("extend_order_goods", extend_order_goods.toString());
 			c.startActivity(intent_to_detail);
 			
 		}
@@ -336,11 +368,16 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 		}
 		@Override
 		public void onClick(View v) {
-			Toast.makeText(c, "123", 400).show();
-			Tools.Log("key="+key);
-			Tools.Log("order_id="+order_id);
-			RequestDailog.showDialog(c, "正在确认订单");
-			HttpUtils.receiveGoods(res_receiveGoods, key, order_id);
+//			Tools.Log("key="+key);
+//			Tools.Log("order_id="+order_id);
+			Tools.Notic(c, "是否确认收货", new OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					HttpUtils.receiveGoods(res_receiveGoods, key, order_id);
+				}
+			});
 		}
 		
 	}
@@ -366,6 +403,21 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 			intent_comment.putExtra("price",price);
 			intent_comment.putExtra("order_id",order_id);
 			c.startActivity(intent_comment);
+		}
+		
+	}
+	/**
+	 * 删除订单
+	 * @author zyk
+	 */
+	class DeleteTheOrder implements View.OnClickListener {
+		String order_id;
+		public DeleteTheOrder(String order_id) {
+			this.order_id = order_id;
+		}
+		@Override
+		public void onClick(View v) {
+			HttpUtils.deleteTheOrder(res_deleteTheOrder, key, order_id);
 		}
 		
 	}
@@ -397,7 +449,6 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 			// TODO Auto-generated method stub
 			super.onSuccess(statusCode, headers, response);
 			RequestDailog.closeDialog();
-			
 			Tools.Log("取消订单="+response);
 			String error=null;
 			JSONObject datas=null;
@@ -496,6 +547,48 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 			else//失败 
 			{
 				Tools.Log("res_Points_error="+error+"");
+				Tools.Notic(c, error+"", null);
+			}
+			
+		}
+		
+		
+	};
+	
+	/**
+	 * 删除订单
+	 */
+	JsonHttpResponseHandler res_deleteTheOrder = new JsonHttpResponseHandler()
+	{
+		
+		@Override
+		public void onSuccess(int statusCode, Header[] headers,JSONObject response) {
+			// TODO Auto-generated method stub
+			super.onSuccess(statusCode, headers, response);
+			RequestDailog.closeDialog();
+			Log.e("删除订单", response+"");
+			String error=null;
+			JSONObject datas=null;
+			try {
+				datas = response.getJSONObject("datas");
+				error = datas.getString("error");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (error==null)//成功
+			{
+				Tools.Notic(c, "您已经删除订单", new OnClickListener() {
+					
+					@Override
+					public void onClick(View arg0) {
+						// TODO Auto-generated method stub
+						c.finish();
+					}
+				});
+			}
+			else//失败 
+			{
 				Tools.Notic(c, error+"", null);
 			}
 			

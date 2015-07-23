@@ -2,12 +2,14 @@ package com.ZYKJ.buerhaitao.UI;
 
 
 import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +40,7 @@ public class B5_5_OrderDetail extends BaseActivity {
 	TextView tv_buyer_name,tv_buyer_number,tv_buyer_address,tv_storename_or,
 	tv_ordergoodsnumber_or,tv_orderprice_or,tv_shipping_fee,tv_payment_name,tv_order_sn,tv_liuyan;
 	ListView listview_goodslist_or;
+	String extend_order_goods;
 	B5_5_OrderDetailAdapter adapter;
 	Button btn_deletetheorder;//取消订单
 	Button btn_paytheorder;//付款
@@ -45,7 +48,7 @@ public class B5_5_OrderDetail extends BaseActivity {
 	Button btn_tocomment;//待评价
 	Button btn_tuihuanhuo;//退换货
 	Button btn_querenshouhuo;//确认收货
-	String pay_sn,order_id,key;
+	String pay_sn,order_id,key,store_phone,canBeComment,price;
 	private int status=0;
     private static final String CHANNEL_WECHAT = "wx";//通过微信支付
     private static final String CHANNEL_ALIPAY = "alipay";//通过支付宝支付
@@ -63,11 +66,16 @@ public class B5_5_OrderDetail extends BaseActivity {
 		key = getSharedPreferenceValue("key");
 		Intent intent = getIntent();
 		order_id = intent.getStringExtra("order_id");
+		store_phone = intent.getStringExtra("store_phone");
+		canBeComment = intent.getStringExtra("canBeComment");
+		price = intent.getStringExtra("price");
+		extend_order_goods = intent.getStringExtra("extend_order_goods");
+		
 		pay_sn = intent.getStringExtra("pay_sn");
 		status = intent.getIntExtra("status", 0);
 		Tools.Log("status="+status);
 		initView();
-		setListener(order_back,btn_deletetheorder,btn_paytheorder);
+		setListener(order_back,btn_deletetheorder,btn_paytheorder,btn_delete_this,btn_tocomment,btn_tuihuanhuo,btn_querenshouhuo);
 		RequestDailog.showDialog(this, "正在获取订单详情");
 		HttpUtils.getOrderDetail(res_getOrderDetail, key, order_id);
 	}
@@ -119,7 +127,13 @@ public class B5_5_OrderDetail extends BaseActivity {
 				btn_tocomment.setVisibility(View.GONE);
 				break;
 			case YISHOUHUO:
-				btn_tocomment.setVisibility(View.VISIBLE);//待评价根据服务器取出的数据进行判断，判断订单是否已经被评价过
+				if (canBeComment.equals("can")) //该订单可以评价，显示评价按钮
+				{
+					btn_tocomment.setVisibility(View.VISIBLE);//待评价根据服务器取出的数据进行判断，判断订单是否已经被评价过
+				}else if(canBeComment.equals("cannot")) //该订单不可以评价，不显示评价按钮
+				{
+					btn_tocomment.setVisibility(View.INVISIBLE);//待评价根据服务器取出的数据进行判断，判断订单是否已经被评价过
+				}
 				btn_delete_this.setVisibility(View.VISIBLE);
 				btn_tuihuanhuo.setVisibility(View.VISIBLE);
 				btn_querenshouhuo.setVisibility(View.GONE);
@@ -140,8 +154,27 @@ public class B5_5_OrderDetail extends BaseActivity {
 			this.finish();
 			break;
 		case R.id.btn_deletetheorder_or://取消订单
-			RequestDailog.showDialog(this, "正在取消订单");
-			HttpUtils.cancelOrder(res_cancelOrder, key, order_id);
+			Tools.Notic(this, "是否取消该订单？", new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					UIDialog.closeDialog();
+//					RequestDailog.showDialog(c, "正在取订单，请稍后");
+					switch (status) 
+					{
+					case DAIFUKUAN://待付款中的取消订单
+						HttpUtils.cancelOrder(res_cancelOrder, key, order_id);
+						break;
+					case DAIFAHUO://待发货中的取消订单
+						HttpUtils.cancelOrder_paid(res_cancelOrder, key, order_id);
+						break;
+						
+					default:
+						break;
+					}
+					
+				}
+			});
 			break;
 		case R.id.btn_paytheorder_or://付款
 			UIDialog.ForThreeBtn(this, new String[] { "微信", "支付宝","取消" }, new OnClickListener() {
@@ -170,12 +203,145 @@ public class B5_5_OrderDetail extends BaseActivity {
 				}
 			});
 			break;
+		case R.id.btn_tuihuanhuo_or:
+			UIDialog.ForTwoBtn(this, new String[] { "店铺电话:"+store_phone,"取消" }, new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					switch (v.getId()) {
+					case R.id.dialog_modif_1:// 给店家打电话
+						UIDialog.closeDialog();
+						 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + store_phone));
+			                // 通知activtity处理传入的call服务
+			             startActivity(intent);
+						break;
+					case R.id.dialog_modif_2:// 取消
+						UIDialog.closeDialog();
+						break;
 
+					default:
+						break;
+					}
+				}
+			});
+			break;
+		case R.id.btn_querenshouhuo_or:
+			Tools.Notic(this, "是否确认收货", new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					HttpUtils.receiveGoods(res_receiveGoods, key, order_id);
+				}
+			});
+			
+			break;
+		case R.id.btn_delete_this_or:
+			Tools.Notic(this, "是否删除订单", new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					HttpUtils.deleteTheOrder(res_deleteTheOrder, key, order_id);
+				}
+			});
+			
+			break;
+		case R.id.btn_tocomment_or:
+			Intent intent_comment = new Intent(this,B5_5_Comment_order.class);
+			intent_comment.putExtra("extend_order_goods",extend_order_goods.toString());
+			intent_comment.putExtra("price",price);
+			intent_comment.putExtra("order_id",order_id);
+			intent_comment.putExtra("extend_order_goods",extend_order_goods);
+			startActivity(intent_comment);
+			break;
+			
 		default:
 			break;
 		}
 		super.onClick(v);
 	}
+	/**
+	 * 删除订单
+	 */
+	JsonHttpResponseHandler res_deleteTheOrder = new JsonHttpResponseHandler()
+	{
+		
+		@Override
+		public void onSuccess(int statusCode, Header[] headers,JSONObject response) {
+			// TODO Auto-generated method stub
+			super.onSuccess(statusCode, headers, response);
+			RequestDailog.closeDialog();
+			Log.e("删除订单", response+"");
+			String error=null;
+			JSONObject datas=null;
+			try {
+				datas = response.getJSONObject("datas");
+				error = datas.getString("error");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (error==null)//成功
+			{
+				Tools.Notic(B5_5_OrderDetail.this, "您已经删除订单", new OnClickListener() {
+					
+					@Override
+					public void onClick(View arg0) {
+						// TODO Auto-generated method stub
+						B5_5_OrderDetail.this.finish();
+					}
+				});
+			}
+			else//失败 
+			{
+				Tools.Notic(B5_5_OrderDetail.this, error+"", null);
+			}
+			
+		}
+		
+		
+	};
+	/**
+	 * 订单确认收货
+	 */
+	JsonHttpResponseHandler res_receiveGoods = new JsonHttpResponseHandler()
+	{
+		
+		@Override
+		public void onSuccess(int statusCode, Header[] headers,JSONObject response) {
+			// TODO Auto-generated method stub
+			super.onSuccess(statusCode, headers, response);
+			RequestDailog.closeDialog();
+			Log.e("确认收货", response+"");
+			String error=null;
+			JSONObject datas=null;
+			try {
+				datas = response.getJSONObject("datas");
+				error = datas.getString("error");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (error==null)//成功
+			{
+				Tools.Notic(B5_5_OrderDetail.this, "您已经确认收货", new OnClickListener() {
+					
+					@Override
+					public void onClick(View arg0) {
+						// TODO Auto-generated method stub
+						B5_5_OrderDetail.this.finish();
+					}
+				});
+			}
+			else//失败 
+			{
+				Tools.Log("res_Points_error="+error+"");
+				Tools.Notic(B5_5_OrderDetail.this, error+"", null);
+			}
+			
+		}
+		
+		
+	};
 	/**
 	 * 订单详情
 	 */

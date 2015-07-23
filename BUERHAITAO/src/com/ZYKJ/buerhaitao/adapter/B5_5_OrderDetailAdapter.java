@@ -66,9 +66,9 @@ public class B5_5_OrderDetailAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         
-        for (int i = 0; i < extend_order_goods.length(); i++) {
+//        for (int i = 0; i < extend_order_goods.length(); i++) {
         	try {
-				JSONObject  extend_order_goods1 = (JSONObject) extend_order_goods.get(i);
+				JSONObject  extend_order_goods1 = (JSONObject) extend_order_goods.get(position);
 				String goods_image_url = extend_order_goods1.getString("image_60_url");
 				ImageLoader.getInstance().displayImage(goods_image_url, viewHolder.iv_product);//设置产品图片
 				viewHolder.tv_productName.setText(extend_order_goods1.getString("goods_name").toString());//设置产品名称
@@ -79,7 +79,7 @@ public class B5_5_OrderDetailAdapter extends BaseAdapter {
 				e.printStackTrace();
 			}
         	
-		}
+//		}
         
 		return convertView;
 	}

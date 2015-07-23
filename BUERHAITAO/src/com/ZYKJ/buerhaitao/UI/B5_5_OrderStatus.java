@@ -183,7 +183,6 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 			adapter = new B5_5_OrderStatusAdapter(this,dataList,status,key);
 			listview.setAdapter(adapter);
 			break;
-
 		default:
 			break;
 		}
@@ -193,7 +192,7 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 	public void onRefresh(int id) {
 		// TODO Auto-generated method stub
 		RequestDailog.showDialog(this, "正在加载数据，请稍后");
-		HttpUtils.getOrderList(res_getOrderList, key, status);
+		HttpUtils.getOrderList(res_getOrderList,key,status);
 	}
 	@Override
 	public void onLoadMore(int id) {

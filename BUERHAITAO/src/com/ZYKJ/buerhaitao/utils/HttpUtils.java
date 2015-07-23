@@ -647,6 +647,20 @@ public class HttpUtils {
 		params.put("order_id", order_id);
 		client.post(url, params, res);
 	}
+	/**
+	 * 删除订单
+	 * 
+	 * @param res
+	 * @param key
+	 * @param order_id
+	 */
+	public static void deleteTheOrder(AsyncHttpResponseHandler res,String key,String order_id) {
+		String url = base_url + "index.php?act=member_order&op=order_delete";
+		RequestParams params = new RequestParams();
+		params.put("key", key);
+		params.put("order_id", order_id);
+		client.post(url, params, res);
+	}
 
 	/**
 	 * 33 查看物流
