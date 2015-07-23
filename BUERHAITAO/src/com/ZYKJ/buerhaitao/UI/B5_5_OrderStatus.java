@@ -155,7 +155,7 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 			v104.setVisibility(View.INVISIBLE);
 			status = DAIFAHUO;
 			RequestDailog.showDialog(this, "正在加载数据，请稍后");
-			HttpUtils.getOrderList(res_getOrderList, key, status);
+			HttpUtils.getOrderList(res_getOrderList,key,status);
 			adapter = new B5_5_OrderStatusAdapter(this,dataList,status,key);
 			listview.setAdapter(adapter);
 			break;
@@ -167,7 +167,7 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 			v104.setVisibility(View.INVISIBLE);
 			status = DAISHOUHUO;
 			RequestDailog.showDialog(this, "正在加载数据，请稍后");
-			HttpUtils.getOrderList(res_getOrderList, key, status);
+			HttpUtils.getOrderList(res_getOrderList,key,status);
 			adapter = new B5_5_OrderStatusAdapter(this,dataList,status,key);
 			listview.setAdapter(adapter);
 			break;
@@ -183,7 +183,6 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 			adapter = new B5_5_OrderStatusAdapter(this,dataList,status,key);
 			listview.setAdapter(adapter);
 			break;
-
 		default:
 			break;
 		}
@@ -193,7 +192,7 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 	public void onRefresh(int id) {
 		// TODO Auto-generated method stub
 		RequestDailog.showDialog(this, "正在加载数据，请稍后");
-		HttpUtils.getOrderList(res_getOrderList, key, status);
+		HttpUtils.getOrderList(res_getOrderList,key,status);
 	}
 	@Override
 	public void onLoadMore(int id) {
@@ -237,6 +236,7 @@ public class B5_5_OrderStatus extends BaseActivity implements IXListViewListener
 						map.put("store_name", order_list1.getString("store_name"));
 						map.put("store_phone", order_list1.getString("store_phone"));
 						map.put("order_id", order_list1.getString("order_id"));
+						map.put("if_evaluation", order_list1.getString("if_evaluation"));
 						map.put("pay_sn", order_list1.getString("pay_sn"));
 						map.put("order_amount", order_list1.getString("order_amount"));
 						map.put("extend_order_goods", order_list1.getJSONArray("extend_order_goods"));

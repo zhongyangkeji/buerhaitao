@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,10 +25,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -36,10 +40,13 @@ import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.UI.B5_MyActivity;
+import com.ZYKJ.buerhaitao.data.AppValue;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
 import com.ZYKJ.buerhaitao.utils.Tools;
 import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.ZYKJ.buerhaitao.view.UIDialog;
+import com.alibaba.fastjson.serializer.JSONSerializer;
+import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -47,10 +54,7 @@ public class B5_5_OrderCommentAdapter extends BaseAdapter {
 	
 	private Activity c;
 	JSONArray extend_order_goods;
-	Map<String, String> map = new HashMap<String, String>();
-	Map<String, String> map_photo = new HashMap<String, String>();
 	
-	List<Map<String, String>> list = new ArrayList<Map<String,String>>();
 	
     private static final int PAIZHAO = 14;
     private static final int XIANGCE = 15;
@@ -59,22 +63,16 @@ public class B5_5_OrderCommentAdapter extends BaseAdapter {
 	private String cutnameString;
 	private String filename;
 	private int position1;
-	String  userid;
+	String  userid,key,order_id;
     
-	public B5_5_OrderCommentAdapter(Activity c, JSONArray extend_order_goods2 , String key) {
+	public B5_5_OrderCommentAdapter(Activity c, JSONArray extend_order_goods2 , String userid, String key, String order_id) {
 		this.c = c;
 		this.extend_order_goods = extend_order_goods2;
 		this.userid = userid;
+		this.key = key;
+		this.order_id = order_id;
 	}
 
-	public List getList() {
-		// TODO Auto-generated method stub
-		return list;
-	}
-	public void setMap_photo(String goods_id,String avatar) {
-		// TODO Auto-generated method stub
-		map_photo.put(goods_id, avatar);
-	}
 	
 	@Override
 	public int getCount() {
@@ -108,6 +106,7 @@ public class B5_5_OrderCommentAdapter extends BaseAdapter {
             viewHolder.ratingBar = (RatingBar) convertView.findViewById(R.id.ratingBar);
             viewHolder.et_comment = (EditText) convertView.findViewById(R.id.et_comment);
             viewHolder.iv_takePhoto = (ImageView) convertView.findViewById(R.id.iv_takePhoto);
+            viewHolder.btn_addComment = (Button) convertView.findViewById(R.id.btn_addComment);
             convertView.setTag(viewHolder);
         }
         else
@@ -124,23 +123,16 @@ public class B5_5_OrderCommentAdapter extends BaseAdapter {
 			viewHolder.tv_goodsprice.setText("￥"+extend_order_goods1.getString("goods_price").toString());//设置产品价格
 			viewHolder.tv_number.setText("X"+extend_order_goods1.getString("goods_num").toString());
 			viewHolder.iv_takePhoto.setOnClickListener(new TakePhoto(goods_id));
-			
-			if (map_photo.get(goods_id)!=null) {
-				ImageLoader.getInstance().displayImage("http://115.28.21.137/data/upload/circle/"+userid+"/"+map_photo.get(goods_id), viewHolder.iv_takePhoto);
-			}
-//			if (map.get("position") == null) {
-//				map.put("position", position+"");
-				map.put("goods_id",goods_id);
-				map.put("rating",viewHolder.ratingBar.getRating()+"");
-				map.put("comment",viewHolder.et_comment.getText()+"");
-				list.add(map);
-//			}
+			String comment = viewHolder.et_comment.getText().toString().trim();
+			String score = viewHolder.ratingBar.getRating()+"";
+			String image = AppValue.map_photo.get("avatar");
+			viewHolder.btn_addComment.setOnClickListener(new Comment(key,goods_id,comment,score,image,order_id));
+			Tools.Log("userid"+userid+"avatar"+AppValue.map_photo.get("avatar"));
+			ImageLoader.getInstance().displayImage("http://115.28.21.137/data/upload/shop/member/"+userid+"/"+image, viewHolder.iv_takePhoto);
     	} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
-        
 		return convertView;
 	}
 	/**
@@ -177,7 +169,6 @@ public class B5_5_OrderCommentAdapter extends BaseAdapter {
 				 * ："image/jpeg 、 image/png等的类型"
 				 * 这个地方小马有个疑问，希望高手解答下：就是这个数据URI与类型为什么要分两种形式来写呀？有什么区别？
 				 */
-				intent_toXIANGCE.putExtra("goods_id", goods_id);
 				intent_toXIANGCE.setDataAndType(
 						MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
 						"image/*");
@@ -198,7 +189,6 @@ public class B5_5_OrderCommentAdapter extends BaseAdapter {
 				createSDCardDir();
 				Intent intent_PAIZHAO = new Intent(
 						MediaStore.ACTION_IMAGE_CAPTURE);
-				intent_PAIZHAO.putExtra("goods_id", goods_id);
 				intent_PAIZHAO.putExtra(MediaStore.EXTRA_OUTPUT, Uri
 						.fromFile(new File(Environment
 								.getExternalStorageDirectory()
@@ -227,6 +217,41 @@ public class B5_5_OrderCommentAdapter extends BaseAdapter {
 			}
 		}
 	}
+	/**
+	 * 确认评价
+	 * @author zyk
+	 *
+	 */
+	class Comment implements View.OnClickListener {
+		String key;
+		String goods_id;
+		String order_id;
+		String comment;
+		String score;
+		String image;
+		public Comment(String key,String goods_id,String comment,String score,String image,String order_id) {
+			this.key = key;
+			this.goods_id = goods_id;
+			this.order_id = order_id;
+			this.comment = comment;
+			this.score = score;
+			this.image = image;
+		}
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			Map<String,Map<String, String>> map = new HashMap<String, Map<String, String>>();
+			Map<String, String> map1 = new HashMap<String, String>();
+			map1.put("comment",comment);
+			map1.put("score",score);
+			map1.put("image",image);
+			map.put(goods_id,map1);
+			Gson gson = new Gson();
+			String jsonStr = gson.toJson(map);
+			Log.e("map", jsonStr);
+			HttpUtils.orderEvaluation(res_orderEvaluation, key,order_id, jsonStr);
+		}
+	}
 	private static class ViewHolder
     {
         TextView tv_productName;
@@ -236,5 +261,44 @@ public class B5_5_OrderCommentAdapter extends BaseAdapter {
         RatingBar ratingBar;
         EditText et_comment;
         ImageView iv_takePhoto;
+        Button btn_addComment;
     }
+	JsonHttpResponseHandler res_orderEvaluation = new JsonHttpResponseHandler()
+	{
+
+		@Override
+		public void onSuccess(int statusCode, Header[] headers,
+				JSONObject response) {
+			// TODO Auto-generated method stub
+			super.onSuccess(statusCode, headers, response);
+			Log.e("订单评价结果", response+"");
+			String error=null;
+			JSONObject datas=null;
+			try {
+				 datas = response.getJSONObject("datas");
+				 error = datas.getString("error");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (error==null)//成功
+			{
+				Tools.Notic(c, "评价成功", new OnClickListener() {
+					
+					@Override
+					public void onClick(View arg0) {
+						// TODO Auto-generated method stub
+						c.finish();
+					}
+				});
+			}
+			else//失败 
+			{
+				Tools.Notic(c, error.toString(), null);
+			}
+			
+		}
+		
+		
+	};
 }

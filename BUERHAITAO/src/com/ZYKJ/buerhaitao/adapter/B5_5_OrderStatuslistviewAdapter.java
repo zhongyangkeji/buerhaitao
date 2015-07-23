@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,11 @@ import com.ZYKJ.buerhaitao.utils.Tools;
 import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
-
+/**
+ * 订单二级listview
+ * @author zyk
+ *
+ */
 public class B5_5_OrderStatuslistviewAdapter extends BaseAdapter {
 	
 	private Activity c;
@@ -67,12 +72,14 @@ public class B5_5_OrderStatuslistviewAdapter extends BaseAdapter {
         }
         
     	try {
-			JSONObject  extend_order_goods1 = (JSONObject) extend_order_goods.get(position);
-			String goods_image_url = extend_order_goods1.getString("goods_image_url");
-			ImageLoader.getInstance().displayImage(goods_image_url, viewHolder.iv_product);//设置产品图片
-			viewHolder.tv_productName.setText(extend_order_goods1.getString("goods_name").toString());//设置产品名称
-			viewHolder.tv_goodsprice.setText("￥"+extend_order_goods1.getString("goods_price").toString());//设置产品价格
-			viewHolder.tv_number.setText("X"+extend_order_goods1.getString("goods_num").toString());
+				
+    			JSONObject  extend_order_goods1 = (JSONObject) extend_order_goods.get(position);
+    			Log.e("extend_order_goods1"+position, extend_order_goods1+"");
+    			String goods_image_url = extend_order_goods1.getString("goods_image_url");
+    			ImageLoader.getInstance().displayImage(goods_image_url, viewHolder.iv_product);//设置产品图片
+    			viewHolder.tv_productName.setText(extend_order_goods1.getString("goods_name").toString());//设置产品名称
+    			viewHolder.tv_goodsprice.setText("￥"+extend_order_goods1.getString("goods_price").toString());//设置产品价格
+    			viewHolder.tv_number.setText("X"+extend_order_goods1.getString("goods_num").toString());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

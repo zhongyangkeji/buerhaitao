@@ -1,5 +1,8 @@
 package com.ZYKJ.buerhaitao.data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class AppValue {
 	public static Shop shop_info = null;
@@ -46,6 +49,8 @@ public class AppValue {
 	 * mob短信验证SECRE
 	 */
 	public static final String APP_SECRE = "a9544d5cdd5854a62ba4f5978be3ef6f";
+	
+	public static  Map<String, String> map_photo = new HashMap<String, String>();
 	
 	
 

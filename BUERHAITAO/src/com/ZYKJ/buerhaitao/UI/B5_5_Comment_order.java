@@ -5,10 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -24,7 +21,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,18 +29,23 @@ import android.widget.Toast;
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.adapter.B5_5_OrderCommentAdapter;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
+import com.ZYKJ.buerhaitao.data.AppValue;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
 import com.ZYKJ.buerhaitao.utils.Tools;
 import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-
+/**
+ * 订单评价页
+ * @author zyk
+ *
+ */
 public class B5_5_Comment_order extends BaseActivity {
 	ImageView order_back;
 	ListView listview_goodslist;
 	TextView tv_ordergoodsnumber_c,tv_orderprice_c;
 	B5_5_OrderCommentAdapter adapter;
-	Button btn_addComment;
+//	Button btn_addComment;
 	JSONArray extend_order_goods;
 	String price;
 	private String timeString;
@@ -65,7 +66,7 @@ public class B5_5_Comment_order extends BaseActivity {
 		Intent intent = getIntent();
 		String array = intent.getStringExtra("extend_order_goods");
 		order_id = intent.getStringExtra("order_id");
-		price  =  intent.getStringExtra("price");
+		price    =  intent.getStringExtra("price");
 		try {
 			extend_order_goods = new JSONArray(array);
 		} catch (JSONException e) {
@@ -76,9 +77,9 @@ public class B5_5_Comment_order extends BaseActivity {
 		tv_ordergoodsnumber_c.setText("共"+extend_order_goods.length()+"件商品");
 		tv_orderprice_c.setText("实付:￥"+price);
 		Log.e("extend_order_goods", extend_order_goods+"");
-		adapter = new B5_5_OrderCommentAdapter(this,extend_order_goods,getSharedPreferenceValue("userid"));
+		adapter = new B5_5_OrderCommentAdapter(this,extend_order_goods,getSharedPreferenceValue("userid"),getSharedPreferenceValue("key"),order_id);
 		listview_goodslist.setAdapter(adapter);
-		setListener(order_back,btn_addComment);
+		setListener(order_back);
 	}
 	private void initView() {
 		// TODO Auto-generated method stub
@@ -86,7 +87,6 @@ public class B5_5_Comment_order extends BaseActivity {
 		listview_goodslist = (ListView) findViewById(R.id.listview_goodslist);
 		tv_ordergoodsnumber_c = (TextView) findViewById(R.id.tv_ordergoodsnumber_c);
 		tv_orderprice_c = (TextView) findViewById(R.id.tv_orderprice_c);
-		btn_addComment = (Button) findViewById(R.id.btn_addComment);
 	}
 	@Override
 	public void onClick(View v) {
@@ -95,20 +95,6 @@ public class B5_5_Comment_order extends BaseActivity {
 		switch (v.getId()) {
 		case R.id.order_back:
 			this.finish();
-			break;
-		case R.id.btn_addComment://提交评价
-			List<Map<String, String>> list = adapter.getList();
-			Toast.makeText(this, list+"", 500).show();
-//			Log.e("list", list+"");
-			for(int i = 0; i<list.size(); i++){
-//				Log.e("list",list.get(i)+"");
-				Map<String, String> map1 = list.get(i);
-				String[][] goods = new String[map1.size()][map1.size()];
-//				for (int j = 0; j <map1.size(); j++) {
-//					goods[j][0] =  
-//				}
-//				HttpUtils.orderEvaluation(res_orderEvaluation, getSharedPreferenceValue("key"), order_id, goods);
-			} 
 			break;
 
 		default:
@@ -122,7 +108,6 @@ public class B5_5_Comment_order extends BaseActivity {
 				switch (requestCode)
 				{
 					case XIANGCE:
-						goods_id = data.getStringExtra("goods_id");
 //						Log.e("goods_id", goods_id);
 						try {
 							startPhotoZoom(data.getData());
@@ -134,7 +119,6 @@ public class B5_5_Comment_order extends BaseActivity {
 						break;
 						// 如果是调用相机拍照时
 					case PAIZHAO:
-						goods_id = data.getStringExtra("goods_id");
 //						Log.e("goods_id", goods_id);
 						// File temp = new File(Environment.getExternalStorageDirectory()
 						// + "/xiaoma.jpg");
@@ -257,10 +241,12 @@ public class B5_5_Comment_order extends BaseActivity {
 					if (error==null)//成功
 					{
 						try {
+							Tools.Log("上传成功");
 							avatar=datas.getString("image_name");
 //							Log.e("image_name", avatar);
 //							Log.e("goods_id",goods_id);
-							adapter.setMap_photo(goods_id,avatar);
+							AppValue.map_photo.put("avatar",avatar);
+//							adapter.setMap_photo(goods_id,avatar);
 							adapter.notifyDataSetChanged();
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
@@ -272,12 +258,9 @@ public class B5_5_Comment_order extends BaseActivity {
 						Tools.Notic(B5_5_Comment_order.this, error+"", null);
 					}
 //						String url = LandousAppConst.avatar_url_head + avatar_head;
-//						ImageLoader.getInstance().displayImage(url, avatar_head_image,
-//								BeeFrameworkApp.options_circle);
+//						ImageLoader.getInstance().displayImage(url,avatar_head_image,BeeFrameworkApp.options_circle);
 //					}
-
 				}
-
 				@Override
 				public void onFailure(int statusCode, Header[] headers,
 						Throwable throwable, JSONObject errorResponse) {

@@ -532,10 +532,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 			super.onSuccess(statusCode, headers, response);
 			RequestDailog.closeDialog();
 			String error=null;
-			String datas=null;
+			JSONObject datas=null;
 			try {
-				 datas = response.getString("datas");
-				 error = response.getString("error");
+				 datas = response.getJSONObject("datas");
+				 error = datas.getString("error");
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

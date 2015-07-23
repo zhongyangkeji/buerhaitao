@@ -139,13 +139,22 @@
             android:text="店铺名称" />
 
     </RelativeLayout>
-
+    <ScrollView 
+        android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout6"
+        >
+<LinearLayout     
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout6"
+        android:orientation="vertical"
+    >
     <ListView
         android:id="@+id/listview_goodslist_or"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/relativeLayout6" >
+        android:layout_alignParentLeft="true">
     </ListView>
 
     <RelativeLayout
@@ -290,6 +299,8 @@
             android:layout_marginTop="10dp"
             android:text="卖家留言卖家留言" />
     </RelativeLayout>
+</LinearLayout>
+</ScrollView>
 <RelativeLayout
     android:id="@+id/addNewAddress"
     android:layout_width="match_parent"
@@ -298,60 +309,55 @@
     android:layout_alignParentLeft="true"
     android:background="@color/white" >
 
+        <!-- 删除订单 -->
+
+        <Button
+            android:id="@+id/btn_delete_this_or"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn_deletetheorder_or"
+            android:background="@drawable/btn_shanchudingdan" />
+ 		<!-- 退换货 -->
+        <Button
+            android:id="@+id/btn_tuihuanhuo_or"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn_tocomment_or"
+            android:background="@drawable/btn_tuihuanhuo" />
+
+        <Button
+            android:id="@+id/btn_tocomment_or"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_daipingjia" />
+
+        <Button
+            android:id="@+id/btn_deletetheorder_or"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn_querenshouhuo_or"
+            android:background="@drawable/btn_quxiaodingdan" />
+
+        <Button
+            android:id="@+id/btn_querenshouhuo_or"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_querenshouhuo" />
+
         <Button
             android:id="@+id/btn_paytheorder_or"
             android:layout_width="60dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
             android:background="@drawable/btn_fukuan" />
-
-        <Button
-            android:id="@+id/btn_deletetheorder_or"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_alignBaseline="@+id/btn_paytheorder_or"
-            android:layout_alignBottom="@+id/btn_paytheorder_or"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/btn_quxiaodingdan" />
-
-        <Button
-            android:id="@+id/btn_tuihuanhuo_or"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_alignBaseline="@+id/btn_deletetheorder_or"
-            android:layout_alignBottom="@+id/btn_deletetheorder_or"
-            android:layout_alignLeft="@+id/btn_deletetheorder_or"
-            android:background="@drawable/btn_tuihuanhuo" />
-
-        <Button
-            android:id="@+id/btn_delete_this_or"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_alignBaseline="@+id/btn_deletetheorder_or"
-            android:layout_alignBottom="@+id/btn_deletetheorder_or"
-            android:layout_alignLeft="@+id/btn_deletetheorder_or"
-            android:background="@drawable/btn_shanchudingdan" />
-
-        <Button
-            android:id="@+id/btn_querenshouhuo_or"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_alignBaseline="@+id/btn_paytheorder_or"
-            android:layout_alignBottom="@+id/btn_paytheorder_or"
-            android:layout_alignLeft="@+id/btn_paytheorder_or"
-            android:background="@drawable/btn_querenshouhuo" />
-
-        <Button
-            android:id="@+id/btn_tocomment_or"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_alignBaseline="@+id/btn_paytheorder_or"
-            android:layout_alignBottom="@+id/btn_paytheorder_or"
-            android:layout_alignLeft="@+id/btn_paytheorder_or"
-            android:background="@drawable/btn_daipingjia" />
 
 </RelativeLayout>
 </RelativeLayout>

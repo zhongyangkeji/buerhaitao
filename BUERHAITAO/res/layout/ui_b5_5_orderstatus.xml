@@ -38,6 +38,7 @@
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/relativeLayout1"
+        
         android:background="@color/white" >
 
         <LinearLayout
