@@ -1267,6 +1267,34 @@ public class HttpUtils {
 		client.post(url, params,res);
 	}
 	
+	/**
+	 *  购物车删除
+	 * @param key 当前登录令牌
+	 * @param cart_id 购物车编号
+	 */
+	public static void getDelete(AsyncHttpResponseHandler res, String key,String cart_id) {
+		String url = base_url + "index.php?act=member_cart&op=cart_del";
+		RequestParams params = new RequestParams();
+		params.put("key",key);
+		params.put("cart_id",cart_id);
+		client.post(url, params,res);
+	}
+	
+	/**
+	 *  购物车删除
+	 * @param key 当前登录令牌
+	 * @param cart_id 购物车编号
+	 * @param quantity 新的购买数量
+	 */
+	public static void getAddGoods(AsyncHttpResponseHandler res, String key,String cart_id,String quantity) {
+		String url = base_url + "index.php?act=member_cart&op=cart_edit_quantity";
+		RequestParams params = new RequestParams();
+		params.put("key",key);
+		params.put("cart_id",cart_id);
+		params.put("quantity",quantity);
+		client.post(url, params,res);
+	}
+	
 	public static String iterateParams(HashMap<String,String> params){
 		String parameter = "";
 		Iterator<String> iterator = params.keySet().iterator();
