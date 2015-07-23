@@ -2,9 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/theme_grey"
+    android:background="@drawable/body_cont_bg"
     android:orientation="vertical" >
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
@@ -90,7 +89,7 @@
         android:layout_height="40dp"
         android:background="@color/white" >
 
-        <!-- 付款 -->
+        <!-- 删除订单 -->
 
         <Button
             android:id="@+id/btn_delete_this"
@@ -99,7 +98,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btn_deletetheorder"
             android:background="@drawable/btn_shanchudingdan" />
-
+ 		<!-- 退换货 -->
         <Button
             android:id="@+id/btn_tuihuanhuo"
             android:layout_width="60dp"
@@ -138,7 +137,6 @@
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"
             android:background="@drawable/btn_fukuan" />
     </RelativeLayout>
 

@@ -50,10 +50,12 @@
 
             <com.ZYKJ.buerhaitao.utils.CircularImage
                 android:id="@+id/img_head"
-                android:layout_width="100dp"
-	            android:layout_height="100dp"
+                android:layout_width="80dp"
+	            android:layout_height="80dp"
 	            android:layout_alignParentBottom="true"
 	            android:layout_alignParentLeft="true"
+	            android:layout_marginLeft="10dp"
+	            android:layout_marginBottom="10dp"
                 android:background="@drawable/img_head"
                 />
 
@@ -84,15 +86,14 @@
 
     </RelativeLayout>
 
-	<!-- 我的钱包+积分+签到 -->
+<!-- 我的钱包+积分+签到 -->
    <RelativeLayout 
     android:id="@+id/relativeLayout2"
     android:layout_below="@+id/relativeLayout1"
     android:layout_width="fill_parent"
-	android:layout_height="60dp"
-	android:background="@drawable/shape_background"
-    
-    >
+	android:layout_height="75dp"
+	android:background="@drawable/body_cont_bg"
+	>
 	<LinearLayout
 	    android:id="@+id/ll_my_purse"
 	    android:layout_width="wrap_content"
@@ -156,13 +157,11 @@
 
        <Button
            android:id="@+id/btn_chackInShape"
-           android:layout_width="58dp"
-           android:layout_height="58dp"
+           android:layout_width="45dp"
+           android:layout_height="45dp"
            android:background="@drawable/shape_round"
            android:text="@string/add_five"
-           android:textColor="@color/white" 
-           
-           />
+           android:textColor="@color/white"/>
 
        <Button
            android:id="@+id/signIn"
@@ -181,7 +180,7 @@
 	    android:layout_below="@+id/relativeLayout2"
 	    android:layout_width="fill_parent"
 		android:layout_height="70dp"
-		android:background="@drawable/shape_background"
+		android:background="@drawable/body_cont_bg"
 		android:layout_marginTop="4dp"
 		>
 	  <LinearLayout
@@ -293,7 +292,7 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="38dp"
 	        android:layout_marginTop="6dp"
-	        android:background="@drawable/shape_background"
+	        android:background="@drawable/body_cont_bg"
 	        android:orientation="horizontal" >
 
 	        <ImageView
@@ -331,7 +330,7 @@
 	        android:layout_height="38dp"
 	        android:layout_below="@+id/my_address_page"
 	        android:layout_marginTop="6dp"
-	        android:background="@drawable/shape_background" >
+	        android:background="@drawable/body_cont_bg" >
 
 	        <TextView
 	            android:id="@+id/textView2"
@@ -370,7 +369,7 @@
 	        android:layout_height="38dp"
 	        android:layout_below="@+id/my_store_page"
 	        android:layout_marginTop="6dp"
-	        android:background="@drawable/shape_background" >
+	        android:background="@drawable/body_cont_bg" >
 
 	        <TextView
 	            android:id="@+id/textView3"
@@ -410,7 +409,7 @@
 	        android:layout_alignParentLeft="true"
 	        android:layout_below="@+id/my_points_page"
 	        android:layout_marginTop="6dp"
-	        android:background="@drawable/shape_background" >
+	        android:background="@drawable/body_cont_bg" >
 
 	        <TextView
 	            android:layout_width="wrap_content"

@@ -690,7 +690,7 @@ public class HttpUtils {
 	 * @param goods 商品评价
 	 */
 	public static void orderEvaluation(AsyncHttpResponseHandler res,
-			String key, String order_id, String goods[][]) {
+			String key, String order_id, String goods) {
 		String url = base_url + "index.php?act=member_evaluate&op=save";
 		RequestParams params = new RequestParams();
 		params.put("key", key);

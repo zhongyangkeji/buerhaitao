@@ -116,47 +116,49 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 				 viewHolder.tv_orderstatus.setText("待付款");
 				 viewHolder.btn_paytheorder.setVisibility(View.VISIBLE);
 				 viewHolder.btn_deletetheorder.setVisibility(View.VISIBLE);
-				 viewHolder.btn_delete_this.setVisibility(View.GONE);
-				 viewHolder.btn_tocomment.setVisibility(View.GONE);
-				 viewHolder.btn_tuihuanhuo.setVisibility(View.GONE);
-				 viewHolder.btn_querenshouhuo.setVisibility(View.GONE);
+				 viewHolder.btn_delete_this.setVisibility(View.INVISIBLE);
+				 viewHolder.btn_tocomment.setVisibility(View.INVISIBLE);
+				 viewHolder.btn_tuihuanhuo.setVisibility(View.INVISIBLE);
+				 viewHolder.btn_querenshouhuo.setVisibility(View.INVISIBLE);
 				 
 				break;
 			case DAIFAHUO:
 				viewHolder.tv_orderstatus.setText("买家已付款");
 				
 				viewHolder.btn_deletetheorder.setVisibility(View.VISIBLE);
-				viewHolder.btn_paytheorder.setVisibility(View.GONE);
-				viewHolder.btn_delete_this.setVisibility(View.GONE);
-				viewHolder.btn_tocomment.setVisibility(View.GONE);
-				viewHolder.btn_tuihuanhuo.setVisibility(View.GONE);
-				viewHolder.btn_querenshouhuo.setVisibility(View.GONE);
+				viewHolder.btn_paytheorder.setVisibility(View.INVISIBLE);
+				viewHolder.btn_delete_this.setVisibility(View.INVISIBLE);
+				viewHolder.btn_tocomment.setVisibility(View.INVISIBLE);
+				viewHolder.btn_tuihuanhuo.setVisibility(View.INVISIBLE);
+				viewHolder.btn_querenshouhuo.setVisibility(View.INVISIBLE);
 				break;
 			case DAISHOUHUO:
 				viewHolder.tv_orderstatus.setText("卖家已发货");
 				viewHolder.btn_tuihuanhuo.setVisibility(View.VISIBLE);
 				viewHolder.btn_querenshouhuo.setVisibility(View.VISIBLE);
-				viewHolder.btn_deletetheorder.setVisibility(View.GONE);
-				viewHolder.btn_paytheorder.setVisibility(View.GONE);
-				viewHolder.btn_delete_this.setVisibility(View.GONE);
-				viewHolder.btn_tocomment.setVisibility(View.GONE);
+				viewHolder.btn_deletetheorder.setVisibility(View.INVISIBLE);
+				viewHolder.btn_paytheorder.setVisibility(View.INVISIBLE);
+				viewHolder.btn_delete_this.setVisibility(View.INVISIBLE);
+				viewHolder.btn_tocomment.setVisibility(View.INVISIBLE);
 				break;
 			case YISHOUHUO:
 				viewHolder.tv_orderstatus.setText("买家已收货");
-				
-				viewHolder.btn_tocomment.setVisibility(View.VISIBLE);//待评价根据服务器取出的数据进行判断，判断订单是否已经被评价过
+				if (data.get(position).get("if_evaluation").toString().equals("true")) {
+					viewHolder.btn_tocomment.setVisibility(View.VISIBLE);//待评价根据服务器取出的数据进行判断，判断订单是否已经被评价过
+				}else {
+					viewHolder.btn_tocomment.setVisibility(View.INVISIBLE);//待评价根据服务器取出的数据进行判断，判断订单是否已经被评价过
+				}
 				viewHolder.btn_delete_this.setVisibility(View.VISIBLE);
 				viewHolder.btn_tuihuanhuo.setVisibility(View.VISIBLE);
-				viewHolder.btn_querenshouhuo.setVisibility(View.GONE);
-				viewHolder.btn_deletetheorder.setVisibility(View.GONE);
-				viewHolder.btn_paytheorder.setVisibility(View.GONE);
+				viewHolder.btn_querenshouhuo.setVisibility(View.INVISIBLE);
+				viewHolder.btn_deletetheorder.setVisibility(View.INVISIBLE);
+				viewHolder.btn_paytheorder.setVisibility(View.INVISIBLE);
 				
 				break;
 	
 			default:
 				break;
 		}
-        
         pay_sn = data.get(position).get("pay_sn").toString();
         price = data.get(position).get("order_amount").toString();
         viewHolder.tv_storename.setText(data.get(position).get("store_name").toString());//店铺名
@@ -172,7 +174,6 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
         viewHolder.btn_tuihuanhuo.setOnClickListener(new TuiHuan(position,data.get(position).get("store_phone").toString()));
         viewHolder.btn_querenshouhuo.setOnClickListener(new QueRen(position,data.get(position).get("order_id").toString()));
         viewHolder.btn_tocomment.setOnClickListener(new PingJia(position,extend_order_goods,price,data.get(position).get("order_id").toString()));
-        
         return convertView;
 	}
 	/**

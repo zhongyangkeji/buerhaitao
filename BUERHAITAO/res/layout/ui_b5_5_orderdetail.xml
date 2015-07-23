@@ -139,13 +139,22 @@
             android:text="店铺名称" />
 
     </RelativeLayout>
-
+    <ScrollView 
+        android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout6"
+        >
+<LinearLayout     
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout6"
+        android:orientation="vertical"
+    >
     <ListView
         android:id="@+id/listview_goodslist_or"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/relativeLayout6" >
+        android:layout_alignParentLeft="true">
     </ListView>
 
     <RelativeLayout
@@ -290,6 +299,9 @@
             android:layout_marginTop="10dp"
             android:text="卖家留言卖家留言" />
     </RelativeLayout>
+    
+</LinearLayout>
+</ScrollView>
 <RelativeLayout
     android:id="@+id/addNewAddress"
     android:layout_width="match_parent"

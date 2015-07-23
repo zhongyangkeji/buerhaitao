@@ -49,17 +49,13 @@
     android:id="@+id/listview_goodslist1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
-    
+    android:orientation="vertical">
     <ListView
         android:id="@+id/listview_goodslist"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1">
     </ListView>
-    
-    
 </RelativeLayout >
 
     <RelativeLayout
@@ -101,24 +97,5 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/relativeLayout3"
         android:background="@color/theme_grey" />
-
-    <RelativeLayout
-        android:id="@+id/addNewAddress"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:background="@color/white" >
-
-        <Button
-            android:id="@+id/btn_addComment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/shape_btn_background_yellow"
-            android:text="确定评价"
-            android:textColor="@color/white" />
-    </RelativeLayout>
 
 </RelativeLayout>
