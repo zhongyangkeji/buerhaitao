@@ -8,8 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
-import com.ZYKJ.buerhaitao.adapter.B3_JieSuanAdapter;
 import com.ZYKJ.buerhaitao.adapter.B3_ShpppingCartAdapter;
 import com.ZYKJ.buerhaitao.adapter.B3_ShpppingCartAdapter.ChangedPrice;
 import com.ZYKJ.buerhaitao.adapter.B3_ShpppingCartAdapter.IsAllChecked;
@@ -78,11 +75,18 @@ public class B3_ShoppingCartActivity extends BaseActivity implements ChangedPric
 	
 		switch (v.getId()) {
 		case R.id.tv_jiesuan:
-			if (tv_jiesuan.getText()=="结算（0）") {
+			if (tv_jiesuan.getText().toString()=="结算（0）") {
 				Toast.makeText(getApplicationContext(), "您还没有选择商品哦！", Toast.LENGTH_LONG).show();
 			}else {
-				Intent itmrhd = new Intent();
+				/*Intent itmrhd = new Intent();
 				itmrhd.setClass(B3_ShoppingCartActivity.this, B3_ShoppingJieSuan.class);
+				startActivity(itmrhd);*/
+				String allcheckinfo = showCheckedItems();
+//				HttpUtils.getBuyFirst(res_ShoppingCarInfo,"3ae653eb52824dbc4ba977de343e2e12",allcheckinfo,"1");
+				
+				Intent itmrhd = new Intent();
+				itmrhd.setClass(B3_ShoppingCartActivity.this, JieSuanActivity.class);
+				itmrhd.putExtra("allcheckinfo", allcheckinfo);
 				startActivity(itmrhd);
 			}
 //			showCheckedItems();
@@ -111,10 +115,23 @@ public class B3_ShoppingCartActivity extends BaseActivity implements ChangedPric
 
 	}
 
-	private void showCheckedItems() {
-		String checkedItems = "";
+	private String showCheckedItems() {
+//		String checkedItems = "";
+		String allcheckinfo = "";
 		List<String> checkedChildren = adapter.getCheckedChildren();
-		if (checkedChildren != null && !checkedChildren.isEmpty()) {
+		for (int i = 0; i < dataList.size(); i++) {
+			for (int j = 0; j < dataList.get(i).getStore_list().size(); j++) {
+				for (int j2 = 0; j2 < checkedChildren.size(); j2++) {
+					if (dataList.get(i).getStore_list().get(j).getCart_id()==checkedChildren.get(j2)) {
+						allcheckinfo = allcheckinfo+(checkedChildren.get(j2)+"|"+dataList.get(i).getStore_list().get(j).getGoods_num()+",");
+					}
+				}
+			}
+		}
+		allcheckinfo=allcheckinfo.substring(0, allcheckinfo.length()-1);
+//		Toast.makeText(getApplicationContext(), allcheckinfo.toString(), Toast.LENGTH_LONG).show();
+		return allcheckinfo;
+		/*if (checkedChildren != null && !checkedChildren.isEmpty()) {
 			for (String child : checkedChildren) {
 				if (checkedItems.length() > 0) {
 					checkedItems += "\n";
@@ -126,10 +143,10 @@ public class B3_ShoppingCartActivity extends BaseActivity implements ChangedPric
 
 		final Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("已选中项(无排序)：");
-		builder.setMessage(checkedItems);
+		builder.setMessage(allcheckinfo.toString());
 		builder.setPositiveButton("关闭", null);
 		builder.setCancelable(true);
-		builder.create().show();
+		builder.create().show();*/
 	}
 
 	/**

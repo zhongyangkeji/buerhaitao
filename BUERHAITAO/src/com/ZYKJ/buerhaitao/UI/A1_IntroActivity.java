@@ -69,7 +69,7 @@ public class A1_IntroActivity extends BaseActivity implements OnPageChangeListen
 			ImageView imageView = new ImageView(this);
 			imageView.setTag(i);
 			imageView.setScaleType(ScaleType.FIT_XY);
-			imageView.setAdjustViewBounds(true);
+//			imageView.setAdjustViewBounds(true);
 			imageView.setOnClickListener(this);
 
 			mImageViews[i] = imageView;

@@ -1295,6 +1295,21 @@ public class HttpUtils {
 		client.post(url, params,res);
 	}
 	
+	/**
+	 *  购买第一步
+	 * @param key 当前登录令牌
+	 * @param cart_id 购买参数
+	 * @param ifcart 购物车购买标志 1
+	 */
+	public static void getBuyFirst(AsyncHttpResponseHandler res, String key,String cart_id,String ifcart) {
+		String url = base_url + "index.php?act=member_buy&op=buy_step1";
+		RequestParams params = new RequestParams();
+		params.put("key",key);
+		params.put("cart_id",cart_id);
+		params.put("ifcart",ifcart);
+		client.post(url, params,res);
+	}
+	
 	public static String iterateParams(HashMap<String,String> params){
 		String parameter = "";
 		Iterator<String> iterator = params.keySet().iterator();
