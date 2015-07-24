@@ -30,16 +30,14 @@ public class A1_IntroActivity extends BaseActivity implements OnPageChangeListen
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initView(R.layout.ui_intro);
-
 	}
 
 	public void initView(int viewId) {
 		super.initView(viewId);
 
-		imgIdArray = new int[] { R.drawable.introduce_1,
-				R.drawable.introduce_2, R.drawable.introduce_3 };
+		imgIdArray = new int[] { R.drawable.introduce_1,R.drawable.introduce_2, R.drawable.introduce_3 };
 
-		ViewGroup group = (ViewGroup) findViewById(R.id.viewGroup);
+//		ViewGroup group = (ViewGroup) findViewById(R.id.viewGroup);
 		viewPager = (ViewPager) findViewById(R.id.viewPager);
 
 		// // 将点点加入到ViewGroup中
@@ -53,7 +51,6 @@ public class A1_IntroActivity extends BaseActivity implements OnPageChangeListen
 		// } else {
 		// tips[i].setBackgroundResource(R.drawable.page_indicator_unfocused);
 		// }
-		//
 		// LinearLayout.LayoutParams layoutParams = new
 		// LinearLayout.LayoutParams(
 		// new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT,
@@ -73,8 +70,7 @@ public class A1_IntroActivity extends BaseActivity implements OnPageChangeListen
 			imageView.setOnClickListener(this);
 
 			mImageViews[i] = imageView;
-			imageView.setImageBitmap(BitmapFactory.decodeResource(
-					getResources(), imgIdArray[i]));
+			imageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), imgIdArray[i]));
 		}
 
 		// 设置Adapter
@@ -98,7 +94,6 @@ public class A1_IntroActivity extends BaseActivity implements OnPageChangeListen
 		@Override
 		public void destroyItem(View container, int position, Object object) {
 		}
-
 		/**
 		 * 载入图片进去，用当前的position 除以 图片数组长度取余数是关键
 		 */
