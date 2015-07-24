@@ -19,17 +19,17 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class JieSuanShangPinAdapter extends BaseAdapter {
 	
 	private Activity c;
-	JSONArray extend_order_goods;
+	JSONArray goodsjsa;
     
-	public JieSuanShangPinAdapter(Activity c, JSONArray extend_order_goods2) {
+	public JieSuanShangPinAdapter(Activity c, JSONArray goodsjsa) {
 		this.c = c;
-		this.extend_order_goods = extend_order_goods2;
+		this.goodsjsa = goodsjsa;
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return extend_order_goods == null ? 0 : extend_order_goods.length();
+		return goodsjsa == null ? 0 : goodsjsa.length();
 	}
 
 	@Override
@@ -51,25 +51,27 @@ public class JieSuanShangPinAdapter extends BaseAdapter {
         {
             viewHolder = new ViewHolder();
             LayoutInflater mInflater = LayoutInflater.from(c);
-            convertView = mInflater.inflate(R.layout.ui_b5_5_orderlist_list_items_1, null);
-            viewHolder.tv_productName = (TextView) convertView.findViewById(R.id.tv_productName);
-            viewHolder.tv_goodsprice = (TextView) convertView.findViewById(R.id.tv_goodsprice);
-            viewHolder.tv_number = (TextView) convertView.findViewById(R.id.tv_number);
-            viewHolder.iv_product = (ImageView) convertView.findViewById(R.id.iv_product);
+            convertView = mInflater.inflate(R.layout.ui_goodsjiesuan_list_items, null);
+            viewHolder.childrenNameTV = (TextView) convertView.findViewById(R.id.children_name1);
+			viewHolder.im_shangpuimg = (ImageView) convertView.findViewById(R.id.im_shangpuimg1);
+			viewHolder.tv_spec = (TextView) convertView.findViewById(R.id.tv_spec1);
+			viewHolder.tv_goods_price = (TextView) convertView.findViewById(R.id.tv_goods_price1);
+			viewHolder.tv_goods_num = (TextView) convertView.findViewById(R.id.tv_goods_num1);
+            
             convertView.setTag(viewHolder);
         }
         else
         {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        
     	try {
-			JSONObject  extend_order_goods1 = (JSONObject) extend_order_goods.get(position);
-			String goods_image_url = extend_order_goods1.getString("goods_image_url");
-			ImageLoader.getInstance().displayImage(goods_image_url, viewHolder.iv_product);//设置产品图片
-			viewHolder.tv_productName.setText(extend_order_goods1.getString("goods_name").toString());//设置产品名称
-			viewHolder.tv_goodsprice.setText("￥"+extend_order_goods1.getString("goods_price").toString());//设置产品价格
-			viewHolder.tv_number.setText("X"+extend_order_goods1.getString("goods_num").toString());
+			JSONObject jobdata = (JSONObject) goodsjsa.get(position);
+			String goods_image_url = jobdata.getJSONObject("nameValuePairs").getString("goods_image_url");
+			ImageLoader.getInstance().displayImage(goods_image_url, viewHolder.im_shangpuimg);//设置商品图片
+			viewHolder.childrenNameTV.setText(jobdata.getJSONObject("nameValuePairs").getString("goods_name").toString());//设置商品名称
+			viewHolder.tv_goods_price.setText("￥"+jobdata.getJSONObject("nameValuePairs").getString("goods_price").toString());//设置商品价格
+			viewHolder.tv_goods_num.setText("X"+jobdata.getJSONObject("nameValuePairs").getString("goods_num").toString());//设置商品数量
+			viewHolder.tv_spec.setText(jobdata.getJSONObject("nameValuePairs").getString("goods_spec").toString());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -100,9 +102,10 @@ public class JieSuanShangPinAdapter extends BaseAdapter {
 
 	private static class ViewHolder
     {
-        TextView tv_productName;
-        TextView tv_goodsprice;
-        TextView tv_number;
-        ImageView iv_product;//
+		TextView childrenNameTV;
+		ImageView im_shangpuimg;
+		TextView tv_spec;
+		TextView tv_goods_price;
+		TextView tv_goods_num;
     }
 }

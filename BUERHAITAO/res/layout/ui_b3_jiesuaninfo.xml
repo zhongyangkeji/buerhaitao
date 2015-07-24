@@ -170,7 +170,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="￥52820.00"
+                        android:text="￥520.00"
                         android:textColor="#FF9801" />
                 </LinearLayout>
             </RelativeLayout>
@@ -179,6 +179,7 @@
         <com.ZYKJ.buerhaitao.view.MyListView
             android:id="@+id/list_shoppingcar1"
             android:layout_width="match_parent"
+            android:layout_marginBottom="100dp"
             android:layout_height="wrap_content" >
         </com.ZYKJ.buerhaitao.view.MyListView>
     </RelativeLayout>

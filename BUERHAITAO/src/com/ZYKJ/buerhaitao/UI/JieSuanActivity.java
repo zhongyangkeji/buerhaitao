@@ -44,6 +44,10 @@ public class JieSuanActivity extends BaseActivity{
 	//是否支持货到付款
 	private String ifshow_offpay;
 	private String allcheckinfo;
+	private String allpri;
+	private TextView tv_sumgoods1;
+	private TextView tv_jiesuanqueren;
+	private String address_id;
     
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +65,13 @@ public class JieSuanActivity extends BaseActivity{
 		tv_buyer_number = (TextView) findViewById(R.id.tv_buyer_number);//收货人电话
 		tv_buyer_address = (TextView) findViewById(R.id.tv_buyer_address);//收货地址
 		rl_zhifufangshi = (RelativeLayout) findViewById(R.id.rl_zhifufangshi);
+		tv_sumgoods1 = (TextView)findViewById(R.id.tv_sumgoods1);//总价格
+		tv_jiesuanqueren = (TextView)findViewById(R.id.tv_jiesuanqueren);//确认
 		tv_zffs = (TextView) findViewById(R.id.tv_zffs);
-		
+		allpri = getIntent().getStringExtra("allpri");
 		key = getSharedPreferenceValue("key");
 		allcheckinfo = getIntent().getStringExtra("allcheckinfo");
+		tv_sumgoods1.setText(allpri);
 		HttpUtils.getBuyFirst(res_ShoppingCarInfo,"3ae653eb52824dbc4ba977de343e2e12",allcheckinfo,"1");
 		
 		
@@ -75,7 +82,7 @@ public class JieSuanActivity extends BaseActivity{
 		listview.setRefreshTime();
 		
 		
-		setListener(im_jiesuan_back,rl_zhifufangshi);
+		setListener(im_jiesuan_back,rl_zhifufangshi,tv_jiesuanqueren);
 	}
 
 	@Override
@@ -124,6 +131,7 @@ public class JieSuanActivity extends BaseActivity{
 			break;
 		case R.id.dialog_four_modif_2:
 			tv_zffs.setText("微信支付");
+			Object asss = new Object();
 			UIDialog.closeDialog();
 
 			break;
@@ -136,6 +144,14 @@ public class JieSuanActivity extends BaseActivity{
 			tv_zffs.setText("");
 			UIDialog.closeDialog();
 
+			break;
+		case R.id.tv_jiesuanqueren:
+			if (tv_zffs.equals("钱包支付")) {
+//				HttpUtils.getBuySecond(res_BuySecond,"3ae653eb52824dbc4ba977de343e2e12","1",allcheckinfo,address_id  ,1);
+			}else {
+//				HttpUtils.getBuySecond(res_BuySecond,"3ae653eb52824dbc4ba977de343e2e12","1",allcheckinfo,address_id  ,0);
+			}
+			
 			break;
 		default:
 			break;
@@ -173,6 +189,7 @@ public class JieSuanActivity extends BaseActivity{
 					tv_buyer_name.setText("收货人："+address_object.getString("true_name"));
 					tv_buyer_number.setText(address_object.getString("mob_phone"));
 					tv_buyer_address.setText("收货地址："+ address_object.getString("address"));
+					address_id = address_object.getString("address_id");
 					ifshow_offpay = datas.getString("ifshow_offpay");
 					
 					JSONArray store_cart_list = datas.getJSONArray("store_cart_list");

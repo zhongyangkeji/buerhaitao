@@ -1324,6 +1324,31 @@ public class HttpUtils {
 		client.post(url, params,res);
 	}
 	
+	/**
+	 *  购买第二步
+	 * @param key 当前登录令牌
+	 * @param ifcart 购物车购买标志 1
+	 * @param cart_id 购买参数
+	 * @param address_id 收货地址编号
+	 * @param pay_message 订单留言(object {"1" : "很好"} 1:店铺id 很好:留言)
+	 * @param dlyo_pickup_type 配送方式(object {"3" : "自提"} 3:店铺id 自提:配送方式)
+	 * @param pay_type 付款方式(object {"3" : "online"} 3:店铺id online:支付方式)
+	 * @param pd_pay 是否使用钱包支付 1-使用 0-不使用
+	 */
+	public static void getBuySecond(AsyncHttpResponseHandler res, String key,String ifcart,String cart_id,String address_id,String pay_message,String dlyo_pickup_type,String pay_type,String pd_pay) {
+		String url = base_url + "index.php?act=member_buy&op=buy_step2";
+		RequestParams params = new RequestParams();
+		params.put("key",key);
+		params.put("ifcart",ifcart);
+		params.put("cart_id",cart_id);
+		params.put("address_id",address_id);
+		params.put("pay_message",pay_message);
+		params.put("dlyo_pickup_type",dlyo_pickup_type);
+		params.put("pay_type",pay_type);
+		params.put("pd_pay",pd_pay);
+		client.post(url, params,res);
+	}
+	
 	public static String iterateParams(HashMap<String,String> params){
 		String parameter = "";
 		Iterator<String> iterator = params.keySet().iterator();

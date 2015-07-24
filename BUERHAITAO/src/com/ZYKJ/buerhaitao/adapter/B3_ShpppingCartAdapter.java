@@ -493,6 +493,7 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 				groupCheckedStateMap.put(groupItem.getStore_id(), 1);
 //				dadcheck.setChecked(true);
 				//店铺全选的价格修改
+				
 				for (int i = 0; i < childrenItems.size(); i++) {
 					allprice = allprice + Float.parseFloat(childrenItems.get(i).getGoods_price())*Float.parseFloat(childrenItems.get(i).getGoods_num());
 				}
