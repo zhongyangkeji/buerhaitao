@@ -23,6 +23,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -65,6 +66,7 @@ public class B1_HomeActivity extends BaseActivity {
 	private TextView tv_cityname;//城市名称
 	private TextView tv_updateNumber;//晒单圈更新数
 	private List<Map<String, String>> data2 = new ArrayList<Map<String, String>>();
+	private EditText a1_sousuofujin;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -229,7 +231,8 @@ public class B1_HomeActivity extends BaseActivity {
 		im_moreinfo = (ImageView)findViewById(R.id.im_moreinfo);
 		ll_moreinfolayout = (LinearLayout)findViewById(R.id.ll_moreinfolayout);
 		listviewHorizontal =(ListView)findViewById(R.id.horizon_listview);
-		setListener(im_b1nvshi,im_b1nanshi,im_b1muying,im_b1huazhuang,im_b1shouji,im_b1bangong,im_b1shenghuo,im_b1techan,rl_b1_a1tttj,b5_3_shaidanquan,rl_b1_a2_cnxh,rl_b1_a3_mrhd,rl_sousuokuang,ll_dayspecial,rl_ditu,im_moreinfo,ll_moreinfolayout);
+		a1_sousuofujin = (EditText)findViewById(R.id.a1_sousuofujin);
+		setListener(im_b1nvshi,im_b1nanshi,im_b1muying,im_b1huazhuang,im_b1shouji,im_b1bangong,im_b1shenghuo,im_b1techan,rl_b1_a1tttj,b5_3_shaidanquan,rl_b1_a2_cnxh,rl_b1_a3_mrhd,rl_sousuokuang,ll_dayspecial,rl_ditu,im_moreinfo,ll_moreinfolayout,a1_sousuofujin);
 	}
 
 	@Override
@@ -303,6 +306,11 @@ public class B1_HomeActivity extends BaseActivity {
 			Intent itsydps = new Intent();
 			itsydps.setClass(B1_HomeActivity.this, B1_a4_SearchActivity.class);
 			startActivity(itsydps);
+			break;
+		case R.id.a1_sousuofujin:
+			Intent itsydps1 = new Intent();
+			itsydps1.setClass(B1_HomeActivity.this, B1_a4_SearchActivity.class);
+			startActivity(itsydps1);
 			break;
 		//首页天天特价
 		case R.id.ll_dayspecial:

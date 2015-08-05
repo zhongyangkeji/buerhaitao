@@ -70,7 +70,7 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 		inflater = LayoutInflater.from(context);	
 		listcarld = new HashMap<Integer, Boolean>();
 		// 默认设置所有的父列表项和子列表项的选中状态(1为全选)
-		setIschecked(ischecked);		
+		setIschecked(ischecked);
 	}
 
 	@Override
@@ -493,7 +493,18 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 				groupCheckedStateMap.put(groupItem.getStore_id(), 1);
 //				dadcheck.setChecked(true);
 				//店铺全选的价格修改
-				
+				//加上已经选择的
+
+				//减掉已经选择的
+				for (int j = 0; j < checkedChildren.size(); j++) {
+					for (int i = 0; i < childrenItems.size(); i++) {
+						String asas=childrenItems.get(i).getCart_id().toString();
+						String asdfsd=checkedChildren.get(j).toString();
+						if (asas.equals(asdfsd)) {
+							allprice = allprice-Float.parseFloat(childrenItems.get(i).getGoods_price())*Float.parseFloat(childrenItems.get(i).getGoods_num());
+						}
+					}
+				} 
 				for (int i = 0; i < childrenItems.size(); i++) {
 					allprice = allprice + Float.parseFloat(childrenItems.get(i).getGoods_price())*Float.parseFloat(childrenItems.get(i).getGoods_num());
 				}

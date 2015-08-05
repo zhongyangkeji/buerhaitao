@@ -146,9 +146,10 @@ public class JieSuanActivity extends BaseActivity{
 
 			break;
 		case R.id.tv_jiesuanqueren:
+			String zffs = "";
 			if (tv_zffs.equals("钱包支付")) {
 //				HttpUtils.getBuySecond(res_BuySecond,"3ae653eb52824dbc4ba977de343e2e12","1",allcheckinfo,address_id  ,1);
-			}else {
+			}else{
 //				HttpUtils.getBuySecond(res_BuySecond,"3ae653eb52824dbc4ba977de343e2e12","1",allcheckinfo,address_id  ,0);
 			}
 			

@@ -88,7 +88,7 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_shangpinxiangqing);
 		initView();
-		HttpUtils.getGoodsInfo(res_goodsinfo, "100001");
+		HttpUtils.getGoodsInfo(res_goodsinfo, "100024");
 	}
 	
 	private void initView(){
@@ -137,59 +137,7 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 			startActivity(iteckpj);
 			break;
 		case R.id.ll_sp_addincar:
-			Intent itaddcar = new Intent(Sp_GoodsInfoActivity.this,Sp_a2_XingHao.class);
-			itaddcar.putExtra("chanpinprice",chanpinprice);
-			itaddcar.putExtra("kucun",kucun);
-			if(leixing1.length()==1){
-				itaddcar.putExtra("tiaomu","1");
-				try {
-					itaddcar.putExtra("fenlei1",leixing1.getString("1"));
-					
-					JSONArray jsonarray = xuanxiang.getJSONArray("1");
-					
-					List<String> list = new ArrayList<String>();
-					for (int i=0; i<jsonarray.length(); i++) {
-					    try {
-							list.add( jsonarray.getString(i) );
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					String[] stringArray = list.toArray(new String[list.size()]);
-					itaddcar.putExtra("arry1",stringArray);
-					
-					
-					
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			if(leixing1.length()==2){
-				itaddcar.putExtra("tiaomu","2");
-				try {
-//					Toast.makeText(Sp_GoodsInfoActivity.this, leixing1.getString("1").toString(), Toast.LENGTH_LONG).show();
-					itaddcar.putExtra("fenlei1",leixing1.getString("1").toString());
-					itaddcar.putExtra("fenlei2",leixing1.getString("2").toString());
-					
-					JSONArray jsonarray1 = xuanxiang.getJSONArray("1");
-					
-					itaddcar.putExtra("arry1",jsonarray1.toString());
-					
-
-					JSONArray jsonarray2 = xuanxiang.getJSONArray("2");
-					itaddcar.putExtra("arry2",jsonarray2.toString());
-					 
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-						
-			Sp_GoodsInfoActivity.this.startActivity(itaddcar);  
-            
-			Sp_GoodsInfoActivity.this.overridePendingTransition(R.anim.activity_open,0); 
+			
 			break;
 		case R.id.rl_chooseleixing:
 			Intent itaddcar1 = new Intent(Sp_GoodsInfoActivity.this,Sp_a2_XingHao.class);
@@ -213,8 +161,6 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 					}
 					String[] stringArray = list.toArray(new String[list.size()]);
 					itaddcar1.putExtra("arry1",stringArray);
-					
-					
 					
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
