@@ -95,8 +95,7 @@ public class Sp_a2_XingHao extends BaseActivity {
 					// TODO Auto-generated method stub
 					tv_qxzlx.setText(tiaomu1.getText() + ":"
 							+ cpcs.get(position).getName());
-					tv_qxzlx_yincang.setText(tiaomu1.getText() + ":"
-							+ cpcs.get(position).getId());
+					tv_qxzlx_yincang.setText(cpcs.get(position).getId());
 //					Toast.makeText(getApplicationContext(),
 //							cpcs.get(position).getId(), Toast.LENGTH_LONG)
 //							.show();
@@ -127,8 +126,7 @@ public class Sp_a2_XingHao extends BaseActivity {
 					// TODO Auto-generated method stub
 					tv_qxzlx.setText(tiaomu1.getText() + ":"
 							+ cpcs.get(position).getName());
-					tv_qxzlx_yincang.setText(tiaomu1.getText() + ":"
-							+ cpcs.get(position).getId());
+					tv_qxzlx_yincang.setText(cpcs.get(position).getId());
 //					Toast.makeText(getApplicationContext(),
 //							cpcs.get(position).getId(), Toast.LENGTH_LONG)
 //							.show();
@@ -150,8 +148,7 @@ public class Sp_a2_XingHao extends BaseActivity {
 					// TODO Auto-generated method stub
 					tv_qxzlx1.setText(tiaomu2.getText() + ":"
 							+ cpcs1.get(position).getName());
-					tv_qxzlx1_yincang.setText(tiaomu2.getText() + ":"
-							+ cpcs1.get(position).getId());
+					tv_qxzlx1_yincang.setText(cpcs1.get(position).getId());
 //					Toast.makeText(getApplicationContext(),
 //							cpcs1.get(position).getId(), Toast.LENGTH_LONG)
 //							.show();
@@ -204,7 +201,10 @@ public class Sp_a2_XingHao extends BaseActivity {
 						try {
 //							choosejiage = new JSONObject(getIntent().getStringExtra("choosejiage"));
 							choosexinghao=new JSONObject(getIntent().getStringExtra("choosexinghao"));
-							goodsid = choosexinghao.getString(tv_qxzlx_yincang.getText().toString()+tv_qxzlx1_yincang.getText().toString());
+							String a = tv_qxzlx_yincang.getText().toString();
+							String b = tv_qxzlx1_yincang.getText().toString();
+							String c = a+"|"+b;
+							goodsid = choosexinghao.getString(c);
 							
 						} catch (org.json.JSONException e) {
 							// TODO Auto-generated catch block
