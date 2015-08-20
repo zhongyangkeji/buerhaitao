@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -75,8 +76,8 @@ public class B1_a4_SearchActivity extends BaseActivity implements IXListViewList
     private ListView pList;
 	
 	private Integer page=2,curpage=1;
-	private String city_id="88",keyword,id;
-	private String lng="1",lat="1";
+	private String city_id,keyword,id;
+	private String lng,lat;
 	private List<Goods> goods;
 	private List<Shop> shops;
 	private List<HashMap<String, String>> shopClass;
@@ -89,7 +90,9 @@ public class B1_a4_SearchActivity extends BaseActivity implements IXListViewList
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_a4_search);
-		
+		city_id = getSharedPreferenceValue("cityid");
+		lng = getSharedPreferenceValue("lng");
+		lat = getSharedPreferenceValue("lat");
 		id = getIntent().getStringExtra(CHANNEL == 0?"gc_id":"sc_id");//店铺、宝贝编号
 		
 		initView();
@@ -287,10 +290,20 @@ public class B1_a4_SearchActivity extends BaseActivity implements IXListViewList
 		/*店铺、宝贝详情*/
 		if(CHANNEL == 0){
 			Goods good = goods.get(position-1);
-			Toast.makeText(B1_a4_SearchActivity.this, good.getGoods_id(), Toast.LENGTH_LONG).show();
+//			Toast.makeText(B1_a4_SearchActivity.this, good.getGoods_id(), Toast.LENGTH_LONG).show();
+			Intent intent = new Intent();
+			intent.putExtra("goods_id", good.getGoods_id());
+			intent.setClass(B1_a4_SearchActivity.this, Sp_GoodsInfoActivity.class);
+			startActivity(intent);
 		}else{
 			Shop shop = shops.get(position-1);
-			Toast.makeText(B1_a4_SearchActivity.this, shop.getStore_id(), Toast.LENGTH_LONG).show();
+//			Toast.makeText(B1_a4_SearchActivity.this, shop.getStore_id(), Toast.LENGTH_LONG).show();
+			Intent intent = new Intent();
+			intent.putExtra("store_id", shop.getStore_id());
+			intent.setClass(
+					B1_a4_SearchActivity.this,
+					BX_DianPuXiangQingActivity.class);
+			startActivity(intent);
 		}
 	}
 	

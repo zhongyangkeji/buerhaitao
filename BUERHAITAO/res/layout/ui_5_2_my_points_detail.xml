@@ -21,16 +21,16 @@
 
         <ImageButton
             android:id="@+id/points_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="20dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="15dp"
             android:background="@null"
             android:contentDescription="@string/app_name"
             android:padding="5dp"
             android:onClick="points_back"
-            android:src="@drawable/symbol_left" />
+            android:src="@drawable/symbol_left1" />
     </RelativeLayout>
     <com.ZYKJ.buerhaitao.view.MyListView
         android:id="@+id/listview_points"

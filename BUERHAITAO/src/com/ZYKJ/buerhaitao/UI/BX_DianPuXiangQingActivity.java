@@ -9,8 +9,11 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -61,7 +64,7 @@ public class BX_DianPuXiangQingActivity extends BaseActivity implements IXListVi
 	private TextView tv_store_address;
 	//店铺电话
 	private ImageView im_store_phone;
-	public int a =0;
+//	public int a =0;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -80,19 +83,27 @@ public class BX_DianPuXiangQingActivity extends BaseActivity implements IXListVi
 		im_store_phone = (ImageView)findViewById(R.id.im_store_phone);
 		im_storeback = (ImageButton) findViewById(R.id.im_storeback);
 		listvsinf = (MyListView) findViewById(R.id.lv_store_info);
-		if (a==0) {
-			
-		}else {
-			stoadapter = new B0_StoreInfoAdapter(BX_DianPuXiangQingActivity.this,datax);
-			listvsinf.setAdapter(stoadapter);
-		}
+		RequestDailog.showDialog(this, "正在加载数据，请稍后");
+		HttpUtils.getStoreInfo(res_storeinfo, store_id, key);
+		stoadapter = new B0_StoreInfoAdapter(BX_DianPuXiangQingActivity.this,datax);
+		listvsinf.setAdapter(stoadapter);
 		listvsinf.setPullLoadEnable(true);
 		listvsinf.setPullRefreshEnable(true);
 		listvsinf.setXListViewListener(this, 0);
 		listvsinf.setRefreshTime();
-		RequestDailog.showDialog(this, "正在加载数据，请稍后");
-		HttpUtils.getStoreInfo(res_storeinfo, store_id, key);
+		listvsinf.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				String goid = datax.get(arg2-1).get("goods_id").toString();
+				intent.putExtra("goods_id", goid);
+				intent.setClass(BX_DianPuXiangQingActivity.this, Sp_GoodsInfoActivity.class);
+				startActivity(intent);
+			}
+		});
 		setListener(im_storeback,im_storeshare,im_storeshoucang,im_store_phone);
 	}
 
@@ -139,7 +150,6 @@ public class BX_DianPuXiangQingActivity extends BaseActivity implements IXListVi
 //					.put("store_phone",obj.getString("store_phone"));
 //					.put("store_credit_text", obj.getString("store_credit_text"));
 //					.put("mb_sliders", obj.getString("mb_sliders"));
-					a=1;
 					JSONArray array = datas.getJSONArray("goods_list");
 					datax.clear();
 					for (int i = 0; i < array.length(); i++) {
@@ -179,7 +189,9 @@ public class BX_DianPuXiangQingActivity extends BaseActivity implements IXListVi
 			 BX_DianPuXiangQingActivity.this.finish();
 			break;
 		case R.id.im_storeshare:
-			
+			String fxnr = "友盟社会化组件（SDK）让移动应用快速整合社交分享功能，http://www.umeng.com/social";
+			String fxtp = "http://www.umeng.com/images/pic/banner_module_social.png";
+			FenXiang fx = new FenXiang(getApplicationContext(),BX_DianPuXiangQingActivity.this,fxnr,fxtp);
 			break;
 		case R.id.im_storeshoucang:
 			

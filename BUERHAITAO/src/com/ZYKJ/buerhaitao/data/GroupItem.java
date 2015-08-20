@@ -15,7 +15,6 @@ public class GroupItem {
 	
 	public GroupItem() {
 	}
-
 	
 	public GroupItem(String store_id,String store_name,List<ChildrenItem> childrenItems) {
 		this.store_id = store_id;

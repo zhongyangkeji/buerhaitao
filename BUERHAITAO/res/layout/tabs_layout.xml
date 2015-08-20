@@ -30,7 +30,6 @@
             <RadioButton
                 android:id="@+id/tab_radio1"
                 style="@style/tab_button_bottom"
-                android:layout_height="wrap_content"
                 android:checked="true"
                 android:drawableTop="@drawable/tab_dw_index"
                 android:text="@string/tab_index" />

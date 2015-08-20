@@ -47,8 +47,8 @@ public class B4_StoreActivity extends BaseActivity implements IXListViewListener
 	private int curpage = 1;//当前页
 	private int key = 0;//  1-智能 2-好评 3-离我最近 空-按时间排序
 	private int order = 0;// 排序方式的状态,1-升序 2-降序
-	private String city_id="88",keyword,sc_id;
-	private String lng="1",lat="1";
+	private String city_id,keyword,sc_id;
+	private String lng,lat;
 
 	private LinearLayout ly_a4_category,ly_a4_assess;
     private PopupWindow popupWindow;
@@ -65,7 +65,9 @@ public class B4_StoreActivity extends BaseActivity implements IXListViewListener
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initView(R.layout.ui_b4_storeactivity);
-		
+		city_id = getSharedPreferenceValue("cityid");
+		lng = getSharedPreferenceValue("lng");
+		lat = getSharedPreferenceValue("lat");
 		initView();
         initPop();
 	}
@@ -239,7 +241,12 @@ public class B4_StoreActivity extends BaseActivity implements IXListViewListener
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		/*店铺、宝贝详情*/
 		Shop shop = shops.get(position-1);
-		Toast.makeText(B4_StoreActivity.this, shop.getSc_name(), Toast.LENGTH_LONG).show();
+//		Toast.makeText(B4_StoreActivity.this, shop.getSc_name(), Toast.LENGTH_LONG).show();
+		Intent intent = new Intent();
+		String storeid = shops.get(position-1).getStore_id();
+		intent.putExtra("store_id", storeid);
+		intent.setClass(B4_StoreActivity.this,BX_DianPuXiangQingActivity.class);
+		startActivity(intent);
 	}
 
 	@Override

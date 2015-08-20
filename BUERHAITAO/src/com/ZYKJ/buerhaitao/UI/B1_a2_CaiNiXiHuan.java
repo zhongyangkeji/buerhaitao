@@ -8,8 +8,11 @@ import java.util.Map;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 
 import com.ZYKJ.buerhaitao.R;
@@ -49,8 +52,21 @@ public class B1_a2_CaiNiXiHuan extends BaseActivity implements
 		listview_b1_a2_like.setXListViewListener(this, 0);
 		listview_b1_a2_like.setRefreshTime();
 		RequestDailog.showDialog(this, "正在加载数据，请稍后");
-		HttpUtils.getCaiNiLike(res_cnlike, "1", "1", "88", "0");
+//		HttpUtils.getCaiNiLike(res_cnlike, "1", "1", "88", "0");
+		HttpUtils.getCaiNiLike(res_cnlike,getSharedPreferenceValue("lng"),getSharedPreferenceValue("lat"),getSharedPreferenceValue("cityid"), "0");
+		listview_b1_a2_like.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				String goid = data.get(arg2-1).get("goods_id");
+				intent.putExtra("goods_id", goid);
+				intent.setClass(B1_a2_CaiNiXiHuan.this, Sp_GoodsInfoActivity.class);
+				startActivity(intent);
+			}
+		});
 		setListener(b1_a2_back);
 	}
 

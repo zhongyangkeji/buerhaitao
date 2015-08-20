@@ -1260,7 +1260,7 @@ public class HttpUtils {
 	}
 	
 	/**
-	 *  城市名称
+	 *  城市定位
 	 * @param goods_id 商品编号
 	 * @param
 	 */
@@ -1348,7 +1348,26 @@ public class HttpUtils {
 		params.put("pd_pay",pd_pay);
 		client.post(url, params,res);
 	}
-	
+
+	/**
+	 * 加入购物车
+	 * 
+	 * @param key 当前登录令牌
+	 * @param goods_id 商品编号
+	 * @param quantity 购买数量
+	 */
+//	public static void getAddGouWu(AsyncHttpResponseHandler res,String key,String goods_id,String quantity) {
+//		String url = base_url + "index.php?act=member_cart&op=cart_add"+"&key="+key+"&goods_id="+goods_id+"&quantity="+quantity;
+//		client.get(url, res);
+//	}
+	public static void getAddGouWu(AsyncHttpResponseHandler res,String key,String goods_id,String quantity) {
+		String url = base_url + "index.php?act=member_cart&op=cart_add";
+		RequestParams params = new RequestParams();
+		params.put("key",key);
+		params.put("goods_id",goods_id);
+		params.put("quantity",quantity);
+		client.post(url, params,res);
+	}
 	public static String iterateParams(HashMap<String,String> params){
 		String parameter = "";
 		Iterator<String> iterator = params.keySet().iterator();

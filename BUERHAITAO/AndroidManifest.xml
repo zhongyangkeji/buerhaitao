@@ -281,7 +281,8 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
+		<service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
+		</service>
         <service
             android:name="com.umeng.message.UmengService"
             android:exported="true"
@@ -321,6 +322,9 @@
             android:name="UMENG_CHANNEL"
             android:value="Channel ID" >
         </meta-data>
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="A8Q5RVrWX2Anz4nO0qFiTT8I" /> 
         <!--
         <meta-data
             android:name="UMENG_APPKEY"

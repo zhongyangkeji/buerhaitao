@@ -2,7 +2,7 @@
 <!-- 6.17 首页 lss -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/background_color"
     android:gravity="center_horizontal"
     android:orientation="vertical" >
@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
+                android:maxLength="3"
                 android:text="@string/classify_address"
                 android:textColor="#FFF"
                 android:textSize="16sp" />
@@ -34,8 +35,8 @@
             <ImageView
                 android:layout_width="13dp"
                 android:layout_height="10dp"
-                android:layout_marginLeft="3dp"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
                 android:layout_toRightOf="@id/tv_cityname"
                 android:src="@drawable/b1_ditusousuo" />
         </RelativeLayout>
@@ -64,38 +65,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:drawableRight="@drawable/search_classify"
                     android:text="@string/classify_baby"
                     android:textColor="#808080"
-	                android:drawableRight="@drawable/search_classify"
                     android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/a1_sousuofujin"
+                    style="@style/edit_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/tv_baobei"
-	                android:hint="@string/classify_search"
+                    android:editable="false"
+                    android:hint="@string/classify_search"
                     android:textColor="#000"
-                	style="@style/edit_text"
-                	android:editable="false"
                     android:textSize="14sp" />
-
-                <!--
-                     <TextView
-                    android:id="@+id/a1_sydpss"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@id/tv_baobei"
-                    android:background="@null"
-                    android:hint="搜索附近商品、商铺"
-                    android:textColor="#000"
-                    android:textColorHint="#B3B3B3"
-                    android:textSize="14sp" />
-                -->
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
@@ -113,20 +99,15 @@
 
             <!-- 轮播图 -->
 
-            <LinearLayout
+            <com.ZYKJ.buerhaitao.customview.B1_HomeShowView
+                android:id="@+id/slideshowView"
                 android:layout_width="fill_parent"
+                android:padding="1dp"
                 android:layout_height="150dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:orientation="vertical" >
-
-                <com.ZYKJ.buerhaitao.customview.B1_HomeShowView
-                    android:id="@+id/slideshowView"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:background="@drawable/body_cont_bg" />
-            </LinearLayout>
+                android:background="@drawable/shape_backgroundall" />
             <!-- 中间八个图标 -->
 
             <LinearLayout
@@ -135,7 +116,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/body_cont_bg" >
+                android:background="@drawable/shape_backgroundall" >
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -304,7 +285,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/body_cont_bg"
+                android:background="@drawable/shape_backgroundall"
                 android:orientation="vertical" >
 
                 <RelativeLayout
@@ -348,15 +329,16 @@
                 <RelativeLayout
                     android:id="@+id/ll_dayspecial"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
+                    android:layout_height="fill_parent" >
 
                     <ImageView
                         android:id="@+id/im_b1_a1_pic"
                         android:layout_width="100dp"
                         android:layout_height="80dp"
                         android:layout_margin="10dp"
+                        android:scaleType="fitXY"
                         android:src="@drawable/buerhaitao" />
-                    
+
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="87dp"
@@ -375,15 +357,16 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentLeft="true"
                                 android:layout_centerVertical="true"
-                                android:text="产品名称"
                                 android:singleLine="true"
+                                android:text="产品名称"
                                 android:textColor="#000"
                                 android:textSize="16sp" />
-                            <TextView 
+
+                            <TextView
                                 android:id="@+id/tv_goodsid"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:visibility="gone"/>
+                                android:visibility="gone" />
                         </RelativeLayout>
 
                         <LinearLayout
@@ -433,89 +416,100 @@
                                 android:src="@drawable/b1_a2_shenglve" />
                         </RelativeLayout>
                     </LinearLayout>
-                    <LinearLayout 
+
+                    <LinearLayout
                         android:id="@+id/ll_moreinfolayout"
                         android:layout_width="120dp"
                         android:layout_height="fill_parent"
-                        android:background="#F5F5F5"
                         android:layout_alignParentRight="true"
+                        android:background="#F5F5F5"
                         android:orientation="vertical"
-                        android:visibility="gone">
-                        <LinearLayout 
+                        android:visibility="gone" >
+
+                        <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="0.0dp"
-                            android:layout_weight="10">
-                            <TextView 
+                            android:layout_weight="10" >
+
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="10dp"
-                                android:textSize="16sp"
-                                android:text="店铺名称"/>
+                                android:text="店铺名称"
+                                android:textSize="16sp" />
                         </LinearLayout>
-                        <View 
+
+                        <View
                             android:layout_width="fill_parent"
                             android:layout_height="1dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:background="#D9D9D9"/>
-                        <LinearLayout 
+                            android:background="#D9D9D9" />
+
+                        <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="0.0dp"
-                            android:layout_weight="7">
-                            <TextView 
+                            android:layout_weight="7" >
+
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="10dp"
-                                android:text="库存："/>
-                            <TextView 
+                                android:text="库存：" />
+
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="10dp"
-                                android:textColor="#FA9334"
-                                android:text="890件"/>
+                                android:text="890件"
+                                android:textColor="#FA9334" />
                         </LinearLayout>
-                        <LinearLayout 
+
+                        <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="0.0dp"
-                            android:layout_weight="7">
-                            <TextView 
+                            android:layout_weight="7" >
+
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="10dp"
-                                android:text="销量："/>
-                            <TextView 
+                                android:text="销量：" />
+
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="10dp"
-                                android:textColor="#FA9334"
-                                android:text="1231件"/>                            
+                                android:text="1231件"
+                                android:textColor="#FA9334" />
                         </LinearLayout>
-                        <LinearLayout 
+
+                        <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="0.0dp"
-                            android:layout_weight="7">
-                            <TextView 
+                            android:layout_weight="7" >
+
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="10dp"
-                                android:text="浏览量："/>
-                            <TextView 
+                                android:text="浏览量：" />
+
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="10dp"
-                                android:textColor="#FA9334"
-                                android:text="42132次"/>
-                            
+                                android:text="42132次"
+                                android:textColor="#FA9334" />
                         </LinearLayout>
                     </LinearLayout>
-                    
                 </RelativeLayout>
             </LinearLayout>
 
@@ -527,13 +521,13 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/body_cont_bg"
+                android:background="@drawable/shape_backgroundall"
                 android:orientation="vertical" >
 
                 <RelativeLayout
                     android:id="@+id/b5_3_shaidanquan"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="38dp" >
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -562,37 +556,29 @@
                         android:text="N条新内容更新"
                         android:textColor="#707070" />
                 </RelativeLayout>
-				<!-- <com.ZYKJ.buerhaitao.customview.B5_3_ShowView
-                    android:id="@+id/slideshowView"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:background="@drawable/body_cont_bg" /> -->
-                 <!--    <com.ZYKJ.buerhaitao.view.HorizontalListView  
-				        android:id="@+id/horizon_listview"  
-				        android:layout_width="fill_parent"  
-				        android:layout_height="fill_parent">  
-    				</com.ZYKJ.buerhaitao.view.HorizontalListView>  --> 
+
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="15dp"
                     android:background="#d6d6d6" />
-		                <ListView
-		                    android:id="@+id/horizon_listview"
-		                    android:layout_width="fill_parent"
-		                    android:layout_height="wrap_content" >
-		                </ListView>
+
+                <ListView
+                    android:id="@+id/horizon_listview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+                </ListView>
             </LinearLayout>
 
             <!-- 猜你喜欢 -->
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="590dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/body_cont_bg"
+                android:background="@drawable/shape_backgroundall"
                 android:orientation="vertical" >
 
                 <RelativeLayout
@@ -633,22 +619,20 @@
                     android:layout_marginLeft="15dp"
                     android:background="#d6d6d6" />
 
-                <com.ZYKJ.buerhaitao.view.MyListView
+                <com.ZYKJ.buerhaitao.view.AutoListView
                     android:id="@+id/list_cainilike"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" >
-                </com.ZYKJ.buerhaitao.view.MyListView>
+                </com.ZYKJ.buerhaitao.view.AutoListView>
             </LinearLayout>
 
             <!-- 每日好店 -->
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="590dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/body_cont_bg"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/shape_backgroundall"
                 android:orientation="vertical" >
 
                 <RelativeLayout
@@ -689,12 +673,16 @@
                     android:layout_marginLeft="15dp"
                     android:background="#d6d6d6" />
 
-                <com.ZYKJ.buerhaitao.view.MyListView
+                <com.ZYKJ.buerhaitao.view.AutoListView
                     android:id="@+id/list_meirihaodian"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" >
-                </com.ZYKJ.buerhaitao.view.MyListView>
+                </com.ZYKJ.buerhaitao.view.AutoListView>
             </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="3dp" />
         </LinearLayout>
     </ScrollView>
 

@@ -67,6 +67,7 @@ public class B1_a1_DaySpecialAdapter extends BaseAdapter {
 		ViewHolder.tv_b1_a1_chanpinjianjie1.setText(data.get(position).get("goods_jingle"));
 		ViewHolder.tv_b1_a1_zhehoujia1.setText(data.get(position).get("goods_promotion_price"));
 		ViewHolder.tv_b1_a1_yuanjia1.setText(data.get(position).get("goods_price"));
+		
 		return convertView;
 	}
 	public final class ViewHolder {  

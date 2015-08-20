@@ -42,6 +42,7 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 	private ImageView im_sp_gouwuche;
 //	List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 	String key,goods_id;
+	String tv_qxzlx = "";
 	//商品名称
 	private TextView tv_sp_spname;
 	//销售价
@@ -80,15 +81,22 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 	private LinearLayout ll_sp_addincar;
 	//商品分享
 	private LinearLayout ll_goods_fenxiang;
-	String chanpinprice,kucun;
-	JSONObject leixing1,xuanxiang;
-	
+	private String chanpinprice,kucun,xsprice;
+	private JSONArray leixing1;
+	private int pj=0;
+	private JSONObject jsonitemz,xuanxiang;
+	private String choosejiage,choosexinghao;
+	//选择规格类型
+	private TextView tv_xzgglx;
+	//立即购买
+	private LinearLayout ll_ljgm;
+	String goodsid;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_shangpinxiangqing);
 		initView();
-		HttpUtils.getGoodsInfo(res_goodsinfo, "100024");
+		HttpUtils.getGoodsInfo(res_goodsinfo, goods_id);
 	}
 	
 	private void initView(){
@@ -114,9 +122,11 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 		ll_chakantuwen = (LinearLayout)findViewById(R.id.ll_chakantuwen);
 		ll_sp_addincar = (LinearLayout)findViewById(R.id.ll_sp_addincar);
 		ll_goods_fenxiang = (LinearLayout)findViewById(R.id.ll_goods_fenxiang);
+		ll_ljgm = (LinearLayout)findViewById(R.id.ll_ljgm);
 //		key = getSharedPreferenceValue("key");
+		tv_xzgglx = (TextView)findViewById(R.id.tv_xzgglx);
 		tv_shichangjia.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-		setListener(im_sp_back,im_sp_gouwuche,ll_ckgdpj,ll_sp_addincar,rl_chooseleixing,ll_goods_fenxiang);
+		setListener(im_sp_back,im_sp_gouwuche,ll_ckgdpj,ll_sp_addincar,rl_chooseleixing,ll_goods_fenxiang,ll_ljgm);
 	}
 	
 	@Override
@@ -137,19 +147,24 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 			startActivity(iteckpj);
 			break;
 		case R.id.ll_sp_addincar:
-			
+			if (tv_xzgglx.getText().equals("选择规格类型")) {
+				Toast.makeText(Sp_GoodsInfoActivity.this, "请先选择规格类型", Toast.LENGTH_LONG).show();
+			}
+			break;
+		case R.id.ll_ljgm:
+			if (tv_xzgglx.getText().equals("选择规格类型")) {
+				Toast.makeText(Sp_GoodsInfoActivity.this, "请先选择规格类型", Toast.LENGTH_LONG).show();
+			}
 			break;
 		case R.id.rl_chooseleixing:
 			Intent itaddcar1 = new Intent(Sp_GoodsInfoActivity.this,Sp_a2_XingHao.class);
-			itaddcar1.putExtra("chanpinprice",chanpinprice);
-			itaddcar1.putExtra("kucun",kucun);
 			if(leixing1.length()==1){
-				itaddcar1.putExtra("tiaomu","1");
+				itaddcar1.putExtra("tiaomu","1");//arr.getJSONObject(0)
 				try {
-					itaddcar1.putExtra("fenlei1",leixing1.getString("1"));
+					itaddcar1.putExtra("fenlei1",leixing1.getJSONObject(0).getString("name").toString());
 					
-					JSONArray jsonarray = xuanxiang.getJSONArray("1");
-					
+//					JSONArray jsonarray = xuanxiang.getJSONArray("1");
+					JSONArray jsonarray = xuanxiang.getJSONArray(leixing1.getJSONObject(0).getString("id").toString());
 					List<String> list = new ArrayList<String>();
 					for (int i=0; i<jsonarray.length(); i++) {
 					    try {
@@ -171,15 +186,15 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 				itaddcar1.putExtra("tiaomu","2");
 				try {
 //					Toast.makeText(Sp_GoodsInfoActivity.this, leixing1.getString("1").toString(), Toast.LENGTH_LONG).show();
-					itaddcar1.putExtra("fenlei1",leixing1.getString("1").toString());
-					itaddcar1.putExtra("fenlei2",leixing1.getString("2").toString());
+					itaddcar1.putExtra("fenlei1",leixing1.getJSONObject(0).getString("name").toString());
+					itaddcar1.putExtra("fenlei2",leixing1.getJSONObject(1).getString("name").toString());
 					
-					JSONArray jsonarray1 = xuanxiang.getJSONArray("1");
+					JSONArray jsonarray1 = xuanxiang.getJSONArray(leixing1.getJSONObject(0).getString("id").toString());
 					
 					itaddcar1.putExtra("arry1",jsonarray1.toString());
 					
 
-					JSONArray jsonarray2 = xuanxiang.getJSONArray("2");
+					JSONArray jsonarray2 = xuanxiang.getJSONArray(leixing1.getJSONObject(1).getString("id").toString());
 					itaddcar1.putExtra("arry2",jsonarray2.toString());
 					 
 				} catch (JSONException e) {
@@ -187,8 +202,13 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 					e.printStackTrace();
 				}
 			}
-						
-			Sp_GoodsInfoActivity.this.startActivity(itaddcar1);  
+
+			itaddcar1.putExtra("chanpinprice",chanpinprice);
+			itaddcar1.putExtra("kucun",kucun);
+			itaddcar1.putExtra("goodsid", goodsid);
+			itaddcar1.putExtra("choosejiage", choosejiage);
+			itaddcar1.putExtra("choosexinghao", choosexinghao);
+			Sp_GoodsInfoActivity.this.startActivityForResult(itaddcar1,0);  
             
 			Sp_GoodsInfoActivity.this.overridePendingTransition(R.anim.activity_open,0); 
 			break;
@@ -227,18 +247,23 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 					//每日好店
 						JSONObject jsonItem = datas.getJSONObject("goods_info");
 //						JSONObject jsonItem = array.getJSONObject(0);
-
-						JSONObject jsonitemz = datas.getJSONObject("evaluate");
+						try {
+							jsonitemz = datas.getJSONObject("evaluate");
+						} catch (Exception e) {
+							pj=1;
+						}
+						
 //							JSONObject jsonitemz = arrayz.getJSONObject(0);
 						//商品名称
 						tv_sp_spname.setText(jsonItem.getString("goods_name"));
 						//销售价 
-						chanpinprice = "￥"+jsonItem.getString("goods_price");
-						tv_xiaoshoujia.setText(chanpinprice);
+						xsprice = "￥"+jsonItem.getString("goods_promotion_price");
+						tv_xiaoshoujia.setText(xsprice);
 						//库存
 						kucun = "库存："+jsonItem.getString("goods_storage")+"件";
-						//市场价
-//						tv_shichangjia
+						//市场价tv_xiaoshoujia
+						chanpinprice = "￥"+jsonItem.getString("goods_price");
+						tv_shichangjia.setText(chanpinprice);
 						//所属二级分类
 						tv_sp_ssejfl.setText(jsonItem.getString("gc_name"));
 						//已售件数
@@ -252,19 +277,27 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 						tv_sp_babypingjia.setText("宝贝评价：（"+jsonItem.getString("evaluation_count")+"）");
 						//总评分：
 						tv_zongpinfen.setText("总评分："+jsonItem.getString("evaluation_good_star"));
-						//用户头像
-				   		ImageLoader.getInstance().displayImage((String)jsonitemz.getString("geval_avatar"), im_userimage);
-						//用户名称
-						tv_username.setText(jsonitemz.getString("geval_frommembername")); 
-						//评星
-						xiangqing_rating_bar.setRating(Float.parseFloat(jsonitemz.getString("geval_scores")));
-						//商品评价 
-						tv_sp_pingjia.setText(jsonitemz.getString("geval_content"));
-						//产品参数
-						tv_chanpincanshu.setText(jsonitemz.getString("geval_spec"));
+						if (pj==1) {
+							
+						}else {
+							//用户头像
+					   		ImageLoader.getInstance().displayImage((String)jsonitemz.getString("geval_avatar"), im_userimage);
+							//用户名称
+							tv_username.setText(jsonitemz.getString("geval_frommembername")); 
+							//评星
+							xiangqing_rating_bar.setRating(Float.parseFloat(jsonitemz.getString("evaluation_good_star")));
+							//商品评价 
+							tv_sp_pingjia.setText(jsonitemz.getString("geval_content"));
+							//产品参数
+							tv_chanpincanshu.setText(jsonitemz.getString("geval_spec"));
+						}
 						//查看更多评价
-						leixing1 = jsonItem.getJSONObject("spec_name");
+						leixing1 = jsonItem.getJSONArray("spec_name");
+//						leixing1 = jsonItem.getJSONObject("spec_name");
 						xuanxiang = jsonItem.getJSONObject("spec_value");
+						choosexinghao = datas.getJSONObject("spec_list").toString();
+						choosejiage = datas.getJSONObject("spec_list_goods").toString();
+						
 //						ll_ckgdpj
 						//继续拖动，查看图文详情
 //						ll_chankantuwen
@@ -284,4 +317,16 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 		}
 	};
 
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (resultCode) { // resultCode为回传的标记，我在B中回传的是RESULT_OK
+		case RESULT_OK:
+			tv_qxzlx = data.getStringExtra("tv_qxzlx");
+			tv_xzgglx.setText(tv_qxzlx);
+			break;
+		default:
+			break;
+		}
+	}
+	
 }

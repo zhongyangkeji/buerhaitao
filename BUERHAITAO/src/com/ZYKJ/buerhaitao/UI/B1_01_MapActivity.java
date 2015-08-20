@@ -66,6 +66,8 @@ public class B1_01_MapActivity extends BaseActivity{
 	LocationUtil mLocationUtil;
 	String lng;//经度
 	String lat;// 纬度
+	String citynamex;
+	String area_idx;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -113,6 +115,9 @@ public class B1_01_MapActivity extends BaseActivity{
 				//这里要利用adapter.getItem(position)来获取当前position所对应的对象
 				Intent mapit = new Intent();
 				mapit.putExtra("cityname",((SortModel)adapter.getItem(position)).getArea_name());
+				mapit.putExtra("cityid",((SortModel)adapter.getItem(position)).getArea_id());
+				mapit.putExtra("lng",lng);
+				mapit.putExtra("lat",lat);
 				mapit.setClass(B1_01_MapActivity.this, B1_HomeActivity.class);
 				startActivity(mapit);
 //				Toast.makeText(getApplication(), ((SortModel)adapter.getItem(position)).getName(), Toast.LENGTH_SHORT).show();
@@ -160,10 +165,7 @@ public class B1_01_MapActivity extends BaseActivity{
 			B1_01_MapActivity.this.finish();
 			break;
 		case R.id.tv_findcityname:
-			Intent mapit = new Intent();
-			mapit.putExtra("cityname",tv_findcityname.getText().toString());
-			mapit.setClass(B1_01_MapActivity.this, B1_HomeActivity.class);
-			startActivity(mapit);
+			HttpUtils.getCityName(res_getCityName1,lng,lat);
 			break;
 		default:
 			break;
@@ -219,10 +221,56 @@ public class B1_01_MapActivity extends BaseActivity{
 			if (error==null)//成功
 			{
 				try {
-					String cityname = datas.getString("area_name");
-					String area_id = datas.getString("area_id");
-					tv_findcityname.setText(cityname);
-					tv_dangqiancity.setText(cityname);
+					citynamex = datas.getString("area_name");
+					area_idx = datas.getString("area_id");
+					tv_findcityname.setText(citynamex);
+					tv_dangqiancity.setText(citynamex);
+				} 
+				catch (org.json.JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else//失败 
+			{
+				Tools.Log("res_Points_error="+error+"");
+			}
+		}
+	};
+	
+	JsonHttpResponseHandler res_getCityName1 = new JsonHttpResponseHandler()
+	{
+
+		public void onSuccess(int statusCode, Header[] headers,
+				JSONObject response) {
+			// TODO Auto-generated method stub
+			super.onSuccess(statusCode, headers, response);
+			RequestDailog.closeDialog();
+			Tools.Log("res_pointsMallresponse="+response);
+			String error=null;
+			JSONObject datas=null;
+			try {
+				 datas = response.getJSONObject("datas");
+				 error = response.getString("error");
+			}catch (org.json.JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			if (error==null)//成功
+			{
+				try {
+					citynamex = datas.getString("area_name");
+					area_idx = datas.getString("area_id");
+					tv_findcityname.setText(citynamex);
+					tv_dangqiancity.setText(citynamex);
+					Intent mapit = new Intent();
+					mapit.putExtra("cityname",tv_findcityname.getText().toString());
+					mapit.putExtra("lng",lng);
+					mapit.putExtra("lat",lat);
+					mapit.putExtra("cityname",citynamex);
+					mapit.putExtra("cityid",area_idx);
+					mapit.setClass(B1_01_MapActivity.this, B1_HomeActivity.class);
+					startActivity(mapit);
 				} 
 				catch (org.json.JSONException e) {
 					// TODO Auto-generated catch block

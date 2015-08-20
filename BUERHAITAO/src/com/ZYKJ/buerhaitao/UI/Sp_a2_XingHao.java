@@ -3,6 +3,10 @@ package com.ZYKJ.buerhaitao.UI;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.Header;
+import org.json.JSONObject;
+
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +22,13 @@ import android.widget.Toast;
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.data.ChanPinCanShu;
+import com.ZYKJ.buerhaitao.utils.HttpUtils;
+import com.ZYKJ.buerhaitao.utils.Tools;
+import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
+import com.google.gson.JsonObject;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 /**
  * @author lss 2015年7月4日选择型号
@@ -30,7 +40,7 @@ public class Sp_a2_XingHao extends BaseActivity {
 	private View view_sp_a1_back2;
 	private ImageView im_sp_a1_back3;
 	private TextView tv_chanpinprice, tv_kucun, tiaomu1, tiaomu2, tv_qxzlx,
-			tv_qxzlx1, tv_addcar;
+			tv_qxzlx1, tv_addcar,tv_qxzlx_yincang,tv_qxzlx1_yincang;
 	private GridView gview, gview1;
 	private String[] iconName;
 	// private String[] iconName = { "通讯录", "日历", "照相机", "时钟", "游戏", "短信", "铃声",
@@ -38,6 +48,7 @@ public class Sp_a2_XingHao extends BaseActivity {
 	private List<Map<String, Object>> data_list;
 	private ArrayAdapter<ChanPinCanShu> sim_adapter;
 	private String tiaomu;
+	private JSONObject choosejiage,choosexinghao;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,6 +72,8 @@ public class Sp_a2_XingHao extends BaseActivity {
 		gview1 = (GridView) findViewById(R.id.gview1);
 		tv_qxzlx = (TextView) findViewById(R.id.tv_qxzlx);
 		tv_qxzlx1 = (TextView) findViewById(R.id.tv_qxzlx1);
+		tv_qxzlx_yincang = (TextView) findViewById(R.id.tv_qxzlx_yincang);
+		tv_qxzlx1_yincang = (TextView) findViewById(R.id.tv_qxzlx1_yincang);
 		tiaomu = getIntent().getStringExtra("tiaomu");
 		tv_addcar = (TextView) findViewById(R.id.tv_addcar);
 		if (tiaomu.equals("1")) {
@@ -82,9 +95,11 @@ public class Sp_a2_XingHao extends BaseActivity {
 					// TODO Auto-generated method stub
 					tv_qxzlx.setText(tiaomu1.getText() + ":"
 							+ cpcs.get(position).getName());
-					Toast.makeText(getApplicationContext(),
-							cpcs.get(position).getId(), Toast.LENGTH_LONG)
-							.show();
+					tv_qxzlx_yincang.setText(tiaomu1.getText() + ":"
+							+ cpcs.get(position).getId());
+//					Toast.makeText(getApplicationContext(),
+//							cpcs.get(position).getId(), Toast.LENGTH_LONG)
+//							.show();
 				}
 			});
 
@@ -112,9 +127,11 @@ public class Sp_a2_XingHao extends BaseActivity {
 					// TODO Auto-generated method stub
 					tv_qxzlx.setText(tiaomu1.getText() + ":"
 							+ cpcs.get(position).getName());
-					Toast.makeText(getApplicationContext(),
-							cpcs.get(position).getId(), Toast.LENGTH_LONG)
-							.show();
+					tv_qxzlx_yincang.setText(tiaomu1.getText() + ":"
+							+ cpcs.get(position).getId());
+//					Toast.makeText(getApplicationContext(),
+//							cpcs.get(position).getId(), Toast.LENGTH_LONG)
+//							.show();
 				}
 			});
 
@@ -133,9 +150,11 @@ public class Sp_a2_XingHao extends BaseActivity {
 					// TODO Auto-generated method stub
 					tv_qxzlx1.setText(tiaomu2.getText() + ":"
 							+ cpcs1.get(position).getName());
-					Toast.makeText(getApplicationContext(),
-							cpcs1.get(position).getId(), Toast.LENGTH_LONG)
-							.show();
+					tv_qxzlx1_yincang.setText(tiaomu2.getText() + ":"
+							+ cpcs1.get(position).getId());
+//					Toast.makeText(getApplicationContext(),
+//							cpcs1.get(position).getId(), Toast.LENGTH_LONG)
+//							.show();
 				}
 			});
 
@@ -148,39 +167,66 @@ public class Sp_a2_XingHao extends BaseActivity {
 		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.ll_sp_a1_back1:
-			super.finish();
+			
+			Intent intent = new Intent(Sp_a2_XingHao.this,Sp_GoodsInfoActivity.class);
+			intent.putExtra("tv_qxzlx", tv_qxzlx.getText().toString()+tv_qxzlx1.getText().toString());
+			intent.putExtra("tv_qxzlx_yincang", tv_qxzlx_yincang.getText().toString()+tv_qxzlx1_yincang.getText().toString());
+			Sp_a2_XingHao.this.setResult(Activity.RESULT_OK, intent);
+			Sp_a2_XingHao.this.finish();
 			this.overridePendingTransition(R.anim.activity_close, 0);
 			break;
 		case R.id.view_sp_a1_back2:
-			finish();
+			Intent intent1 = new Intent(Sp_a2_XingHao.this,Sp_GoodsInfoActivity.class);
+			intent1.putExtra("tv_qxzlx", tv_qxzlx.getText().toString()+tv_qxzlx1.getText().toString());
+			intent1.putExtra("tv_qxzlx_yincang", tv_qxzlx_yincang.getText().toString()+tv_qxzlx1_yincang.getText().toString());
+			Sp_a2_XingHao.this.setResult(Activity.RESULT_OK, intent1);
+			Sp_a2_XingHao.this.finish();
 			break;
 		case R.id.im_sp_a1_back3:
-			finish();
+			Intent intent2 = new Intent(Sp_a2_XingHao.this,Sp_GoodsInfoActivity.class);
+			intent2.putExtra("tv_qxzlx", tv_qxzlx.getText().toString()+tv_qxzlx1.getText().toString());
+			intent2.putExtra("tv_qxzlx_yincang", tv_qxzlx_yincang.getText().toString()+tv_qxzlx1_yincang.getText().toString());
+			Sp_a2_XingHao.this.setResult(Activity.RESULT_OK, intent2);
+			Sp_a2_XingHao.this.finish();
 			break;
 		case R.id.tv_addcar:
-			if (tiaomu.equals("1")) {
+			if (tiaomu.equals("1")) {//一个分类
 				if (tv_qxzlx.getText().length() > 0) {
-
+					HttpUtils.getAddGouWu(res_addgouwu, getSharedPreferenceValue("key"),getIntent().getStringExtra("goodsid"),"1");
 				} else {
-					Toast.makeText(getApplicationContext(), "1111111",
+					Toast.makeText(getApplicationContext(), "请选择型号",
 							Toast.LENGTH_LONG).show();
 				}
-			} else if (tiaomu.equals("2")) {
+			} else if (tiaomu.equals("2")) {//两个分类
 				if (tv_qxzlx.getText().length() > 0) {
-					if (tv_qxzlx.getText().length() > 0) {
-
+					if (tv_qxzlx1.getText().length() > 0) {
+						String goodsid=null;
+						try {
+//							choosejiage = new JSONObject(getIntent().getStringExtra("choosejiage"));
+							choosexinghao=new JSONObject(getIntent().getStringExtra("choosexinghao"));
+							goodsid = choosexinghao.getString(tv_qxzlx_yincang.getText().toString()+tv_qxzlx1_yincang.getText().toString());
+							
+						} catch (org.json.JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+//						choosejiage = getIntent().getStringExtra("choosejiage").t
+						
+						
+						//加入购物车
+						HttpUtils.getAddGouWu(res_addgouwu, getSharedPreferenceValue("key"),goodsid,"1");
 					} else {
 						Toast.makeText(getApplicationContext(),
-								"33333333333333", Toast.LENGTH_LONG).show();
+								"请选择型号2", Toast.LENGTH_LONG).show();
 					}
-				} else if (tv_qxzlx.getText().length() > 0) {
-
-				} else {
-					Toast.makeText(getApplicationContext(), "2222222222",
+				}else {
+					Toast.makeText(getApplicationContext(), "请选择型号",
 							Toast.LENGTH_LONG).show();
 				}
-			} else {
-
+			} else {//没有分类，直接加入购物车
+				//加入购物车
+				HttpUtils.getAddGouWu(res_addgouwu, getSharedPreferenceValue("key"),getIntent().getStringExtra("goodsid"),"1");
 			}
 			break;
 
@@ -189,6 +235,38 @@ public class Sp_a2_XingHao extends BaseActivity {
 		}
 	}
 
+	JsonHttpResponseHandler res_addgouwu = new JsonHttpResponseHandler()
+	{
+		@Override
+		public void onSuccess(int statusCode, Header[] headers,
+				JSONObject response) {
+			// TODO Auto-generated method stub
+			super.onSuccess(statusCode, headers, response);
+			RequestDailog.closeDialog();
+			
+			String error=null;
+			JSONObject datas=null;
+			try {
+				 datas = response.getJSONObject("datas");
+				 error = datas.getString("error");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (org.json.JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (error==null)//成功
+			{
+				Toast.makeText(getApplicationContext(), "添加成功", Toast.LENGTH_LONG).show();				
+			}
+			else//失败 
+			{
+				Toast.makeText(getApplicationContext(), "添加失败，"+error, Toast.LENGTH_LONG).show();
+			}
+		}
+	};
+	
 	@Override
 	public void finish() {
 		// TODO Auto-generated method stub

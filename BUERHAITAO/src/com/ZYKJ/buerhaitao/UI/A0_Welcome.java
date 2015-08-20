@@ -11,13 +11,21 @@ import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.data.AppValue;
 import com.ZYKJ.buerhaitao.utils.Tools;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.map.MyLocationData;
 import com.umeng.message.PushAgent;
 
 
 public class A0_Welcome extends BaseActivity {
+//	public LocationClient mLocationClient = null;
+//	public BDLocationListener mLocationListener = new MyLocationListener();
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initView(R.layout.ui_welcome);
+//		initLocation();
 		//消息推送
 		PushAgent mPushAgent = PushAgent.getInstance(A0_Welcome.this);
 		mPushAgent.enable();
@@ -56,4 +64,32 @@ public class A0_Welcome extends BaseActivity {
 		};
 		timer.schedule(task, 2000);
 	}
+//	private void initLocation() {
+//		mLocationClient = new LocationClient(this);
+//		mLocationListener = new MyLocationListener();
+//		mLocationClient.registerLocationListener(mLocationListener);
+//		LocationClientOption option = new LocationClientOption();
+//		option.setCoorType("bd09ll");
+//		option.setIsNeedAddress(true);
+//		option.setOpenGps(true);
+//		option.setScanSpan(1000);
+//		
+//		mLocationClient.setLocOption(option);
+//	}
+//	private class MyLocationListener implements BDLocationListener {
+//		@Override
+//		public void onReceiveLocation(BDLocation location) {
+//			location.getLatitude();
+//			location.getLongitude();
+//			Toast.makeText(getApplicationContext(), String.valueOf(location.getLatitude()), Toast.LENGTH_LONG).show();
+//			}
+//	}	
+	
+//	@Override
+//	protected void onStart() {
+//		super.onStart();
+//		//开启定位
+//		if(!mLocationClient.isStarted())
+//			mLocationClient.start();
+//	}
 }

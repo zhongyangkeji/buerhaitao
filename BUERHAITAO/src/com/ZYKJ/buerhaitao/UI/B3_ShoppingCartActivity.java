@@ -65,7 +65,7 @@ public class B3_ShoppingCartActivity extends BaseActivity implements ChangedPric
 		
 		setListener(tv_jiesuan,im_checkall);
 //		HttpUtils.getShoppingCarInfoList(res_ShoppingCarInfo,getSharedPreferenceValue("key"));
-		HttpUtils.getShoppingCarInfoList(res_ShoppingCarInfo,"3ae653eb52824dbc4ba977de343e2e12");
+		HttpUtils.getShoppingCarInfoList(res_ShoppingCarInfo,getSharedPreferenceValue("key"));
 		
 	}
 	
@@ -165,7 +165,7 @@ public class B3_ShoppingCartActivity extends BaseActivity implements ChangedPric
 			sumtiaoshu =  sumtiaoshu + dataList.get(i).getStore_list().size();
 		}
 //		Toast.makeText(getApplicationContext(), ""+sumtiaoshu, Toast.LENGTH_LONG).show();
-		adapter = new B3_ShpppingCartAdapter(this, dataList,ischeck,sumtiaoshu,this,this,this);
+		adapter = new B3_ShpppingCartAdapter(this, dataList,ischeck,sumtiaoshu,this,this,this,getSharedPreferenceValue("key"));
 		expandableList.setAdapter(adapter);
 
 		groupCount = expandableList.getCount();

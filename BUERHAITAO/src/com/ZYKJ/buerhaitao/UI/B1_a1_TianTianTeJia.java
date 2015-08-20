@@ -8,8 +8,11 @@ import java.util.Map;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 
 import com.ZYKJ.buerhaitao.R;
@@ -47,8 +50,21 @@ public class B1_a1_TianTianTeJia extends BaseActivity implements IXListViewListe
 		listview_b1_a1_dayspecial.setXListViewListener(this, 0);
 		listview_b1_a1_dayspecial.setRefreshTime();
 		RequestDailog.showDialog(this, "正在加载数据，请稍后");
-		HttpUtils.getDaySpecial(res_dayspecial, "0","88","1","1");
-		
+//		HttpUtils.getDaySpecial(res_dayspecial, "0","88","1","1");
+		HttpUtils.getDaySpecial(res_dayspecial, "0",getSharedPreferenceValue("cityid"),getSharedPreferenceValue("lng"),getSharedPreferenceValue("lat"));
+		listview_b1_a1_dayspecial.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+				// TODO Auto-generated method stub
+				Intent itdayspec = new Intent();
+				String goid = data.get(position-1).get("goods_id");
+				itdayspec.putExtra("goods_id",goid);
+				itdayspec.setClass(B1_a1_TianTianTeJia.this, Sp_GoodsInfoActivity.class);
+				startActivity(itdayspec);
+			}
+		});
 		setListener(b1_a1_back1);
 	}
 	
@@ -128,7 +144,7 @@ public class B1_a1_TianTianTeJia extends BaseActivity implements IXListViewListe
 	public void onRefresh(int id) {
 		// TODO Auto-generated method stub
 		RequestDailog.showDialog(this, "正在加载数据，请稍后");
-		HttpUtils.getDaySpecial(res_dayspecial, "0","88","1","1");
+		HttpUtils.getDaySpecial(res_dayspecial, "0",getSharedPreferenceValue("cityid"),getSharedPreferenceValue("lng"),getSharedPreferenceValue("lat"));
 	}
 
 	@Override

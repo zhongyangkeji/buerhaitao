@@ -58,8 +58,9 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 	int sumtiaoshu;
 	JieSuanCount jiesuancount;
 	int childcheck=0;
+	String key;
 
-	public B3_ShpppingCartAdapter(Context context, List<GroupItem> dataList,int ischecked,int sumtiaoshu,ChangedPrice changedprice,IsAllChecked isallchecked,JieSuanCount jiesuancount) {
+	public B3_ShpppingCartAdapter(Context context, List<GroupItem> dataList,int ischecked,int sumtiaoshu,ChangedPrice changedprice,IsAllChecked isallchecked,JieSuanCount jiesuancount,String key) {
 		this.dataList = dataList;
 		this.context = context;
 		this.ischecked =ischecked;
@@ -67,6 +68,7 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 		this.isallchecked = isallchecked;
 		this.sumtiaoshu = sumtiaoshu;
 		this.jiesuancount = jiesuancount;
+		this.key = key;
 		inflater = LayoutInflater.from(context);	
 		listcarld = new HashMap<Integer, Boolean>();
 		// 默认设置所有的父列表项和子列表项的选中状态(1为全选)
@@ -125,7 +127,11 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 					
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {
-						HttpUtils.getDelete(res_delete,"3ae653eb52824dbc4ba977de343e2e12",childrenItem.getCart_id());
+						int a = dataList.size();
+						HttpUtils.getDelete(res_delete,key,childrenItem.getCart_id());
+						dataList.remove(childrenItem);
+//						childrenItem
+						int b = dataList.size();
 						B3_ShpppingCartAdapter.this.notifyDataSetChanged();
 					}
 				})
@@ -405,7 +411,7 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 					String nums = (Integer.toString(goodnum-1));
 					childrenItem.setGoods_num(nums);
 					viewHolder.editconunt.setText(childrenItem.getGoods_num());
-					HttpUtils.getAddGoods(res_add,"3ae653eb52824dbc4ba977de343e2e12",childrenItem.getCart_id(),childrenItem.getGoods_num());
+					HttpUtils.getAddGoods(res_add,key,childrenItem.getCart_id(),childrenItem.getGoods_num());
 					B3_ShpppingCartAdapter.this.notifyDataSetChanged();
 					if (viewHolder.childrenCB.isChecked()==true) {
 						float price = Float.parseFloat(childrenItem.getGoods_price());
@@ -438,7 +444,7 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 				String nums = (Integer.toString(goodnum+1));
 				childrenItem.setGoods_num(nums);
 				viewHolder.editconunt.setText(childrenItem.getGoods_num());;
-				HttpUtils.getAddGoods(res_add,"3ae653eb52824dbc4ba977de343e2e12",childrenItem.getCart_id(),childrenItem.getGoods_num());
+				HttpUtils.getAddGoods(res_add,key,childrenItem.getCart_id(),childrenItem.getGoods_num());
 				B3_ShpppingCartAdapter.this.notifyDataSetChanged();
 				if (viewHolder.childrenCB.isChecked()==true) {
 					float price  =Float.parseFloat(childrenItem.getGoods_price());

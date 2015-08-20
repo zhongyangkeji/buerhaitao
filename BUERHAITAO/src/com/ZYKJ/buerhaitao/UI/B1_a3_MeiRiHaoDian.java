@@ -8,8 +8,11 @@ import java.util.Map;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 
 import com.ZYKJ.buerhaitao.R;
@@ -47,8 +50,21 @@ public class B1_a3_MeiRiHaoDian extends BaseActivity implements IXListViewListen
 		listview_b1_a3_goodstore.setXListViewListener(this, 0);
 		listview_b1_a3_goodstore.setRefreshTime();
 		RequestDailog.showDialog(this, "正在加载数据，请稍后");
-		HttpUtils.getGoodStore(res_goodstore, "5","0","88","80", "100");
-		
+//		HttpUtils.getGoodStore(res_goodstore, "5","0","88","80", "100");
+		HttpUtils.getGoodStore(res_goodstore, "5","0",getSharedPreferenceValue("cityid"),getSharedPreferenceValue("lng"),getSharedPreferenceValue("lat"));
+		listview_b1_a3_goodstore.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				String storeid = data.get(arg2-1).get("store_id");
+				intent.putExtra("store_id", storeid);
+				intent.setClass(B1_a3_MeiRiHaoDian.this,BX_DianPuXiangQingActivity.class);
+				startActivity(intent);
+			}
+		});
 		setListener(b1_a3_goodstoreback);
 	}
 	
@@ -94,6 +110,7 @@ public class B1_a3_MeiRiHaoDian extends BaseActivity implements IXListViewListen
 						map.put("store_label", jsonItem.getString("store_label"));
 						map.put("store_desccredit", jsonItem.getString("store_desccredit"));
 						map.put("juli", jsonItem.getString("juli"));
+						map.put("store_id", jsonItem.getString("store_id"));
 						data.add(map);
 					}
 					goodstoredapter.notifyDataSetChanged();
