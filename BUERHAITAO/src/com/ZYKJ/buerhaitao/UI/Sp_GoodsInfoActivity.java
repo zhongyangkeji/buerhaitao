@@ -42,7 +42,7 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 	private ImageView im_sp_gouwuche;
 //	List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 	String key,goods_id;
-	String tv_qxzlx = "";
+	String tv_qxzlx = "",tv_qxzlx1 = "",tv_qxzlx2 = "";
 	//商品名称
 	private TextView tv_sp_spname;
 	//销售价
@@ -90,7 +90,11 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 	private TextView tv_xzgglx;
 	//立即购买
 	private LinearLayout ll_ljgm;
-	String goodsid;
+	private String goodsid;
+	private String xzhdgg=null;//选择后的goodsid
+	private String tv_qxzlx_yincang=null;//隐藏的控件存了选择了的型号的id
+	private String price;
+	private Intent itaddcar1;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -147,70 +151,50 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 			startActivity(iteckpj);
 			break;
 		case R.id.ll_sp_addincar:
-			if (tv_xzgglx.getText().equals("选择规格类型")) {
-				Toast.makeText(Sp_GoodsInfoActivity.this, "请先选择规格类型", Toast.LENGTH_LONG).show();
-			}
+			XuanZeLeiXing();
 			break;
-		case R.id.ll_ljgm:
-			if (tv_xzgglx.getText().equals("选择规格类型")) {
-				Toast.makeText(Sp_GoodsInfoActivity.this, "请先选择规格类型", Toast.LENGTH_LONG).show();
-			}
-			break;
-		case R.id.rl_chooseleixing:
-			Intent itaddcar1 = new Intent(Sp_GoodsInfoActivity.this,Sp_a2_XingHao.class);
-			if(leixing1.length()==1){
-				itaddcar1.putExtra("tiaomu","1");//arr.getJSONObject(0)
-				try {
-					itaddcar1.putExtra("fenlei1",leixing1.getJSONObject(0).getString("name").toString());
-					
-//					JSONArray jsonarray = xuanxiang.getJSONArray("1");
-					JSONArray jsonarray = xuanxiang.getJSONArray(leixing1.getJSONObject(0).getString("id").toString());
-					List<String> list = new ArrayList<String>();
-					for (int i=0; i<jsonarray.length(); i++) {
-					    try {
-							list.add( jsonarray.getString(i) );
-						} catch (JSONException e) {
+		case R.id.ll_ljgm://立即购买
+			if (tv_xzgglx.getText().equals("选择规格类型")||tv_xzgglx.getText().equals("")) {
+				XuanZeLeiXing();
+			}else {
+				if(leixing1.length()==1){
+					try {
+						String a = tv_qxzlx_yincang.substring(0,tv_qxzlx_yincang.length()-1);
+						JSONObject jso=new JSONObject(choosexinghao);
+						goodsid = jso.getString(a);
+						Intent itmrhd = new Intent();
+						itmrhd.setClass(Sp_GoodsInfoActivity.this, JieSuan1Activity.class);
+						itmrhd.putExtra("allpri", price.substring(1, price.length()-1));
+						itmrhd.putExtra("xzhdgg", xzhdgg);
+						startActivity(itmrhd);
+					} catch (Exception e) {
+					}
+				}
+				if(leixing1.length()==2){
+					if (tv_qxzlx1==null||tv_qxzlx1==""||tv_qxzlx2==null||tv_qxzlx2=="") {
+						XuanZeLeiXing();
+					}else {
+//						立即购买
+						try {
+							String a = tv_qxzlx_yincang;
+							JSONObject jso=new JSONObject(choosexinghao);
+							goodsid = jso.getString(a);
+							Intent itmrhd = new Intent();
+							itmrhd.setClass(Sp_GoodsInfoActivity.this, JieSuan1Activity.class);
+							itmrhd.putExtra("allpri", price.substring(1, price.length()-1));
+							itmrhd.putExtra("xzhdgg", goodsid);
+							startActivity(itmrhd);
+							
+						} catch (org.json.JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
-					String[] stringArray = list.toArray(new String[list.size()]);
-					itaddcar1.putExtra("arry1",stringArray);
-					
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 			}
-			if(leixing1.length()==2){
-				itaddcar1.putExtra("tiaomu","2");
-				try {
-//					Toast.makeText(Sp_GoodsInfoActivity.this, leixing1.getString("1").toString(), Toast.LENGTH_LONG).show();
-					itaddcar1.putExtra("fenlei1",leixing1.getJSONObject(0).getString("name").toString());
-					itaddcar1.putExtra("fenlei2",leixing1.getJSONObject(1).getString("name").toString());
-					
-					JSONArray jsonarray1 = xuanxiang.getJSONArray(leixing1.getJSONObject(0).getString("id").toString());
-					
-					itaddcar1.putExtra("arry1",jsonarray1.toString());
-					
-
-					JSONArray jsonarray2 = xuanxiang.getJSONArray(leixing1.getJSONObject(1).getString("id").toString());
-					itaddcar1.putExtra("arry2",jsonarray2.toString());
-					 
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
-			itaddcar1.putExtra("chanpinprice",chanpinprice);
-			itaddcar1.putExtra("kucun",kucun);
-			itaddcar1.putExtra("goodsid", goodsid);
-			itaddcar1.putExtra("choosejiage", choosejiage);
-			itaddcar1.putExtra("choosexinghao", choosexinghao);
-			Sp_GoodsInfoActivity.this.startActivityForResult(itaddcar1,0);  
-            
-			Sp_GoodsInfoActivity.this.overridePendingTransition(R.anim.activity_open,0); 
+			break;
+		case R.id.rl_chooseleixing:
+			XuanZeLeiXing();
 			break;
 		case R.id.ll_goods_fenxiang:
 			// 设置分享内容
@@ -221,6 +205,70 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 		default:
 			
 			break;
+		}
+	}
+	
+	public void XuanZeLeiXing(){
+		itaddcar1 = new Intent(Sp_GoodsInfoActivity.this,Sp_a2_XingHao.class);
+		if(leixing1.length()==1){
+			LeiXing1();
+		}
+		if(leixing1.length()==2){
+			LeiXing2();
+		}
+
+		itaddcar1.putExtra("chanpinprice",chanpinprice);
+		itaddcar1.putExtra("kucun",kucun);
+		itaddcar1.putExtra("goodsid", goodsid);
+		itaddcar1.putExtra("choosejiage", choosejiage);
+		itaddcar1.putExtra("choosexinghao", choosexinghao);
+		Sp_GoodsInfoActivity.this.startActivityForResult(itaddcar1,0);
+		Sp_GoodsInfoActivity.this.overridePendingTransition(R.anim.activity_open,0); 
+	}
+	
+	public void LeiXing1(){
+		itaddcar1.putExtra("tiaomu","1");//arr.getJSONObject(0)
+		try {
+			itaddcar1.putExtra("fenlei1",leixing1.getJSONObject(0).getString("name").toString());
+			
+//			JSONArray jsonarray = xuanxiang.getJSONArray("1");
+			JSONArray jsonarray = xuanxiang.getJSONArray(leixing1.getJSONObject(0).getString("id").toString());
+			List<String> list = new ArrayList<String>();
+			for (int i=0; i<jsonarray.length(); i++) {
+			    try {
+					list.add( jsonarray.getString(i) );
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			String[] stringArray = list.toArray(new String[list.size()]);
+			itaddcar1.putExtra("arry1",stringArray);
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void LeiXing2(){
+		itaddcar1.putExtra("tiaomu","2");
+		try {
+//			Toast.makeText(Sp_GoodsInfoActivity.this, leixing1.getString("1").toString(), Toast.LENGTH_LONG).show();
+			itaddcar1.putExtra("fenlei1",leixing1.getJSONObject(0).getString("name").toString());
+			itaddcar1.putExtra("fenlei2",leixing1.getJSONObject(1).getString("name").toString());
+			
+			JSONArray jsonarray1 = xuanxiang.getJSONArray(leixing1.getJSONObject(0).getString("id").toString());
+			
+			itaddcar1.putExtra("arry1",jsonarray1.toString());
+			
+
+			JSONArray jsonarray2 = xuanxiang.getJSONArray(leixing1.getJSONObject(1).getString("id").toString());
+			itaddcar1.putExtra("arry2",jsonarray2.toString());
+			 
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -321,8 +369,13 @@ public class Sp_GoodsInfoActivity extends BaseActivity{
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (resultCode) { // resultCode为回传的标记，我在B中回传的是RESULT_OK
 		case RESULT_OK:
-			tv_qxzlx = data.getStringExtra("tv_qxzlx");
+			tv_qxzlx1 = data.getStringExtra("tv_qxzlx1");
+			tv_qxzlx2 = data.getStringExtra("tv_qxzlx2");
+			tv_qxzlx = tv_qxzlx1+tv_qxzlx2;
 			tv_xzgglx.setText(tv_qxzlx);
+			xzhdgg = data.getStringExtra("xzhdgg");
+			tv_qxzlx_yincang = data.getStringExtra("tv_qxzlx_yincang");
+			price = data.getStringExtra("price");
 			break;
 		default:
 			break;

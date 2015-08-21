@@ -40,7 +40,7 @@ public class Sp_a2_XingHao extends BaseActivity {
 	private View view_sp_a1_back2;
 	private ImageView im_sp_a1_back3;
 	private TextView tv_chanpinprice, tv_kucun, tiaomu1, tiaomu2, tv_qxzlx,
-			tv_qxzlx1, tv_addcar,tv_qxzlx_yincang,tv_qxzlx1_yincang;
+			tv_qxzlx1, tv_addcar,tv_qxzlx_yincang,tv_qxzlx1_yincang,tv_lijigoumai;
 	private GridView gview, gview1;
 	private String[] iconName;
 	// private String[] iconName = { "通讯录", "日历", "照相机", "时钟", "游戏", "短信", "铃声",
@@ -49,6 +49,7 @@ public class Sp_a2_XingHao extends BaseActivity {
 	private ArrayAdapter<ChanPinCanShu> sim_adapter;
 	private String tiaomu;
 	private JSONObject choosejiage,choosexinghao;
+	private String goodsid=null;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -74,6 +75,7 @@ public class Sp_a2_XingHao extends BaseActivity {
 		tv_qxzlx1 = (TextView) findViewById(R.id.tv_qxzlx1);
 		tv_qxzlx_yincang = (TextView) findViewById(R.id.tv_qxzlx_yincang);
 		tv_qxzlx1_yincang = (TextView) findViewById(R.id.tv_qxzlx1_yincang);
+		tv_lijigoumai = (TextView) findViewById(R.id.tv_lijigoumai);
 		tiaomu = getIntent().getStringExtra("tiaomu");
 		tv_addcar = (TextView) findViewById(R.id.tv_addcar);
 		if (tiaomu.equals("1")) {
@@ -96,6 +98,18 @@ public class Sp_a2_XingHao extends BaseActivity {
 					tv_qxzlx.setText(tiaomu1.getText() + ":"
 							+ cpcs.get(position).getName());
 					tv_qxzlx_yincang.setText(cpcs.get(position).getId());
+					String a = tv_qxzlx_yincang.getText().toString();
+					try {
+						choosejiage = new JSONObject(getIntent().getStringExtra("choosejiage"));
+						JSONObject obj = choosejiage.getJSONObject(a);
+						String goods_storage = "库存:"+ obj.getString("goods_storage");
+						String goods_price = "￥"+obj.getString("goods_price");
+						tv_chanpinprice.setText(goods_price);
+						tv_kucun.setText(goods_storage);
+					} catch (org.json.JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 //					Toast.makeText(getApplicationContext(),
 //							cpcs.get(position).getId(), Toast.LENGTH_LONG)
 //							.show();
@@ -127,9 +141,25 @@ public class Sp_a2_XingHao extends BaseActivity {
 					tv_qxzlx.setText(tiaomu1.getText() + ":"
 							+ cpcs.get(position).getName());
 					tv_qxzlx_yincang.setText(cpcs.get(position).getId());
-//					Toast.makeText(getApplicationContext(),
-//							cpcs.get(position).getId(), Toast.LENGTH_LONG)
-//							.show();
+					if (tv_qxzlx1_yincang.getText().length()>0) {
+						String a = tv_qxzlx_yincang.getText().toString();
+						String b = tv_qxzlx1_yincang.getText().toString();
+						String c = a+"|"+b;
+						try {
+							choosejiage = new JSONObject(getIntent().getStringExtra("choosejiage"));
+							JSONObject obj = choosejiage.getJSONObject(c);
+							String goods_storage = "库存:"+ obj.getString("goods_storage");
+							String goods_price = "￥"+obj.getString("goods_price");
+							tv_chanpinprice.setText(goods_price);
+							tv_kucun.setText(goods_storage);
+						} catch (org.json.JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}else {
+
+					}
+					
 				}
 			});
 
@@ -149,14 +179,30 @@ public class Sp_a2_XingHao extends BaseActivity {
 					tv_qxzlx1.setText(tiaomu2.getText() + ":"
 							+ cpcs1.get(position).getName());
 					tv_qxzlx1_yincang.setText(cpcs1.get(position).getId());
-//					Toast.makeText(getApplicationContext(),
-//							cpcs1.get(position).getId(), Toast.LENGTH_LONG)
-//							.show();
+
+					if (tv_qxzlx_yincang.getText().length()>0) {
+						String a = tv_qxzlx_yincang.getText().toString();
+						String b = tv_qxzlx1_yincang.getText().toString();
+						String c = a+"|"+b;
+						try {
+							choosejiage = new JSONObject(getIntent().getStringExtra("choosejiage"));
+							JSONObject obj = choosejiage.getJSONObject(c);
+							String goods_storage = "库存:"+ obj.getString("goods_storage");
+							String goods_price = "￥"+obj.getString("goods_price");
+							tv_chanpinprice.setText(goods_price);
+							tv_kucun.setText(goods_storage);
+						} catch (org.json.JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}else {
+						
+					}
 				}
 			});
 
 		}
-		setListener(ll_sp_a1_back1, view_sp_a1_back2, im_sp_a1_back3, tv_addcar);
+		setListener(ll_sp_a1_back1, view_sp_a1_back2, im_sp_a1_back3, tv_addcar,tv_lijigoumai);
 	}
 
 	@Override
@@ -164,32 +210,48 @@ public class Sp_a2_XingHao extends BaseActivity {
 		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.ll_sp_a1_back1:
-			
+			//xzhdgg 选择后的规格
 			Intent intent = new Intent(Sp_a2_XingHao.this,Sp_GoodsInfoActivity.class);
-			intent.putExtra("tv_qxzlx", tv_qxzlx.getText().toString()+tv_qxzlx1.getText().toString());
-			intent.putExtra("tv_qxzlx_yincang", tv_qxzlx_yincang.getText().toString()+tv_qxzlx1_yincang.getText().toString());
+			intent.putExtra("tv_qxzlx1", tv_qxzlx.getText().toString());
+			intent.putExtra("tv_qxzlx2", tv_qxzlx1.getText().toString());
+			intent.putExtra("xzhdgg", goodsid);
+			intent.putExtra("tv_qxzlx_yincang", tv_qxzlx_yincang.getText().toString()+"|"+tv_qxzlx1_yincang.getText().toString());
+			intent.putExtra("price", tv_chanpinprice.getText().toString());
 			Sp_a2_XingHao.this.setResult(Activity.RESULT_OK, intent);
 			Sp_a2_XingHao.this.finish();
 			this.overridePendingTransition(R.anim.activity_close, 0);
 			break;
 		case R.id.view_sp_a1_back2:
 			Intent intent1 = new Intent(Sp_a2_XingHao.this,Sp_GoodsInfoActivity.class);
-			intent1.putExtra("tv_qxzlx", tv_qxzlx.getText().toString()+tv_qxzlx1.getText().toString());
-			intent1.putExtra("tv_qxzlx_yincang", tv_qxzlx_yincang.getText().toString()+tv_qxzlx1_yincang.getText().toString());
+			intent1.putExtra("tv_qxzlx1", tv_qxzlx.getText().toString());
+			intent1.putExtra("tv_qxzlx2", tv_qxzlx1.getText().toString());
+			intent1.putExtra("xzhdgg", goodsid);
+			intent1.putExtra("tv_qxzlx_yincang", tv_qxzlx_yincang.getText().toString()+"|"+tv_qxzlx1_yincang.getText().toString());
 			Sp_a2_XingHao.this.setResult(Activity.RESULT_OK, intent1);
 			Sp_a2_XingHao.this.finish();
 			break;
 		case R.id.im_sp_a1_back3:
 			Intent intent2 = new Intent(Sp_a2_XingHao.this,Sp_GoodsInfoActivity.class);
-			intent2.putExtra("tv_qxzlx", tv_qxzlx.getText().toString()+tv_qxzlx1.getText().toString());
-			intent2.putExtra("tv_qxzlx_yincang", tv_qxzlx_yincang.getText().toString()+tv_qxzlx1_yincang.getText().toString());
+			intent2.putExtra("tv_qxzlx1", tv_qxzlx.getText().toString());
+			intent2.putExtra("tv_qxzlx2", tv_qxzlx1.getText().toString());
+			intent2.putExtra("xzhdgg", goodsid);
+			intent2.putExtra("tv_qxzlx_yincang", tv_qxzlx_yincang.getText().toString()+"|"+tv_qxzlx1_yincang.getText().toString());
 			Sp_a2_XingHao.this.setResult(Activity.RESULT_OK, intent2);
 			Sp_a2_XingHao.this.finish();
 			break;
 		case R.id.tv_addcar:
 			if (tiaomu.equals("1")) {//一个分类
 				if (tv_qxzlx.getText().length() > 0) {
-					HttpUtils.getAddGouWu(res_addgouwu, getSharedPreferenceValue("key"),getIntent().getStringExtra("goodsid"),"1");
+					try {
+						choosexinghao=new JSONObject(getIntent().getStringExtra("choosexinghao"));
+						String a = tv_qxzlx_yincang.getText().toString();
+						goodsid = choosexinghao.getString(a);
+						
+					} catch (org.json.JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					HttpUtils.getAddGouWu(res_addgouwu, getSharedPreferenceValue("key"),goodsid,"1");
 				} else {
 					Toast.makeText(getApplicationContext(), "请选择型号",
 							Toast.LENGTH_LONG).show();
@@ -197,7 +259,6 @@ public class Sp_a2_XingHao extends BaseActivity {
 			} else if (tiaomu.equals("2")) {//两个分类
 				if (tv_qxzlx.getText().length() > 0) {
 					if (tv_qxzlx1.getText().length() > 0) {
-						String goodsid=null;
 						try {
 //							choosejiage = new JSONObject(getIntent().getStringExtra("choosejiage"));
 							choosexinghao=new JSONObject(getIntent().getStringExtra("choosexinghao"));
@@ -210,9 +271,6 @@ public class Sp_a2_XingHao extends BaseActivity {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						
-//						choosejiage = getIntent().getStringExtra("choosejiage").t
-						
 						
 						//加入购物车
 						HttpUtils.getAddGouWu(res_addgouwu, getSharedPreferenceValue("key"),goodsid,"1");
@@ -229,7 +287,68 @@ public class Sp_a2_XingHao extends BaseActivity {
 				HttpUtils.getAddGouWu(res_addgouwu, getSharedPreferenceValue("key"),getIntent().getStringExtra("goodsid"),"1");
 			}
 			break;
-
+		case R.id.tv_lijigoumai:
+			if (tiaomu.equals("1")) {//一个分类
+				if (tv_qxzlx.getText().length() > 0) {
+					try {
+						choosexinghao=new JSONObject(getIntent().getStringExtra("choosexinghao"));
+						String a = tv_qxzlx_yincang.getText().toString();
+						goodsid = choosexinghao.getString(a);
+						Intent itmrhd = new Intent();
+						itmrhd.setClass(Sp_a2_XingHao.this, JieSuan1Activity.class);
+						String ae = tv_chanpinprice.getText().toString();
+						itmrhd.putExtra("allpri", ae.substring(1, ae.length()-1));
+						itmrhd.putExtra("xzhdgg", goodsid);
+						startActivity(itmrhd);
+					} catch (org.json.JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+//					HttpUtils.getAddGouWu(res_addgouwu, getSharedPreferenceValue("key"),goodsid,"1");
+				} else {
+					Toast.makeText(getApplicationContext(), "请选择型号",
+							Toast.LENGTH_LONG).show();
+				}
+			} else if (tiaomu.equals("2")) {//两个分类
+				if (tv_qxzlx.getText().length() > 0) {
+					if (tv_qxzlx1.getText().length() > 0) {
+						try {
+							choosexinghao=new JSONObject(getIntent().getStringExtra("choosexinghao"));
+							String a = tv_qxzlx_yincang.getText().toString();
+							String b = tv_qxzlx1_yincang.getText().toString();
+							String c = a+"|"+b;
+							goodsid = choosexinghao.getString(c);
+							Intent itmrhd = new Intent();
+							itmrhd.setClass(Sp_a2_XingHao.this, JieSuan1Activity.class);
+							String aex = tv_chanpinprice.getText().toString();
+							itmrhd.putExtra("allpri", aex.substring(1, aex.length()-1));
+							itmrhd.putExtra("xzhdgg", goodsid);
+							startActivity(itmrhd);
+							
+						} catch (org.json.JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						//加入购物车
+//						HttpUtils.getAddGouWu(res_addgouwu, getSharedPreferenceValue("key"),goodsid,"1");
+					} else {
+						Toast.makeText(getApplicationContext(),
+								"请选择型号2", Toast.LENGTH_LONG).show();
+					}
+				}else {
+					Toast.makeText(getApplicationContext(), "请选择型号",
+							Toast.LENGTH_LONG).show();
+				}
+			} else {//没有分类，直接购买
+				Intent itmrhd = new Intent();
+				itmrhd.setClass(Sp_a2_XingHao.this, JieSuan1Activity.class);
+				String a = tv_chanpinprice.getText().toString();
+				itmrhd.putExtra("allpri", a.substring(1, a.length()-1));
+				itmrhd.putExtra("xzhdgg", getIntent().getStringExtra("goodsid"));
+				startActivity(itmrhd);
+			}
+			break;
 		default:
 			break;
 		}

@@ -134,6 +134,8 @@
         </activity>
         <activity android:name="com.ZYKJ.buerhaitao.UI.JieSuanActivity" >
         </activity>
+        <activity android:name="com.ZYKJ.buerhaitao.UI.JieSuan1Activity" >
+        </activity>
         <activity
             android:name="com.ZYKJ.buerhaitao.UI.Sp_a2_XingHao"
             android:theme="@android:style/Theme.Translucent" >

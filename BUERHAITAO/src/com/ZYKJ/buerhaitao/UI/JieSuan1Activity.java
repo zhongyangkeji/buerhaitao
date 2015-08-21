@@ -27,7 +27,7 @@ import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.ZYKJ.buerhaitao.view.UIDialog;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-public class JieSuanActivity extends BaseActivity{
+public class JieSuan1Activity extends BaseActivity{
 	// 返回
 	private ImageButton im_jiesuan_back;
 	//列表
@@ -43,7 +43,7 @@ public class JieSuanActivity extends BaseActivity{
 	private TextView tv_zffs;
 	//是否支持货到付款
 	private String ifshow_offpay;
-	private String allcheckinfo;
+	private String xzhdgg;
 	private String allpri;
 	private TextView tv_sumgoods1;
 	private TextView tv_jiesuanqueren;
@@ -70,9 +70,10 @@ public class JieSuanActivity extends BaseActivity{
 		tv_zffs = (TextView) findViewById(R.id.tv_zffs);
 		allpri = getIntent().getStringExtra("allpri");
 		key = getSharedPreferenceValue("key");
-		allcheckinfo = getIntent().getStringExtra("allcheckinfo");
 		tv_sumgoods1.setText(allpri);
-		HttpUtils.getBuyFirst(res_ShoppingCarInfo,key,allcheckinfo,"1");
+		xzhdgg = getIntent().getStringExtra("xzhdgg");
+		String allche = xzhdgg+"|1";
+		HttpUtils.getBuyFirst(res_ShoppingCarInfo,key,allche,"0");
 		
 		
 		adapter = new JieSuanAdapter(this,dataList,dataList1,key);
@@ -90,7 +91,7 @@ public class JieSuanActivity extends BaseActivity{
 		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.im_jiesuan_back:
-			JieSuanActivity.this.finish();
+			JieSuan1Activity.this.finish();
 			break;
 		case R.id.rl_zhifufangshi:
 			String a = ifshow_offpay;

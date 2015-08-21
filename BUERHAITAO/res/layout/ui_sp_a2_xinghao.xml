@@ -230,6 +230,7 @@
             	android:layout_height="55dp"
             	android:layout_weight="1">
             	<TextView 
+            	    android:id="@+id/tv_lijigoumai"
             	    android:layout_width="fill_parent"
             	    android:layout_height="fill_parent"
             	    android:background="#FF9900"
