@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.graphics.Paint;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -63,6 +64,8 @@ public class B0_StoreInfoAdapter extends BaseAdapter {
 		ViewHolder.tv_chanpinjianjie.setText(data.get(position).get("goods_jingle").toString());
 //		ViewHolder.comment_rating_bar1.setRating(Float.parseFloat(data.get(position).get("evaluation_good_star")));
 		ViewHolder.tv_spzhj.setText(data.get(position).get("goods_price").toString());
+		ViewHolder.tv_spzhj.getPaint().setFlags(
+				Paint.STRIKE_THRU_TEXT_FLAG);
 		ViewHolder.tv_spyj.setText(data.get(position).get("goods_promotion_price").toString());
 //		ViewHolder.tv_a3_address1.setText(data.get(position).get("store_address"));
 		return convertView;

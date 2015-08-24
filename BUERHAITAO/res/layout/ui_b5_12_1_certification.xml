@@ -42,6 +42,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/view1"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:background="@drawable/shape_background" >
 
         <TextView
@@ -62,9 +64,9 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:background="@drawable/bg_edittext"
-            android:hint="@string/name"
-            android:ems="10" />
+            android:background="@null"
+            android:ems="10"
+            android:hint="@string/name" />
     </RelativeLayout>
 
     <View
@@ -79,6 +81,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/View01"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:background="@drawable/shape_background" >
 
         <TextView
@@ -99,9 +103,9 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:background="@drawable/bg_edittext"
-            android:hint="@string/datestyle"
-            android:ems="10" >
+            android:background="@null"
+            android:ems="10"
+            android:hint="@string/datestyle" >
         </EditText>
     </RelativeLayout>
 
@@ -116,8 +120,9 @@
         android:id="@+id/RelativeLayout04"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
         android:layout_below="@+id/View03"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:background="@drawable/shape_background" >
 
         <TextView
@@ -138,9 +143,9 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:background="@drawable/bg_edittext"
-            android:hint="@string/detailAddress"
-            android:ems="10" />
+            android:background="@null"
+            android:ems="10"
+            android:hint="@string/detailAddress" />
     </RelativeLayout>
 
     <View
@@ -152,6 +157,8 @@
         android:id="@+id/RelativeLayout04"
         android:layout_width="match_parent"
         android:layout_height="140dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_weight="0.00"
         android:background="@drawable/shape_background" >
 
@@ -183,24 +190,25 @@
             android:layout_alignRight="@+id/TextView04"
             android:layout_alignTop="@+id/iv_left"
             android:src="@drawable/b5_12_1_certification" />
-
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="35dp" />
 
-	<Button
-            android:id="@+id/btn_certification"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_btn_background"
-            android:paddingBottom="10dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="10dp"
-            android:text="@string/certifi"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+    <Button
+        android:id="@+id/btn_certification"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/shape_btn_background"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
+        android:text="@string/certifi"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
 
 </LinearLayout>

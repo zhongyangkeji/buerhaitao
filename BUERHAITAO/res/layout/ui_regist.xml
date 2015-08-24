@@ -35,10 +35,10 @@
 <LinearLayout
         android:id="@+id/linearLayout_regist"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:layout_below="@+id/relativeLayout_regist"
         android:layout_marginTop="8dp"
-        android:background="@drawable/shape_background"
+        android:background="@drawable/shape_background1"
         android:baselineAligned="false"
         android:gravity="center_vertical" 
         android:layout_marginLeft="5dp"
@@ -57,7 +57,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:text="@string/login_name"
-                android:textColor="#787878"
+                android:textColor="#000"
                 android:textSize="18sp" />
         </RelativeLayout>
 
@@ -72,7 +72,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/bg_edittext"
+                android:background="@null"
                 android:hint="@string/login_name_hint"
                 android:inputType="text"
                 android:textSize="16sp" >
@@ -89,7 +89,6 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/linearLayout_regist"
         android:layout_marginTop="14dp"
-        android:background="@drawable/shape_background"
         android:baselineAligned="false"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -107,7 +106,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:background="@drawable/bg_edittext"
+        		android:background="@drawable/shape_background1"
                 android:textSize="20sp" />
 
         </RelativeLayout>
@@ -122,7 +121,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_alignParentTop="true"
-                android:background="@drawable/shape_btn_background"
+                android:background="#B2B2B2"
                 android:text="@string/getregistcode"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
@@ -132,11 +131,11 @@
     <LinearLayout
         android:id="@+id/LinearLayout01"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/regist_layout_password"
         android:layout_marginTop="18dp"
-        android:background="@drawable/shape_background"
+        		android:background="@drawable/shape_background1"
         android:baselineAligned="false"
          android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -154,7 +153,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:text="@string/login_pass"
-                android:textColor="#787878"
+                android:textColor="#000"
                 android:textSize="18sp" />
         </RelativeLayout>
 
@@ -169,7 +168,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/bg_edittext"
+                android:background="@null"
                 android:hint="@string/login_pass_hint"
                 android:inputType="text"
                 android:textSize="16sp" />
@@ -184,6 +183,8 @@
         android:layout_below="@+id/LinearLayout01"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
+         android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:background="@drawable/shape_btn_background"
         android:text="@string/regist" 
         android:textSize="15sp"

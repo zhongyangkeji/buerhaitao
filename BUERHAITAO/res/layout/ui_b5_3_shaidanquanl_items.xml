@@ -29,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="张三"
-            android:textColor="@color/blue"
             android:textSize="17.0sp"
             android:textStyle="bold" />
         <TextView
@@ -38,7 +37,6 @@
             android:layout_height="wrap_content"
             android:text="5月6日23:47"
             android:textColor="@color/grey"
-            android:textSize="18.0sp"
             android:textStyle="bold" />
 
         <RelativeLayout
@@ -96,8 +94,8 @@
 
            <ImageView
                android:id="@+id/iv_comment"
-               android:layout_width="25dp"
-               android:layout_height="25dp"
+               android:layout_width="15dp"
+               android:layout_height="15dp"
                android:layout_alignParentBottom="true"
                android:layout_marginRight="8dp"
                android:layout_toLeftOf="@+id/tv_comment"
@@ -115,8 +113,8 @@
 
            <ImageView
                android:id="@+id/iv_zan"
-               android:layout_width="25dp"
-               android:layout_height="25dp"
+               android:layout_width="15dp"
+               android:layout_height="15dp"
                android:layout_alignParentBottom="true"
                android:layout_marginRight="8dp"
                android:layout_toLeftOf="@+id/tv_zan"

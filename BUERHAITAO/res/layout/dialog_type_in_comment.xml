@@ -13,7 +13,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/btn_changeName"
-        android:background="@drawable/bg_edittext"
+        android:background="@null"
         android:ems="10" >
 
         <requestFocus />

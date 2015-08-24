@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -1331,11 +1333,11 @@ public class HttpUtils {
 	 * @param cart_id 购买参数
 	 * @param address_id 收货地址编号
 	 * @param pay_message 订单留言(object {"1" : "很好"} 1:店铺id 很好:留言)
-	 * @param dlyo_pickup_type 配送方式(object {"3" : "自提"} 3:店铺id 自提:配送方式)
-	 * @param pay_type 付款方式(object {"3" : "online"} 3:店铺id online:支付方式)
+	 * @param storeid 配送方式(object {"3" : "自提"} 3:店铺id 自提:配送方式)
+	 * @param storeid2 付款方式(object {"3" : "online"} 3:店铺id online:支付方式)
 	 * @param pd_pay 是否使用钱包支付 1-使用 0-不使用
 	 */
-	public static void getBuySecond(AsyncHttpResponseHandler res, String key,String ifcart,String cart_id,String address_id,String pay_message,String dlyo_pickup_type,String pay_type,String pd_pay) {
+	public static void getBuySecond(AsyncHttpResponseHandler res, String key,String ifcart,String cart_id,String address_id,String pay_message,JSONObject storeid,JSONObject storeid2,String pd_pay) {
 		String url = base_url + "index.php?act=member_buy&op=buy_step2";
 		RequestParams params = new RequestParams();
 		params.put("key",key);
@@ -1343,8 +1345,8 @@ public class HttpUtils {
 		params.put("cart_id",cart_id);
 		params.put("address_id",address_id);
 		params.put("pay_message",pay_message);
-		params.put("dlyo_pickup_type",dlyo_pickup_type);
-		params.put("pay_type",pay_type);
+		params.put("dlyo_pickup_type",storeid);
+		params.put("pay_type",storeid2);
 		params.put("pd_pay",pd_pay);
 		client.post(url, params,res);
 	}

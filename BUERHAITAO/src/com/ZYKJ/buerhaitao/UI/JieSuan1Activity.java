@@ -10,12 +10,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.adapter.JieSuanAdapter;
@@ -26,6 +32,7 @@ import com.ZYKJ.buerhaitao.view.MyListView;
 import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.ZYKJ.buerhaitao.view.UIDialog;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.pingplusplus.android.PaymentActivity;
 
 public class JieSuan1Activity extends BaseActivity{
 	// 返回
@@ -48,7 +55,15 @@ public class JieSuan1Activity extends BaseActivity{
 	private TextView tv_sumgoods1;
 	private TextView tv_jiesuanqueren;
 	private String address_id;
-    
+	private String storeid="";
+	//钱包，微信，支付宝，货到付款
+	private String pay_type1 = "",pay_type2 = "",pay_type3 = "",pay_type4 = "";
+	private JSONObject jobstoreid;
+    private static final String CHANNEL_WECHAT = "wx";//通过微信支付
+    private static final String CHANNEL_ALIPAY = "alipay";//通过支付宝支付
+    private static final int REQUEST_CODE_PAYMENT = 1;
+    private String pay_sn;
+	
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -71,9 +86,8 @@ public class JieSuan1Activity extends BaseActivity{
 		allpri = getIntent().getStringExtra("allpri");
 		key = getSharedPreferenceValue("key");
 		tv_sumgoods1.setText(allpri);
-		xzhdgg = getIntent().getStringExtra("xzhdgg");
-		String allche = xzhdgg+"|1";
-		HttpUtils.getBuyFirst(res_ShoppingCarInfo,key,allche,"0");
+		xzhdgg = getIntent().getStringExtra("xzhdgg")+"|1";
+		HttpUtils.getBuyFirst(res_ShoppingCarInfo,key,xzhdgg,"0");
 		
 		
 		adapter = new JieSuanAdapter(this,dataList,dataList1,key);
@@ -147,11 +161,49 @@ public class JieSuan1Activity extends BaseActivity{
 
 			break;
 		case R.id.tv_jiesuanqueren:
-			String zffs = "";
-			if (tv_zffs.equals("钱包支付")) {
-//				HttpUtils.getBuySecond(res_BuySecond,"3ae653eb52824dbc4ba977de343e2e12","1",allcheckinfo,address_id  ,1);
+			if(tv_zffs.getText().toString().equals("钱包支付")) {
+				String dlyo_pickup_typ = "{"+storeid.substring(1,storeid.length())+"}";
+				String pay_type = "{"+pay_type1.substring(1,pay_type1.length())+"}";
+				try {
+					JSONObject myJsonObject = new JSONObject(dlyo_pickup_typ);
+					JSONObject myJsonObject1 = new JSONObject(pay_type);
+					HttpUtils.getBuySecond(res_BuySecond,key,"0",xzhdgg,address_id,null,myJsonObject,myJsonObject1,"1");
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else if(tv_zffs.getText().toString().equals("微信支付")){
+				String dlyo_pickup_typ = "{"+storeid.substring(1,storeid.length())+"}";
+				String pay_type = "{"+pay_type2.substring(1,pay_type2.length())+"}";
+				try {
+					JSONObject myJsonObject = new JSONObject(dlyo_pickup_typ);
+					JSONObject myJsonObject1 = new JSONObject(pay_type);
+					HttpUtils.getBuySecond(res_BuySecond,key,"0",xzhdgg,address_id,null,myJsonObject,myJsonObject1,"0");
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+//				HttpUtils.payTheOrder(res_payTheOrder, key, pay_sn, CHANNEL_WECHAT);
+				//				HttpUtils.getBuySecond(res_BuySecond,"3ae653eb52824dbc4ba977de343e2e12","1",allcheckinfo,address_id  ,0);
+			}else if(tv_zffs.getText().toString().equals("支付宝支付")){
+				String dlyo_pickup_typ = "{"+storeid.substring(1,storeid.length())+"}";
+				String pay_type = "{"+pay_type3.substring(1,pay_type3.length())+"}";
+				try {
+					JSONObject myJsonObject = new JSONObject(dlyo_pickup_typ);
+					JSONObject myJsonObject1 = new JSONObject(pay_type);
+					HttpUtils.getBuySecond(res_BuySecond,key,"0",xzhdgg,address_id,null,myJsonObject,myJsonObject1,"0");
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+//				HttpUtils.payTheOrder(res_payTheOrder, key, pay_sn, CHANNEL_ALIPAY);
+			}else if(tv_zffs.getText().toString().equals("货到付款")){
+				String dlyo_pickup_typ = "{"+storeid.substring(1,storeid.length())+"}";
+				String pay_type = "{"+pay_type4.substring(1,pay_type4.length())+"}";
+//				HttpUtils.getBuySecond(res_BuySecond,key,"1",allcheckinfo,address_id,null,dlyo_pickup_typ,pay_type,"0");
 			}else{
-//				HttpUtils.getBuySecond(res_BuySecond,"3ae653eb52824dbc4ba977de343e2e12","1",allcheckinfo,address_id  ,0);
+				Toast.makeText(getApplicationContext(), "请选择支付方式", Toast.LENGTH_LONG).show();
 			}
 			
 			break;
@@ -163,7 +215,7 @@ public class JieSuan1Activity extends BaseActivity{
 	
 
 	/**
-	 * 获得订单列表
+	 * 购买第一步
 	 */
 	JsonHttpResponseHandler res_ShoppingCarInfo = new JsonHttpResponseHandler()
 	{
@@ -203,6 +255,13 @@ public class JieSuan1Activity extends BaseActivity{
 						map1.put("store_goods_total", jsonItem.getString("store_goods_total"));
 						map1.put("store_freight_price", jsonItem.getString("store_freight_price"));
 						map.put("goods_list", jsonItem.getJSONArray("goods_list"));
+//						storeid = ;
+						storeid = storeid+","+ "\""+jsonItem.getJSONArray("goods_list").getJSONObject(0).getString("store_id")+"\" : \"物流配送\"";
+						pay_type1 = pay_type1+","+ "\""+jsonItem.getJSONArray("goods_list").getJSONObject(0).getString("store_id")+"\" : \"offline\"";
+						pay_type2 = pay_type2+","+ "\""+jsonItem.getJSONArray("goods_list").getJSONObject(0).getString("store_id")+"\" : \"online\"";
+						pay_type3 = pay_type3+","+ "\""+jsonItem.getJSONArray("goods_list").getJSONObject(0).getString("store_id")+"\" : \"online\"";
+						pay_type4 = pay_type4+","+ "\""+jsonItem.getJSONArray("goods_list").getJSONObject(0).getString("store_id")+"\" : \"offline\"";
+						//						 {"3" : "自提",}
 						dataList.add(map);
 						dataList1.add(map1);
 					}
@@ -236,6 +295,137 @@ public class JieSuan1Activity extends BaseActivity{
 			}
 		}		
 	};
+
+	/**
+	 * 购买第二步
+	 */
+	JsonHttpResponseHandler res_BuySecond = new JsonHttpResponseHandler()
+	{
+		public void onSuccess(int statusCode, Header[] headers,
+				JSONObject response) {
+			// TODO Auto-generated method stub
+			super.onSuccess(statusCode, headers, response);
+			RequestDailog.closeDialog();
+			String error=null;
+			JSONObject datas=null;
+			try {
+				 datas = response.getJSONObject("datas");
+//				 Tools.Log("datas="+datas);
+				 error = datas.getString("error");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			if (error==null)//成功
+			{
+				try {
+					pay_sn = datas.getString("pay_sn");
+					
+					if(tv_zffs.getText().toString().equals("钱包支付")) {
+						
+					}else if(tv_zffs.getText().toString().equals("微信支付")){
+						HttpUtils.payTheOrder(res_payTheOrder, key, pay_sn, CHANNEL_WECHAT);
+						
+					}else if(tv_zffs.getText().toString().equals("支付宝支付")){
+						HttpUtils.payTheOrder(res_payTheOrder, key, pay_sn, CHANNEL_ALIPAY);
+						
+					}else if(tv_zffs.getText().toString().equals("货到付款")){
+						
+					}
+					
+					
+					
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else//失败 
+			{
+				Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+				Tools.Log("res_Points_error="+error+"");
+			}
+		}		
+	};
+	
+	/**
+	 * 付款
+	 */
+	JsonHttpResponseHandler res_payTheOrder = new JsonHttpResponseHandler()
+	{
+
+		@Override
+		public void onSuccess(int statusCode, Header[] headers,JSONObject response) {
+			// TODO Auto-generated method stub
+			super.onSuccess(statusCode, headers, response);
+			RequestDailog.closeDialog();
+			Log.e("付款", response+"");
+			String error=null;
+			JSONObject datas=null;
+			try {
+				 datas = response.getJSONObject("datas");
+				 error = response.getString("error");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (error==null)//成功
+			{
+				Intent intent = new Intent();
+	            String packageName = getPackageName();
+	            ComponentName componentName = new ComponentName(packageName, packageName + ".wxapi.WXPayEntryActivity");
+	            intent.setComponent(componentName);
+	            intent.putExtra(PaymentActivity.EXTRA_CHARGE, response.toString());
+	            startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+			}
+			else//失败 
+			{
+				Tools.Log("res_Points_error="+error+"");
+//				Tools.Notic(B5_MyActivity.this, error+"", null);
+			}
+		}
+	};
 	
 	
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        //支付页面返回处理
+        if (requestCode == REQUEST_CODE_PAYMENT) {
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getExtras().getString("pay_result");
+                /* 处理返回值
+                 * "success" - payment succeed
+                 * "fail"    - payment failed
+                 * "cancel"  - user canceld
+                 * "invalid" - payment plugin not installed
+                 */
+//                Tools.Log("支付结果="+result);
+//                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
+//                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
+//                showMsg(result, errorMsg, extraMsg);
+                if (result.equals("success")) {
+					Tools.Notic(this, "您已经付款成功", new OnClickListener() {
+						
+						@Override
+						public void onClick(View arg0) {
+							// TODO Auto-generated method stub
+							Intent intent_toMy = new Intent(JieSuan1Activity.this,B5_MyActivity.class);
+							startActivity(intent_toMy);
+							finish();
+						}
+					});
+				}else if (result.equals("fail")) {
+					Tools.Notic(this, "支付失败，请重试", null);
+				}else if (result.equals("cancel")) {
+					Tools.Notic(this, "支付取消", null);
+				}else if (result.equals("invalid")) {
+					Tools.Notic(this, "支付失败，请重新支付", null);
+					
+				}
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+            	Tools.Notic(this, "支付取消", null);
+            }
+        }
+    }
 }

@@ -41,6 +41,7 @@
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:paddingTop="5dp"
+        android:textColor="#FFF"
         android:text="确定"
         android:textSize="18sp" />
 

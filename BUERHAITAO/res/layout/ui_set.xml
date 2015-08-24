@@ -36,12 +36,13 @@
     <RelativeLayout
          android:id="@+id/set_1"
          android:layout_width="fill_parent"
-         android:layout_height="55dp"
+         android:layout_height="45dp"
          android:layout_below="@+id/relativeLayout3"
          android:layout_marginTop="6dp"
          android:background="@drawable/shape_background"
          android:gravity="center_vertical"
-         android:orientation="horizontal" >
+         android:layout_marginLeft="5dp"
+         android:layout_marginRight="5dp">
 
 
          <ImageView
@@ -71,9 +72,11 @@
     <RelativeLayout
         android:id="@+id/RelativeLayout01"
         android:layout_width="fill_parent"
-        android:layout_height="55dp"
+        android:layout_height="45dp"
         android:background="@drawable/shape_background"
         android:gravity="center_vertical"
+         android:layout_marginLeft="5dp"
+         android:layout_marginRight="5dp"
         android:orientation="horizontal" >
 
         <ImageView
@@ -97,13 +100,17 @@
             android:textSize="15sp" />
     </RelativeLayout>
 
+	<View 
+             android:layout_width="match_parent"
+             android:layout_height="5dp"/>
     <RelativeLayout
         android:id="@+id/RelativeLayout02"
         android:layout_width="fill_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="6dp"
+        android:layout_height="45dp"
         android:background="@drawable/shape_background"
         android:gravity="center_vertical"
+         android:layout_marginLeft="5dp"
+         android:layout_marginRight="5dp"
         android:orientation="horizontal" >
 
         <ImageView
@@ -127,13 +134,18 @@
             android:textSize="15sp" />
     </RelativeLayout>
     
+	<View 
+             android:layout_width="match_parent"
+             android:layout_height="5dp"/>
 
     <RelativeLayout
         android:id="@+id/RelativeLayout04"
         android:layout_width="fill_parent"
-        android:layout_height="55dp"
+        android:layout_height="45dp"
         android:background="@drawable/shape_background"
         android:gravity="center_vertical"
+         android:layout_marginLeft="5dp"
+         android:layout_marginRight="5dp"
         android:orientation="horizontal" >
 
         <TextView

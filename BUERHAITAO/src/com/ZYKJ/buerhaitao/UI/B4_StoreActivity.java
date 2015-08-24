@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.adapter.B2_ShopsAdapter;
+import com.ZYKJ.buerhaitao.adapter.B4_TextSizeAdapter;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.data.Shop;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
@@ -53,6 +54,7 @@ public class B4_StoreActivity extends BaseActivity implements IXListViewListener
 	private LinearLayout ly_a4_category,ly_a4_assess;
     private PopupWindow popupWindow;
 	private List<HashMap<String, String>> shopClass;
+	private List<HashMap<String, String>> shopClass1;
     private ListView pList;
 	private TextView cl_address;
 	private RelativeLayout rl_sousuokuang;
@@ -60,6 +62,8 @@ public class B4_StoreActivity extends BaseActivity implements IXListViewListener
     
 	private List<Shop> shops;
 	private B2_ShopsAdapter shopsAdapter;
+	private B4_TextSizeAdapter b4tsa;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +141,9 @@ public class B4_StoreActivity extends BaseActivity implements IXListViewListener
 			break;
 		case R.id.ly_a4_category:
             //全部分类
-			pList.setAdapter(new SimpleAdapter(B4_StoreActivity.this, shopClass, android.R.layout.simple_expandable_list_item_1, new String[]{"sc_name"}, new int[]{android.R.id.text1}));
+			b4tsa = new B4_TextSizeAdapter(B4_StoreActivity.this, shopClass);
+			pList.setAdapter(b4tsa);
+//			pList.setAdapter(new SimpleAdapter(B4_StoreActivity.this, shopClass, android.R.layout.simple_expandable_list_item_1, new String[]{"sc_name"}, new int[]{android.R.id.text1}));
             pList.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long viewId) {
@@ -153,9 +159,20 @@ public class B4_StoreActivity extends BaseActivity implements IXListViewListener
 			break;
 		case R.id.ly_a4_assess:
             //智能排序
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(B4_StoreActivity.this, android.R.layout.simple_expandable_list_item_1);
-			adapter.addAll("智能排序","好评优先","离我最近");
-            pList.setAdapter(adapter);
+			shopClass1 = new ArrayList<HashMap<String,String>>();
+			for(int i = 0; i < 3; i++){
+				HashMap<String, String> map = new HashMap<String, String>();
+				if (i==0) {
+					map.put("sc_name", "智能排序");
+				}else if (i==1) {
+					map.put("sc_name", "好评优先");
+				}else{
+					map.put("sc_name", "离我最近");
+				}
+				shopClass1.add(map);
+			}
+			b4tsa = new B4_TextSizeAdapter(B4_StoreActivity.this, shopClass1);
+			pList.setAdapter(b4tsa);
             pList.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
