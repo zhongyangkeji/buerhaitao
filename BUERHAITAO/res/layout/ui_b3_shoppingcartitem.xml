@@ -7,13 +7,13 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="110dp"
+        android:layout_height="100dp"
         android:background="#F8F8F8"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
         <LinearLayout
-            android:layout_width="40dp"
+            android:layout_width="47dp"
             android:layout_height="fill_parent"
             android:gravity="center_vertical|right"
             android:orientation="vertical" >
@@ -21,6 +21,9 @@
                 android:id="@+id/children_cb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" 
+	       		android:scaleX="0.55"
+	       		android:scaleY="0.55"
+	        	android:button="@drawable/checkbox_style1"
                 android:focusable="false"/>
         </LinearLayout>
 
@@ -30,10 +33,10 @@
 
             <ImageView
                 android:id="@+id/im_shangpuimg"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/shangpintu" />
+                android:src="@drawable/buerhaitao" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -53,6 +56,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0.0dp"
                         android:layout_weight="1.5"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         android:text="沙发水电费水电费三分玩儿玩儿玩儿" />
 
                     <TextView
@@ -65,15 +70,25 @@
                         android:layout_width="fill_parent"
                         android:layout_height="0.0dp"
                         android:layout_weight="1" >
+						<LinearLayout 
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginBottom="5dp" >
+						    
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="￥"
+                            android:textColor="#704384" />
 
                         <TextView
                             android:id="@+id/tv_goods_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="5dp"
-                            android:text="￥52.5"
+                            android:text="52.5"
                             android:textColor="#704384" />
+						</LinearLayout>
 
                         <TextView
                             android:id="@+id/tv_goods_num"
@@ -91,8 +106,8 @@
                     android:id="@+id/ll_b3shopedit"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_marginLeft="5dp" 
-                    android:visibility="gone" >
+                    android:visibility="gone"
+                    android:layout_marginLeft="5dp"  >
 
                     <LinearLayout
                         android:id="@+id/ll_del"
@@ -165,11 +180,13 @@
                             </LinearLayout>
 
                             <TextView
-                                android:id="@+id/ass"
+                                android:id="@+id/tv_editguige"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
                                 android:layout_marginRight="25dp"
-                                android:text="颜色分类:3格加宽款粉色；安装方式：组装" />
+                                android:layout_marginLeft="5dp"
+                                android:text="颜色:红" />
                         </RelativeLayout>
                     </LinearLayout>
 

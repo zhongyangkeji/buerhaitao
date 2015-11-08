@@ -76,7 +76,7 @@ public class B3_ShoppingCartActivity extends BaseActivity implements ChangedPric
 		switch (v.getId()) {
 		case R.id.tv_jiesuan:
 			String a = tv_jiesuan.getText().toString();
-			if (a.equals("结算（）")) {
+			if (a.equals("结算（0）")) {
 				Toast.makeText(getApplicationContext(), "您还没有选择商品哦！", Toast.LENGTH_LONG).show();
 			}else {
 				/*Intent itmrhd = new Intent();

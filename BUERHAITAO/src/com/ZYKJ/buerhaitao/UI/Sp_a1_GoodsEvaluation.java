@@ -46,8 +46,8 @@ public class Sp_a1_GoodsEvaluation extends BaseActivity implements IXListViewLis
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_sp_a1_goodsevaluation);
 		initView();
-//		HttpUtils.getGoodsEvaluation(res_goodsevaluation, goods_id);
-		HttpUtils.getGoodsEvaluation(res_goodsevaluation, "100024");
+		HttpUtils.getGoodsEvaluation(res_goodsevaluation, goods_id);
+//		HttpUtils.getGoodsEvaluation(res_goodsevaluation, "100024");
 	}
 
 	private void initView() { 
@@ -136,7 +136,7 @@ public class Sp_a1_GoodsEvaluation extends BaseActivity implements IXListViewLis
 	public void onRefresh(int id) {
 		// TODO Auto-generated method stub
 		RequestDailog.showDialog(this, "正在加载数据，请稍后");
-		HttpUtils.getGoodsEvaluation(res_goodsevaluation, "100024");		
+		HttpUtils.getGoodsEvaluation(res_goodsevaluation, goods_id);		
 	}
 
 	@Override

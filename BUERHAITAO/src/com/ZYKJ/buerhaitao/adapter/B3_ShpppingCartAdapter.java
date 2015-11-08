@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,8 +30,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
+import com.ZYKJ.buerhaitao.UI.B3_ShoppingCartActivity;
+import com.ZYKJ.buerhaitao.UI.JieSuanActivity;
 import com.ZYKJ.buerhaitao.data.ChildrenItem;
 import com.ZYKJ.buerhaitao.data.GroupItem;
+import com.ZYKJ.buerhaitao.data.Shop;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
 import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -102,6 +106,7 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 			viewHolder.childrenNameTV = (TextView) convertView.findViewById(R.id.children_name);
 			viewHolder.im_shangpuimg = (ImageView) convertView.findViewById(R.id.im_shangpuimg);
 			viewHolder.tv_spec = (TextView)convertView.findViewById(R.id.tv_spec);
+			viewHolder.tv_editguige = (TextView)convertView.findViewById(R.id.tv_editguige);
 			viewHolder.tv_goods_price = (TextView)convertView.findViewById(R.id.tv_goods_price);
 			viewHolder.tv_goods_num = (TextView)convertView.findViewById(R.id.tv_goods_num);
 			viewHolder.editconunt = (EditText) convertView.findViewById(R.id.editconunt);
@@ -129,10 +134,13 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 					public void onClick(DialogInterface arg0, int arg1) {
 						int a = dataList.size();
 						HttpUtils.getDelete(res_delete,key,childrenItem.getCart_id());
-						dataList.remove(childrenItem);
+						Intent itmrhd = new Intent();
+						itmrhd.setClass(context, B3_ShoppingCartActivity.class);
+						context.startActivity(itmrhd);
+//						dataList.remove(childrenItem.getCart_id());
 //						childrenItem
-						int b = dataList.size();
-						B3_ShpppingCartAdapter.this.notifyDataSetChanged();
+//						int b = dataList.size();
+//						B3_ShpppingCartAdapter.this.notifyDataSetChanged();
 					}
 				})
 				.setNegativeButton("取消", null)  
@@ -141,9 +149,10 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 			}
 		});
 
-		viewHolder.childrenNameTV.setText(childrenItem.getStore_name());
+		viewHolder.childrenNameTV.setText(childrenItem.getGoods_name());
 		ImageLoader.getInstance().displayImage(childrenItem.getGoods_image_url(), viewHolder.im_shangpuimg);
 		viewHolder.tv_spec.setText(childrenItem.getGoods_spec());
+		viewHolder.tv_editguige.setText(childrenItem.getGoods_spec());
 		viewHolder.tv_goods_price.setText(childrenItem.getGoods_price());
 		viewHolder.tv_goods_num.setText("x"+childrenItem.getGoods_num());
 		viewHolder.editconunt.setText(childrenItem.getGoods_num());
@@ -310,6 +319,7 @@ public class B3_ShpppingCartAdapter extends BaseExpandableListAdapter {
 		TextView childrenNameTV;
 		ImageView im_shangpuimg; 
 		TextView tv_spec;
+		TextView tv_editguige;
 		TextView tv_goods_price;
 		TextView tv_goods_num;
 		//单个商品数量

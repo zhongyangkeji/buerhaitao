@@ -20,6 +20,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,6 +37,7 @@ import org.json.JSONException;
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.adapter.B2_GoodsAdapter;
 import com.ZYKJ.buerhaitao.adapter.B2_ShopsAdapter;
+import com.ZYKJ.buerhaitao.adapter.B4_TextSizeAdapter;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.data.Goods;
 import com.ZYKJ.buerhaitao.data.Shop;
@@ -58,24 +60,27 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 @SuppressLint("NewApi")
 public class B1_a4_SearchActivity extends BaseActivity implements IXListViewListener,OnItemClickListener,TextWatcher,OnEditorActionListener{
 	//返回
-	ImageButton a4_back;
+	private ImageButton a4_back;
 	//宝贝/店铺
-	TextView tv_a4_baobei;
+	private TextView tv_a4_baobei;
 	//默认，销量，价格，好评
-	TextView tv_a4_moren,tv_a4_xiaoliang,tv_a4_jiage,tv_a4_haoping,tv_a4_category,tv_a4_assess;
-	LinearLayout ly_a4_xiaoliang,ly_a4_jiage,ly_a4_category,ly_a4_assess,ll_tabs,dp_tabs;
+	private TextView tv_a4_moren,tv_a4_xiaoliang,tv_a4_jiage,tv_a4_haoping,tv_a4_category,tv_a4_assess;
+	private LinearLayout ly_a4_xiaoliang,ly_a4_jiage,ly_a4_category,ly_a4_assess,ll_tabs,dp_tabs;
 	//销量，价格箭头
-	ImageView im_a4_xiaoliangstate,im_a4_jiagestate,im_a4_category,im_a4_assess;
+	private ImageView im_a4_xiaoliangstate,im_a4_jiagestate,im_a4_category,im_a4_assess,im_search;
+	private List<HashMap<String, String>> shopClass1;
+	private EditText a4_sydpss;
 	//产品列表
-	MyListView a4_seachlist;
+	private MyListView a4_seachlist;
+	private B4_TextSizeAdapter b4tsa;
 	
 	public static int CHANNEL = 0;
 	private int key = 0;// 按默认排序的状态，0为默认排序，1为销量排序,2为价格排序,3为好评排序
-	private int order = 0;// 排序方式的状态,0为降序,1为升序
+	private int order = 1;// 排序方式的状态,0为降序,1为升序
     private PopupWindow popupWindow;
     private ListView pList;
 	
-	private Integer page=2,curpage=1;
+	private Integer page=5,curpage=1;
 	private String city_id,keyword,id;
 	private String lng,lat;
 	private List<Goods> goods;
@@ -124,6 +129,8 @@ public class B1_a4_SearchActivity extends BaseActivity implements IXListViewList
 		im_a4_assess = (ImageView)findViewById(R.id.im_a4_assess);
 		ly_a4_category = (LinearLayout)findViewById(R.id.ly_a4_category);
 		ly_a4_assess = (LinearLayout)findViewById(R.id.ly_a4_assess);
+		im_search = (ImageView)findViewById(R.id.im_search);
+		a4_sydpss = (EditText)findViewById(R.id.a4_sydpss);
 
 		a4_seachlist.setPullLoadEnable(true);
 		a4_seachlist.setPullRefreshEnable(true);
@@ -132,7 +139,7 @@ public class B1_a4_SearchActivity extends BaseActivity implements IXListViewList
 		a4_seachlist.setRefreshTime();
 		tv_a4_baobei.setText(CHANNEL == 0?"宝贝":"店铺");
 		tv_a4_baobei.addTextChangedListener(this);
-		setListener(a4_back,tv_a4_baobei,tv_a4_moren,tv_a4_haoping,ly_a4_xiaoliang,ly_a4_jiage,ly_a4_category,ly_a4_assess);
+		setListener(a4_back,tv_a4_baobei,tv_a4_moren,tv_a4_haoping,ly_a4_xiaoliang,ly_a4_jiage,ly_a4_category,ly_a4_assess,im_search);
 		changeModule();
 	}
 
@@ -271,9 +278,13 @@ public class B1_a4_SearchActivity extends BaseActivity implements IXListViewList
 			RequestDailog.closeDialog();
 			JSONObject response = (JSONObject)JSON.parse(responseString);
 			JSONObject datas = response.getJSONObject("datas");
-			JSONArray jsonArray = datas.getJSONArray("goods_list");
-			List<T> list = JSONArray.parseArray(jsonArray.toString(), clzz);
-			onReadSuccess(list);
+			try {
+				JSONArray jsonArray = datas.getJSONArray("goods_list");
+				List<T> list = JSONArray.parseArray(jsonArray.toString(), clzz);
+				onReadSuccess(list);
+			} catch (Exception e) {
+				onReadSuccess(new ArrayList<T>());
+			}
 		}
 
 		@Override
@@ -329,9 +340,9 @@ public class B1_a4_SearchActivity extends BaseActivity implements IXListViewList
 				im_a4_xiaoliangstate.setImageDrawable(getResources().getDrawable(R.drawable.a4_searchmoren));
 				im_a4_jiagestate.setImageDrawable(getResources().getDrawable(R.drawable.a4_searchmoren));
 				
-				key = 0;order = 0;
+				key = 0;order = 1;
 			}else{
-				return;
+				key = 0;order = 1;
 			}
 			curpage = 1;
 			requestData();
@@ -343,12 +354,12 @@ public class B1_a4_SearchActivity extends BaseActivity implements IXListViewList
 			tv_a4_jiage.setTextColor(Color.parseColor("#808080"));
 			tv_a4_haoping.setTextColor(Color.parseColor("#808080"));
 			im_a4_jiagestate.setImageDrawable(getResources().getDrawable(R.drawable.a4_searchmoren));
-			if (key != 1 || order != 1) {//销量最多
+			if (key != 1 || order != 2) {//销量最多
 				im_a4_xiaoliangstate.setImageDrawable(getResources().getDrawable(R.drawable.a4_searcjshang));
-				key = 1;order = 1;
+				key = 1;order = 2;
 			}else{//销量最少
 				im_a4_xiaoliangstate.setImageDrawable(getResources().getDrawable(R.drawable.a4_searchxia));
-				key = 1;order = 0;
+				key = 1;order = 1;
 			}
 			curpage = 1;
 			requestData();
@@ -360,19 +371,19 @@ public class B1_a4_SearchActivity extends BaseActivity implements IXListViewList
 			tv_a4_jiage.setTextColor(Color.parseColor("#73498b"));
 			tv_a4_haoping.setTextColor(Color.parseColor("#808080"));
 			im_a4_xiaoliangstate.setImageDrawable(getResources().getDrawable(R.drawable.a4_searchmoren));
-			if (key != 2 || order != 1) {//销量最多
+			if (key != 3 || order != 2) {//价格最多
 				im_a4_jiagestate.setImageDrawable(getResources().getDrawable(R.drawable.a4_searcjshang));
-				key = 2;order = 1;
-			}else{//销量最少
+				key = 3;order = 2;
+			}else{//价格最少
 				im_a4_jiagestate.setImageDrawable(getResources().getDrawable(R.drawable.a4_searchxia));
-				key = 2;order = 0;
+				key = 3;order = 1;
 			}
 			curpage = 1;
 			requestData();
 			break;
 		case R.id.tv_a4_haoping:
 			//好评
-			if (key != 3) {
+			if (key != 2) {
 				tv_a4_moren.setTextColor(Color.parseColor("#808080"));
 				tv_a4_xiaoliang.setTextColor(Color.parseColor("#808080"));
 				tv_a4_jiage.setTextColor(Color.parseColor("#808080"));
@@ -380,43 +391,71 @@ public class B1_a4_SearchActivity extends BaseActivity implements IXListViewList
 				im_a4_xiaoliangstate.setImageDrawable(getResources().getDrawable(R.drawable.a4_searchmoren));
 				im_a4_jiagestate.setImageDrawable(getResources().getDrawable(R.drawable.a4_searchmoren));
 				
-				key = 3;order = 0;
+				key = 2;order = 1;
 			}else{
-				return;
+				key = 2;order = 1;
 			}
+			curpage = 1;
+			requestData();
 			break;
 		case R.id.ly_a4_category:
-            //全部分类
-			pList.setAdapter(new SimpleAdapter(B1_a4_SearchActivity.this, shopClass, android.R.layout.simple_expandable_list_item_1, new String[]{"sc_name"}, new int[]{android.R.id.text1}));
+			//全部分类
+			b4tsa = new B4_TextSizeAdapter(B1_a4_SearchActivity.this, shopClass);
+			pList.setAdapter(b4tsa);
             pList.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long viewId) {
-					key = position;order = 0;curpage = 1;keyword = "";
+					order = 1;curpage = 1;keyword = "";
 	                if(popupWindow.isShowing()){
 	                    popupWindow.dismiss();
 	                }
 	                id = shopClass.get(position).get("sc_id");
+	                tv_a4_category.setText(shopClass.get(position).get("sc_name").toString());
 	    			requestData();
 				}
 			});
             popupWindow.showAsDropDown(v);
 			break;
 		case R.id.ly_a4_assess:
-            //智能排序
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(B1_a4_SearchActivity.this, android.R.layout.simple_expandable_list_item_1);
-			adapter.addAll("智能排序","好评优先","离我最近");
-            pList.setAdapter(adapter);
+			//智能排序
+			shopClass1 = new ArrayList<HashMap<String,String>>();
+			for(int i = 0; i < 3; i++){
+				HashMap<String, String> map = new HashMap<String, String>();
+				if (i==0) {
+					map.put("sc_name", "智能排序");
+				}else if (i==1) {
+					map.put("sc_name", "好评优先");
+				}else{
+					map.put("sc_name", "离我最近");
+				}
+				shopClass1.add(map);
+			}
+			b4tsa = new B4_TextSizeAdapter(B1_a4_SearchActivity.this, shopClass1);
+			pList.setAdapter(b4tsa);
             pList.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					key = position;order = 0;curpage = 1;keyword = "";
+					key = position+1;curpage = 1;keyword = "";
+					if (position==0) {
+						order = 1;
+					}if (position==1) {
+						order = 2;
+					}if (position==2) {
+						order = 1;
+					}
 	                if(popupWindow.isShowing()){
 	                    popupWindow.dismiss();
 	                }
+	                tv_a4_assess.setText(shopClass1.get(position).get("sc_name"));
 	    			requestData();
 				}
 			});
             popupWindow.showAsDropDown(v);
+			break;
+		case R.id.im_search:
+			keyword = a4_sydpss.getText().toString();
+			curpage = 1;
+			requestData();
 			break;
 		default:
 			key = 0;order = 0;

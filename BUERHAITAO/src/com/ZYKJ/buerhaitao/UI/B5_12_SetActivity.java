@@ -52,7 +52,7 @@ public class B5_12_SetActivity extends BaseActivity {
 		resetpasswd=(RelativeLayout) findViewById(R.id.RelativeLayout01);//重置密码
 		aboutus=(RelativeLayout) findViewById(R.id.RelativeLayout02);//关于我们
 		appupdate=(RelativeLayout) findViewById(R.id.RelativeLayout04);//版本跟新
-		btn_logout=(Button) findViewById(R.id.btn_logout);//退出登陆
+		btn_logout=(Button) findViewById(R.id.btn_logout);//退出登录
 		set_back=(ImageButton) findViewById(R.id.set_back);
 	}
 	public void onClick(View v)
@@ -81,8 +81,8 @@ public class B5_12_SetActivity extends BaseActivity {
 //			Toast.makeText(this, "目前为最新版本", Toast.LENGTH_LONG).show();
 			Tools.Notic(this,"目前为最新版本", null);
 			break;
-		case R.id.btn_logout://退出登陆
-			RequestDailog.showDialog(this, "正在退出登陆，请稍后");
+		case R.id.btn_logout://退出登录
+			RequestDailog.showDialog(this, "正在退出登录，请稍后");
 			HttpUtils.logout(res_logout,mobile, key);
 			break;
 		case R.id.set_back://退出设置页面

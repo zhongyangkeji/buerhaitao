@@ -493,7 +493,7 @@ public class B5_5_OrderStatusAdapter extends BaseAdapter {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if (error.equals(null))//成功
+			if (error==null)//成功
 			{
 				Intent intent = new Intent();
 	            String packageName = c.getPackageName();

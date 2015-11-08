@@ -270,6 +270,20 @@ public class HttpUtils {
 	}
 
 	/**
+	 * 添加店铺收藏
+	 * 
+	 * @param res
+	 * @param key 
+	 */
+	public static void addStore(AsyncHttpResponseHandler res,String store_id,String key) {
+		String url = base_url + "index.php?act=member_favorites_store&op=favorites_add";
+		RequestParams params = new RequestParams();
+		params.put("store_id",store_id);
+		params.put("key", key);
+		client.post(url, params, res);
+	}
+	
+	/**
 	 * 13查询商品收藏
 	 * 
 	 * @param res
@@ -313,10 +327,11 @@ public class HttpUtils {
 	 * @param res
 	 * @param key
 	 */
-	public static void getFavoriteProduct(AsyncHttpResponseHandler res,String key) {
+	public static void getFavoriteProduct(AsyncHttpResponseHandler res,String key,String curpage) {
 		String url = base_url + "index.php?act=member_favorites&op=favorites_list";
 		RequestParams requestParams = new RequestParams();
 		requestParams.put("key",key);
+		requestParams.put("curpage",curpage);
 		client.post(url, requestParams, res);
 	}
 	/**
@@ -325,10 +340,11 @@ public class HttpUtils {
 	 * @param res
 	 * @param key
 	 */
-	public static void getFavoriteStore(AsyncHttpResponseHandler res,String key) {
+	public static void getFavoriteStore(AsyncHttpResponseHandler res,String key,String curpage) {
 		String url = base_url + "index.php?act=member_favorites_store&op=favorites_list";
 		RequestParams params = new RequestParams();
 		params.put("key",key);
+		params.put("curpage",curpage);
 		client.post(url, params, res);
 	}
 
@@ -1224,10 +1240,10 @@ public class HttpUtils {
 	/**
 	 *  店铺详情
 	 * @param store_id 店铺ID
-	 * @param key 登录令牌（可选），登陆后提交令牌返回是否已经收藏该店铺
+	 * @param key 登录令牌（可选），登录后提交令牌返回是否已经收藏该店铺
 	 */
-	public static void getStoreInfo(AsyncHttpResponseHandler res,String store_id,String key) {
-		String url = base_url + "index.php?act=store&op=store_info"+"&store_id="+store_id+"&key="+key;
+	public static void getStoreInfo(AsyncHttpResponseHandler res,String store_id,String key,String curpage) {
+		String url = base_url + "index.php?act=store&op=store_info"+"&store_id="+store_id+"&key="+key+"&curpage="+curpage;
 		client.get(url, res);
 	}
 	
@@ -1337,7 +1353,7 @@ public class HttpUtils {
 	 * @param storeid2 付款方式(object {"3" : "online"} 3:店铺id online:支付方式)
 	 * @param pd_pay 是否使用钱包支付 1-使用 0-不使用
 	 */
-	public static void getBuySecond(AsyncHttpResponseHandler res, String key,String ifcart,String cart_id,String address_id,String pay_message,JSONObject storeid,JSONObject storeid2,String pd_pay) {
+	public static void getBuySecond(AsyncHttpResponseHandler res, String key,String ifcart,String cart_id,String address_id,String pay_message,JSONObject storeid,JSONObject storeid2,String pd_pay,String client_type) {
 		String url = base_url + "index.php?act=member_buy&op=buy_step2";
 		RequestParams params = new RequestParams();
 		params.put("key",key);
@@ -1348,6 +1364,20 @@ public class HttpUtils {
 		params.put("dlyo_pickup_type",storeid);
 		params.put("pay_type",storeid2);
 		params.put("pd_pay",pd_pay);
+		params.put("client_type", client_type);
+		client.post(url, params,res);
+	}
+	
+	/**
+	 *  收藏添加
+	 * @param key 当前登录令牌
+	 * @param goods_id 商品编号
+	 */
+	public static void getShouCang(AsyncHttpResponseHandler res, String key,String goods_id) {
+		String url = base_url + "index.php?act=member_favorites&op=favorites_add";
+		RequestParams params = new RequestParams();
+		params.put("key",key);
+		params.put("goods_id",goods_id);
 		client.post(url, params,res);
 	}
 

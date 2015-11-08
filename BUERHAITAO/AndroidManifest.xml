@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ZYKJ.buerhaitao"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="1.1" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -59,7 +59,7 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Light.NoTitleBar" >
         <!-- 高德地图 -->
-         <meta-data
+          <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="dd5f5ac1b31d77947fba914e969d596b"/>
          <activity android:name="com.amap.demo.LocationManager" >
@@ -136,6 +136,21 @@
         </activity>
         <activity android:name="com.ZYKJ.buerhaitao.UI.JieSuan1Activity" >
         </activity>
+        
+        
+        <activity
+            android:name="com.ZYKJ.buerhaitao.UI.SimpleGPSNaviActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.ZYKJ.buerhaitao.UI.SimpleNaviActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        
         <activity
             android:name="com.ZYKJ.buerhaitao.UI.Sp_a2_XingHao"
             android:theme="@android:style/Theme.Translucent" >

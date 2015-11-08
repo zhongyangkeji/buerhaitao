@@ -25,8 +25,8 @@
             android:layout_alignBaseline="@+id/tv_productPoints_re"
             android:layout_alignBottom="@+id/tv_productPoints_re"
             android:layout_toRightOf="@+id/tv_productPoints_re"
-            android:text="分"
-            android:textColor="@color/black" />
+            android:textColor="@color/theme_color" 
+            android:text="分"/>
 
         <ImageView
             android:id="@+id/iv_product_re"
@@ -60,8 +60,9 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/tv_producName_re"
             android:layout_centerVertical="true"
-            android:maxLines="12"
+            android:ellipsize="end"
             android:singleLine="true"
+            android:visibility="gone"
             android:text="产品简介产品简介产品简介" />
 
         <View

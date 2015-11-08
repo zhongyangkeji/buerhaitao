@@ -71,7 +71,8 @@ public class JieSuanShangPinAdapter extends BaseAdapter {
 			viewHolder.childrenNameTV.setText(jobdata.getJSONObject("nameValuePairs").getString("goods_name").toString());//设置商品名称
 			viewHolder.tv_goods_price.setText("￥"+jobdata.getJSONObject("nameValuePairs").getString("goods_price").toString());//设置商品价格
 			viewHolder.tv_goods_num.setText("X"+jobdata.getJSONObject("nameValuePairs").getString("goods_num").toString());//设置商品数量
-			viewHolder.tv_spec.setText(jobdata.getJSONObject("nameValuePairs").getString("goods_spec").toString());
+			String spe = jobdata.getJSONObject("nameValuePairs").getJSONObject("goods_spec").getJSONObject("nameValuePairs").toString();
+			viewHolder.tv_spec.setText(spe.substring(1,spe.length()-1));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

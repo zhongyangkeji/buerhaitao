@@ -25,6 +25,10 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/iv_product"
             android:layout_centerHorizontal="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/iv_product"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:text="产品名称"
             android:textColor="@color/black" />
 
@@ -34,7 +38,9 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/tv_productName"
             android:layout_centerVertical="true"
-            android:maxLines="12"
+            android:layout_toRightOf="@id/iv_product"
+            android:visibility="gone"
+            android:ellipsize="end"
             android:singleLine="true"
             android:text="产品简介产品简介产品简介" />
 
@@ -55,7 +61,7 @@
             android:layout_alignBottom="@+id/tv_productPoints"
             android:layout_toRightOf="@+id/tv_productPoints"
             android:text="分"
-            android:textColor="@color/black" />
+            android:textColor="@color/theme_color" />
 
         <View
             android:id="@+id/view1"
@@ -76,9 +82,8 @@
             android:textSize="10sp" />
     </RelativeLayout>
 
-    <View 
-            android:layout_width="wrap_content"
-            android:layout_height="3dp"
-        />
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="3dp" />
 
 </LinearLayout>

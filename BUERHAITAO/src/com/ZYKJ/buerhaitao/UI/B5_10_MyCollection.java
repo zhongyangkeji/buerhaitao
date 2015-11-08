@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -45,6 +46,9 @@ public class B5_10_MyCollection extends BaseActivity implements IXListViewListen
 	Boolean  isEdit = false;
 	String key;
 	String tagProduct,tagStore;
+	int curpage=1,curpage1=1;
+	private Handler mHandler = new Handler();//异步加载或刷新
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -67,7 +71,7 @@ public class B5_10_MyCollection extends BaseActivity implements IXListViewListen
 		listview.setXListViewListener(this, 0);
 		listview.setRefreshTime();
 		RequestDailog.showDialog(this, "正在加载数据，请稍后");
-		HttpUtils.getFavoriteProduct(res_getFavoriteProduct, getSharedPreferenceValue("key"));
+		HttpUtils.getFavoriteProduct(res_getFavoriteProduct, getSharedPreferenceValue("key"),String.valueOf(curpage));
 		tagProduct = "1";
 		tagStore   = "0";
 	}
@@ -108,7 +112,7 @@ public class B5_10_MyCollection extends BaseActivity implements IXListViewListen
 			adapter = new B5_10_MyCollectionAdapter(B5_10_MyCollection.this,data,isEdit,key);
 			listview.setAdapter(adapter);
 			RequestDailog.showDialog(this, "正在加载数据，请稍后");
-			HttpUtils.getFavoriteProduct(res_getFavoriteProduct, getSharedPreferenceValue("key"));
+			HttpUtils.getFavoriteProduct(res_getFavoriteProduct, getSharedPreferenceValue("key"),"1");
 			
 			break;
 		case R.id.ll_store://商铺
@@ -120,7 +124,7 @@ public class B5_10_MyCollection extends BaseActivity implements IXListViewListen
 			listview = (MyListView) findViewById(R.id.listview_colllection);
 			adapter_store = new B5_10_MyCollectionAdapter(B5_10_MyCollection.this,data_store,isEdit,key);
 			listview.setAdapter(adapter_store);
-			HttpUtils.getFavoriteStore(res_getFavoriteStore, getSharedPreferenceValue("key"));
+			HttpUtils.getFavoriteStore(res_getFavoriteStore, getSharedPreferenceValue("key"),"1");
 			break;
 //		case R.id.rl_delete://删除
 //			String idStrings = "";
@@ -144,13 +148,50 @@ public class B5_10_MyCollection extends BaseActivity implements IXListViewListen
 	}
 	@Override
 	public void onRefresh(int id) {
-		// TODO Auto-generated method stub
-		
+		/**下拉刷新 重建*/
+		mHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				if (tagProduct.equals("1")) 
+				{
+					curpage = 1;
+					HttpUtils.getFavoriteProduct(res_getFavoriteProduct, getSharedPreferenceValue("key"),String.valueOf(curpage));
+					onLoad();
+				}
+				else if (tagStore.equals("1")) {
+					curpage1 = 1;
+					HttpUtils.getFavoriteStore(res_getFavoriteStore, getSharedPreferenceValue("key"),String.valueOf(curpage1));
+					onLoad();
+				}
+			}
+		}, 1000);
+
 	}
 	@Override
 	public void onLoadMore(int id) {
-		// TODO Auto-generated method stub
-		
+		/**上拉加载分页*/
+		mHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				if (tagProduct.equals("1")) 
+				{
+					curpage += 1;
+					HttpUtils.getFavoriteProduct(res_getFavoriteProduct, getSharedPreferenceValue("key"),String.valueOf(curpage));
+					onLoad();
+				}
+				else if (tagStore.equals("1")) {
+					curpage1 += 1;
+					HttpUtils.getFavoriteStore(res_getFavoriteStore, getSharedPreferenceValue("key"),String.valueOf(curpage1));
+					onLoad();
+				}
+			}
+		}, 1000);		
+	}
+
+	private void onLoad() {
+		listview.stopRefresh();
+		listview.stopLoadMore();
+		listview.setRefreshTime();
 	}
 	
 	/**
@@ -177,7 +218,9 @@ public class B5_10_MyCollection extends BaseActivity implements IXListViewListen
 			if (error==null)//成功
 			{
 				try {
-					data.clear();
+					if (curpage==1) {
+						data.clear();
+					}
 					org.json.JSONArray array = datas.getJSONArray("favorites_list");//等收藏功能完善之后更改array的名字
 					for (int i = 0; i < array.length(); i++) {
 						JSONObject jsonItem = array.getJSONObject(i);
@@ -227,13 +270,14 @@ public class B5_10_MyCollection extends BaseActivity implements IXListViewListen
 				datas = response.getJSONObject("datas");
 				error = datas.getString("error");
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
 			if (error==null)//成功
 			{
 				try {
-					data_store.clear();
+					if (curpage1==1) {
+						data_store.clear();
+					}
 					org.json.JSONArray array = datas.getJSONArray("favorites_list");//等收藏功能完善之后更改array的名字
 					for (int i = 0; i < array.length(); i++) {
 						JSONObject jsonItem = array.getJSONObject(i);

@@ -22,7 +22,28 @@ public class Goods implements Serializable {
 	private String juli;//距离
 	private String goods_image_url;//图片地址
 	private String goods_jingle;//商品简介
+	private String store_name;//店铺名称
+	private String goods_storage;//库存
+	private String is_special;
 	
+	public String getIs_special() {
+		return is_special;
+	}
+	public void setIs_special(String is_special) {
+		this.is_special = is_special;
+	}
+	public String getStore_name() {
+		return store_name;
+	}
+	public void setStore_name(String store_name) {
+		this.store_name = store_name;
+	}
+	public String getGoods_storage() {
+		return goods_storage;
+	}
+	public void setGoods_storage(String goods_storage) {
+		this.goods_storage = goods_storage;
+	}
 	public String getGoods_id() {
 		return goods_id;
 	}

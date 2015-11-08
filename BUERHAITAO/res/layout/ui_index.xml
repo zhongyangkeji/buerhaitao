@@ -99,14 +99,37 @@
 
             <!-- 轮播图 -->
 
-            <com.ZYKJ.buerhaitao.customview.B1_HomeShowView
-                android:id="@+id/slideshowView"
-                android:layout_width="fill_parent"
-                android:padding="1dp"
-                android:layout_height="150dp"
+			<RelativeLayout 
+			    android:layout_width="fill_parent"
+			    android:layout_height="150dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp">
+            	<com.ZYKJ.buerhaitao.customview.B1_HomeShowView
+                	android:id="@+id/slideshowView"
+                	android:layout_width="fill_parent"
+                	android:layout_height="fill_parent"/>
+			    <ImageView 
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:src="@drawable/zsj"/>
+			    <ImageView 
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_alignParentRight="true"
+			        android:src="@drawable/ysj"/>
+			    <ImageView 
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_alignParentBottom="true"
+			        android:src="@drawable/zxj"/>
+			    <ImageView 
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_alignParentRight="true"
+			        android:layout_alignParentBottom="true"
+			        android:src="@drawable/yxj"/>
+			</RelativeLayout>
             <!-- 中间八个图标 -->
 
             <LinearLayout
@@ -382,6 +405,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="10dp"
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                android:textColor="#A0A0A0"
                                 android:text="产品简介产品简介产品简介产品简介产品简介产品" />
                         </LinearLayout>
 
@@ -413,6 +439,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_marginLeft="10dp"
+                                android:textColor="#A0A0A0"
                                 android:layout_toRightOf="@id/tv_b1_a1_zhehoujia"
                                 android:text="￥" />
                             <TextView
@@ -420,6 +447,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
+                                android:textColor="#A0A0A0"
                                 android:layout_toRightOf="@id/tv_b1_a1_yuanjia1"
                                 android:text="98" />
 
@@ -441,7 +469,7 @@
                         android:layout_alignParentRight="true"
                         android:background="#F5F5F5"
                         android:orientation="vertical"
-                        android:visibility="gone" >
+                        android:visibility="gone">
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -449,6 +477,7 @@
                             android:layout_weight="10" >
 
                             <TextView
+                                android:id="@+id/tv_dianpuming"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
@@ -477,6 +506,7 @@
                                 android:text="库存：" />
 
                             <TextView
+                                android:id="@+id/tv_kucun"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
@@ -498,6 +528,7 @@
                                 android:text="销量：" />
 
                             <TextView
+                                android:id="@+id/tv_xiaoliang"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
@@ -509,7 +540,8 @@
                         <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="0.0dp"
-                            android:layout_weight="7" >
+                            android:layout_weight="7" 
+                            android:visibility="gone">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -580,11 +612,10 @@
                     android:layout_marginLeft="15dp"
                     android:background="#d6d6d6" />
 
-                <ListView
+                <com.ZYKJ.buerhaitao.view.AutoListView
                     android:id="@+id/horizon_listview"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" >
-                </ListView>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <!-- 猜你喜欢 -->
@@ -639,8 +670,7 @@
                 <com.ZYKJ.buerhaitao.view.AutoListView
                     android:id="@+id/list_cainilike"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
-                </com.ZYKJ.buerhaitao.view.AutoListView>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <!-- 每日好店 -->
@@ -693,13 +723,10 @@
                 <com.ZYKJ.buerhaitao.view.AutoListView
                     android:id="@+id/list_meirihaodian"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
-                </com.ZYKJ.buerhaitao.view.AutoListView>
+                    android:layout_height="wrap_content" 
+                    android:layout_marginBottom="3dp"/>
             </LinearLayout>
 
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="3dp" />
         </LinearLayout>
     </ScrollView>
 

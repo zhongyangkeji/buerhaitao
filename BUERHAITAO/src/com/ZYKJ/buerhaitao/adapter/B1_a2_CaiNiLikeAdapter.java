@@ -7,6 +7,7 @@ import java.util.Map;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -66,8 +67,12 @@ public class B1_a2_CaiNiLikeAdapter extends BaseAdapter {
 			ViewHolder.tv_a2_juli=(TextView) convertView.findViewById(R.id.tv_a2_juli);
 			ViewHolder.tv_a2_chanpinjianjie=(TextView) convertView.findViewById(R.id.tv_a2_chanpinjianjie);
 			ViewHolder.tv_a2_jiage=(TextView) convertView.findViewById(R.id.tv_a2_jiage);
+			ViewHolder.tv_a2_jiage1=(TextView) convertView.findViewById(R.id.tv_a2_jiage1);
 			ViewHolder.im_moreinfoadapter = (ImageView)convertView.findViewById(R.id.im_moreinfoadapter);
 			ViewHolder.ll_b1a2_moreinfolayout = (LinearLayout)convertView.findViewById(R.id.ll_b1a2_moreinfolayout);
+			ViewHolder.tv_dianpuming=(TextView) convertView.findViewById(R.id.tv_dianpuming);
+			ViewHolder.tv_kucun=(TextView) convertView.findViewById(R.id.tv_kucun);
+			ViewHolder.tv_xiaoliang=(TextView) convertView.findViewById(R.id.tv_xiaoliang);
 			convertView.setTag(ViewHolder);
 		}else{
 			ViewHolder=(ViewHolder) convertView.getTag();
@@ -76,8 +81,17 @@ public class B1_a2_CaiNiLikeAdapter extends BaseAdapter {
 		ViewHolder.tv_a2_chanpinname.setText(data.get(position).get("goods_name"));
 		ViewHolder.tv_a2_juli.setText(data.get(position).get("juli"));
 		ViewHolder.tv_a2_chanpinjianjie.setText(data.get(position).get("goods_jingle"));
-		ViewHolder.tv_a2_jiage.setText(data.get(position).get("goods_price"));
-		ViewHolder.im_moreinfoadapter.setOnClickListener(new MoreInfoListener(position,convertView));//更多按钮绑定监听
+		ViewHolder.tv_a2_jiage.setText(data.get(position).get("goods_promotion_price"));
+		
+		if (data.get(position).get("is_special").equals("1")) {
+			ViewHolder.tv_a2_jiage1.setVisibility(View.VISIBLE);
+			ViewHolder.tv_a2_jiage1.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+			ViewHolder.tv_a2_jiage1.setText("￥ "+data.get(position).get("goods_price"));
+		}
+		ViewHolder.tv_dianpuming.setText(data.get(position).get("store_name"));
+		ViewHolder.tv_kucun.setText(data.get(position).get("goods_storage"));
+		ViewHolder.tv_xiaoliang.setText(data.get(position).get("goods_salenum"));
+//		ViewHolder.im_moreinfoadapter.setOnClickListener(new MoreInfoListener(position,convertView));//更多按钮绑定监听
 		ViewHolder.ll_b1a2_moreinfolayout.setOnClickListener(new YinCangListener(position,convertView));
 		return convertView;
 	}
@@ -124,7 +138,11 @@ public class B1_a2_CaiNiLikeAdapter extends BaseAdapter {
         public TextView tv_a2_juli;
         public TextView tv_a2_chanpinjianjie;
         public TextView tv_a2_jiage;
+        public TextView tv_a2_jiage1;
         public ImageView im_moreinfoadapter;
         public LinearLayout ll_b1a2_moreinfolayout;
+        public TextView tv_dianpuming;
+        public TextView tv_kucun;
+        public TextView tv_xiaoliang;
     }  
 }

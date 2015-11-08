@@ -86,7 +86,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 			ISLOGIN=1;
 			HttpUtils.getPointsLog(res_Points, getSharedPreferenceValue("key"));
 			String headImgString=getSharedPreferenceValue("headImg_filename");
-//			if (headImgString!=null) //如果登陆过，显示之前本地的头像
+//			if (headImgString!=null) //如果登录过，显示之前本地的头像
 //			{
 ////			File f = new File(headImgString); 
 //			    Bitmap bitmap_head=BitmapFactory.decodeFile(headImgString);
@@ -129,7 +129,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 		
 		if (isLogin()) {
 			if (getSharedPreferenceValue("username")!="") {
-				btn_login.setText(getSharedPreferenceValue("username"));//设置登陆按钮显示用户昵称
+				btn_login.setText(getSharedPreferenceValue("username"));//设置登录按钮显示用户昵称
 				btn_login.setTextColor(0xff73498b);
 			}else{
 				btn_login.setText("更改昵称");
@@ -206,8 +206,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 			case R.id.dialog_modif_3:// 取消
 				UIDialog.closeDialog();
 				break;
-			case R.id.btn_login://登陆
-				if (ISLOGIN==1) //如果已经登陆,点击之后弹出修改昵称的dialog
+			case R.id.btn_login://登录
+				if (ISLOGIN==1) //如果已经登录,点击之后弹出修改昵称的dialog
 				{
 					final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 					final AlertDialog aDialog=builder.create();  
@@ -246,10 +246,14 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 				break;
 			case R.id.btn_shaidanquan://晒单圈
 //				Toast.makeText(this, "晒单圈", Toast.LENGTH_LONG).show();
-				Intent intent_shaidanquan=new Intent();
-				intent_shaidanquan.setClass(this, B5_3_MyShaiDanQuan.class);
 //				intent_shaidanquan.setClass(this, MainActivity_we.class);
-				startActivity(intent_shaidanquan);
+//				Intent intent_shaidanquan=new Intent();
+//				intent_shaidanquan.setClass(this, B5_3_MyShaiDanQuan.class);
+//				startActivity(intent_shaidanquan);
+
+				Intent itshaidanquan = new Intent();
+				itshaidanquan.setClass(B5_MyActivity.this, B5_3_ShaiDanQuan.class);
+				startActivity(itshaidanquan);
 				break;
 			case R.id.btn_chackInShape://签到
 				RequestDailog.showDialog(this, "正在签到，请稍后");
@@ -436,6 +440,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 			if (error==null)//成功
 			{
 				putSharedPreferenceValue("chacked","1");//保存签到成功的状态，虽然重复签到的检测在服务器端已经做了判断
+				String jifen = tv_my_points.getText().toString();
+				int jf = Integer.parseInt(jifen)+5;
+				tv_my_points.setText(String.valueOf(jf));
 				Tools.Notic(B5_MyActivity.this, "签到成功", null);
 			}
 			else//失败 

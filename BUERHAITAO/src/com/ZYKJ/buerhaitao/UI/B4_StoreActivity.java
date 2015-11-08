@@ -16,12 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,8 +44,8 @@ public class B4_StoreActivity extends BaseActivity implements IXListViewListener
 	
 	private int page = 5;//每页数量
 	private int curpage = 1;//当前页
-	private int key = 0;//  1-智能 2-好评 3-离我最近 空-按时间排序
-	private int order = 0;// 排序方式的状态,1-升序 2-降序
+	private int key = 0;//  1-智能 2-好评 3-离我最近 空-按时间排序  	
+	private int order = 1;// 排序方式的状态,1-升序 2-降序
 	private String city_id,keyword,sc_id;
 	private String lng,lat;
 
@@ -63,6 +61,8 @@ public class B4_StoreActivity extends BaseActivity implements IXListViewListener
 	private List<Shop> shops;
 	private B2_ShopsAdapter shopsAdapter;
 	private B4_TextSizeAdapter b4tsa;
+	private TextView tv_a4_category;//全部分类
+	private TextView tv_a4_assess;//智能排序
 	
 
 	@Override
@@ -86,7 +86,9 @@ public class B4_StoreActivity extends BaseActivity implements IXListViewListener
 		
 		ly_a4_category = (LinearLayout)findViewById(R.id.ly_a4_category);
 		ly_a4_assess = (LinearLayout)findViewById(R.id.ly_a4_assess);
-        
+		tv_a4_assess = (TextView)findViewById(R.id.tv_a4_assess);
+		tv_a4_category = (TextView)findViewById(R.id.tv_a4_category);
+		
         a4_storelist.setPullLoadEnable(true);
         a4_storelist.setPullRefreshEnable(true);
         a4_storelist.setXListViewListener(this, 0);
@@ -120,6 +122,7 @@ public class B4_StoreActivity extends BaseActivity implements IXListViewListener
 	private void requestData(){
 		HashMap<String,String> params = new HashMap<String,String>();
 		params.put("key", String.valueOf(key));//排序方式 1-销量 2-评价 3-价格 空-按距离排序
+//		Toast.makeText(getApplicationContext(),String.valueOf(order), Toast.LENGTH_LONG).show();
 		params.put("order", String.valueOf(order));//1-升序 2-降序
 		params.put("page", String.valueOf(page));//每页数量
 		params.put("curpage", String.valueOf(curpage));//当前页码
@@ -143,15 +146,15 @@ public class B4_StoreActivity extends BaseActivity implements IXListViewListener
             //全部分类
 			b4tsa = new B4_TextSizeAdapter(B4_StoreActivity.this, shopClass);
 			pList.setAdapter(b4tsa);
-//			pList.setAdapter(new SimpleAdapter(B4_StoreActivity.this, shopClass, android.R.layout.simple_expandable_list_item_1, new String[]{"sc_name"}, new int[]{android.R.id.text1}));
             pList.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long viewId) {
-					key = 0;order = 0;curpage = 1;keyword = "";
+					order = 1;curpage = 1;keyword = "";
 	                if(popupWindow.isShowing()){
 	                    popupWindow.dismiss();
 	                }
 	                sc_id = shopClass.get(position).get("sc_id");
+	                tv_a4_category.setText(shopClass.get(position).get("sc_name").toString());
 	    			requestData();
 				}
 			});
@@ -176,10 +179,18 @@ public class B4_StoreActivity extends BaseActivity implements IXListViewListener
             pList.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					key = position;order = 0;curpage = 1;keyword = "";
+					key = position+1;curpage = 1;keyword = "";
+					if (position==0) {
+						order = 1;
+					}if (position==1) {
+						order = 2;
+					}if (position==2) {
+						order = 1;
+					}
 	                if(popupWindow.isShowing()){
 	                    popupWindow.dismiss();
 	                }
+	                tv_a4_assess.setText(shopClass1.get(position).get("sc_name"));
 	    			requestData();
 				}
 			});
@@ -240,9 +251,13 @@ public class B4_StoreActivity extends BaseActivity implements IXListViewListener
 			RequestDailog.closeDialog();
 			JSONObject response = (JSONObject)JSON.parse(responseString);
 			JSONObject datas = response.getJSONObject("datas");
-			JSONArray jsonArray = datas.getJSONArray("goods_list");
-			List<T> list = JSONArray.parseArray(jsonArray.toString(), clzz);
-			onReadSuccess(list);
+			try {
+				JSONArray jsonArray = datas.getJSONArray("goods_list");
+				List<T> list = JSONArray.parseArray(jsonArray.toString(), clzz);
+				onReadSuccess(list);	
+			} catch (Exception e) {
+				onReadSuccess(new ArrayList<T>());
+			}
 		}
 
 		@Override

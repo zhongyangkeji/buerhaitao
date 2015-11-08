@@ -50,7 +50,7 @@
     </RelativeLayout>
 
     <ScrollView
-        android:id="@+id/sc_sc"
+        android:id="@+id/index_scroll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/relativeLayout1" >
@@ -63,13 +63,29 @@
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="150dp" >
+                
 
-                <ImageView
-                    android:id="@+id/im_storeinfobg"
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent" >
+
+                <cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager
+                    android:id="@+id/index_viewpage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top" />
+
+                <LinearLayout
+                    android:id="@+id/gallery_point_linear"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:src="@drawable/buerhaitao" />
-
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/index_viewpage"
+                    android:layout_alignParentLeft="true"
+                    android:background="#f0eff4"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+                </LinearLayout>
+            </RelativeLayout>
                 <View
                     android:id="@+id/view1"
                     android:layout_width="fill_parent"
@@ -119,9 +135,11 @@
                 android:orientation="horizontal" >
 
                 <LinearLayout
+                    android:id="@+id/ll_ditudaohang"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_marginLeft="61dp"
+                    android:gravity="center_vertical"
                     android:padding="5dp" >
 
                     <ImageView
@@ -133,7 +151,7 @@
                     <TextView
                         android:id="@+id/tv_store_address"
                         android:layout_width="wrap_content"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:text="山东省临沂市兰山区红旗路金鼎国际904室"
                         android:textColor="#808080" />
@@ -179,7 +197,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_below="@id/sc_sc" >
+                    android:layout_below="@id/index_scroll" >
                 </com.ZYKJ.buerhaitao.view.MyListView>
 
 </RelativeLayout>

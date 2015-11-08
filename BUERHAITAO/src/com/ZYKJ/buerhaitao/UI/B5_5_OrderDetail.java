@@ -378,7 +378,7 @@ public class B5_5_OrderDetail extends BaseActivity {
 					tv_buyer_number.setText(reciver_info.getString("mob_phone"));
 					tv_buyer_address.setText("收货地址:"+reciver_info.getString("address"));
 					tv_ordergoodsnumber_or.setText("共"+order_info.getString("goods_count")+"件商品");
-					tv_orderprice_or.setText("实付:￥"+order_info.getString("order_amount")+"元");
+					tv_orderprice_or.setText("实付:￥"+order_info.getString("order_amount"));
 					tv_shipping_fee.setText("￥"+order_info.getString("shipping_fee"));//运费
 					tv_payment_name.setText(order_info.getString("payment_name"));//付款方式
 					tv_storename_or.setText(order_info.getString("store_name"));//店铺名称

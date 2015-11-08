@@ -26,7 +26,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +38,6 @@ import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
 import com.ZYKJ.buerhaitao.utils.Tools;
 import com.ZYKJ.buerhaitao.view.AutoListView;
-import com.ZYKJ.buerhaitao.view.MyListView;
 import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.ZYKJ.buerhaitao.view.ToastView;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -56,7 +54,7 @@ public class B1_HomeActivity extends BaseActivity {
 	private RelativeLayout rl_sousuokuang;
 	// 每日好店
 	private AutoListView list_meirihaodian, list_cainilike;
-	private ListView listviewHorizontal;
+	private AutoListView listviewHorizontal;
 	private List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 	private List<Map<String, String>> data1 = new ArrayList<Map<String, String>>();
 	// 天天特价
@@ -71,6 +69,7 @@ public class B1_HomeActivity extends BaseActivity {
 	private TextView tv_updateNumber;// 晒单圈更新数
 	private List<Map<String, String>> data2 = new ArrayList<Map<String, String>>();
 	private EditText a1_sousuofujin;
+	private TextView tv_dianpuming, tv_kucun, tv_xiaoliang;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -141,15 +140,19 @@ public class B1_HomeActivity extends BaseActivity {
 					B1_a3_MeiRiHaoDianAdapter goodadapter = new B1_a3_MeiRiHaoDianAdapter(
 							B1_HomeActivity.this, data);
 					list_meirihaodian.setAdapter(goodadapter);
-					list_meirihaodian.setOnItemClickListener(new OnItemClickListener() {
+					list_meirihaodian
+							.setOnItemClickListener(new OnItemClickListener() {
 
 								@Override
-								public void onItemClick(AdapterView<?> arg0,View view, int i, long arg3) {
-										Intent intent = new Intent();
-										String storeid = data.get(i).get("store_id");
-										intent.putExtra("store_id", storeid);
-										intent.setClass(B1_HomeActivity.this,BX_DianPuXiangQingActivity.class);
-										startActivity(intent);
+								public void onItemClick(AdapterView<?> arg0,
+										View view, int i, long arg3) {
+									Intent intent = new Intent();
+									String storeid = data.get(i)
+											.get("store_id");
+									intent.putExtra("store_id", storeid);
+									intent.setClass(B1_HomeActivity.this,
+											BX_DianPuXiangQingActivity.class);
+									startActivity(intent);
 								}
 							});
 
@@ -172,24 +175,37 @@ public class B1_HomeActivity extends BaseActivity {
 						map1.put("goods_image",
 								jsonItem1.getString("goods_image"));
 						map1.put("goods_id", jsonItem1.getString("goods_id"));
+						map1.put("goods_salenum",
+								jsonItem1.getString("goods_salenum"));
+						map1.put("goods_storage",
+								jsonItem1.getString("goods_storage"));
+						map1.put("store_name",
+								jsonItem1.getString("store_name"));
+						map1.put("goods_promotion_price",
+								jsonItem1.getString("goods_promotion_price"));
+						map1.put("is_special",
+								jsonItem1.getString("is_special"));
 						data1.add(map1);
 					}
 					B1_a2_CaiNiLikeAdapter cainilikeadapter = new B1_a2_CaiNiLikeAdapter(
 							B1_HomeActivity.this, data1);
 					list_cainilike.setAdapter(cainilikeadapter);
-					list_cainilike.setOnItemClickListener(new OnItemClickListener() {
+					list_cainilike
+							.setOnItemClickListener(new OnItemClickListener() {
 
-						@Override
-						public void onItemClick(AdapterView<?> arg0, View arg1,
-								int arg2, long arg3) {
-							// TODO Auto-generated method stub
-							Intent intent = new Intent();
-							String goid = data1.get(arg2).get("goods_id");
-							intent.putExtra("goods_id", goid);
-							intent.setClass(B1_HomeActivity.this, Sp_GoodsInfoActivity.class);
-							startActivity(intent);
-						}
-					});
+								@Override
+								public void onItemClick(AdapterView<?> arg0,
+										View arg1, int arg2, long arg3) {
+									// TODO Auto-generated method stub
+									Intent intent = new Intent();
+									String goid = data1.get(arg2).get(
+											"goods_id");
+									intent.putExtra("goods_id", goid);
+									intent.setClass(B1_HomeActivity.this,
+											Sp_GoodsInfoActivity.class);
+									startActivity(intent);
+								}
+							});
 
 					// 天天特价
 					org.json.JSONArray arr = datas.getJSONArray("day_special");
@@ -206,6 +222,12 @@ public class B1_HomeActivity extends BaseActivity {
 					tv_b1_a1_yuanjia.getPaint().setFlags(
 							Paint.STRIKE_THRU_TEXT_FLAG);
 					tv_goodsid.setText(jsonIt.getString("goods_id").toString());
+					tv_dianpuming.setText(jsonIt.getString("store_name")
+							.toString());
+					tv_kucun.setText(jsonIt.getString("goods_storage")
+							.toString());
+					tv_xiaoliang.setText(jsonIt.getString("goods_salenum")
+							.toString());
 
 					// 晒单圈
 					data2.clear();
@@ -266,11 +288,14 @@ public class B1_HomeActivity extends BaseActivity {
 		tv_b1_a1_zhehoujia = (TextView) findViewById(R.id.tv_b1_a1_zhehoujia);
 		tv_b1_a1_yuanjia = (TextView) findViewById(R.id.tv_b1_a1_yuanjia);
 		tv_updateNumber = (TextView) findViewById(R.id.tv_updateNumber);
+		tv_dianpuming = (TextView) findViewById(R.id.tv_dianpuming);
+		tv_kucun = (TextView) findViewById(R.id.tv_kucun);
+		tv_xiaoliang = (TextView) findViewById(R.id.tv_xiaoliang);
 		ll_dayspecial = (RelativeLayout) findViewById(R.id.ll_dayspecial);
 		rl_ditu = (RelativeLayout) findViewById(R.id.rl_ditu);
 		im_moreinfo = (ImageView) findViewById(R.id.im_moreinfo);
 		ll_moreinfolayout = (LinearLayout) findViewById(R.id.ll_moreinfolayout);
-		listviewHorizontal = (ListView) findViewById(R.id.horizon_listview);
+		listviewHorizontal = (AutoListView) findViewById(R.id.horizon_listview);
 		a1_sousuofujin = (EditText) findViewById(R.id.a1_sousuofujin);
 		setListener(im_b1nvshi, im_b1nanshi, im_b1muying, im_b1huazhuang,
 				im_b1shouji, im_b1bangong, im_b1shenghuo, im_b1techan,
@@ -324,7 +349,8 @@ public class B1_HomeActivity extends BaseActivity {
 		// 晒单圈
 		case R.id.b5_3_shaidanquan:
 			Intent itshaidanquan = new Intent();
-			itshaidanquan.setClass(B1_HomeActivity.this, B5_3_ShaiDanQuan.class);
+			itshaidanquan
+					.setClass(B1_HomeActivity.this, B5_3_ShaiDanQuan.class);
 			startActivity(itshaidanquan);
 			break;
 		// 猜你喜欢
@@ -362,17 +388,18 @@ public class B1_HomeActivity extends BaseActivity {
 			Intent itdayspec = new Intent();
 			String goid = tv_goodsid.getText().toString();
 			itdayspec.putExtra("goods_id", goid);
-			itdayspec.setClass(B1_HomeActivity.this, Sp_GoodsInfoActivity.class);
+			itdayspec
+					.setClass(B1_HomeActivity.this, Sp_GoodsInfoActivity.class);
 			startActivity(itdayspec);
 			break;
 		// 城市选择
 		case R.id.rl_ditu:
 			Intent itmap = new Intent();
 			itmap.setClass(B1_HomeActivity.this, B1_01_MapActivity.class);
-			startActivity(itmap);
+			startActivityForResult(itmap, 0);
 			break;
 		case R.id.im_moreinfo:
-			ll_moreinfolayout.setVisibility(View.VISIBLE);
+			/*ll_moreinfolayout.setVisibility(View.VISIBLE);*/
 			break;
 		case R.id.ll_moreinfolayout:
 			ll_moreinfolayout.setVisibility(View.GONE);
@@ -429,4 +456,19 @@ public class B1_HomeActivity extends BaseActivity {
 		intent.putExtra("gc_id", gc_id);
 		startActivity(intent);
 	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		cityname = data.getStringExtra("cityname");
+		tv_cityname.setText(cityname);
+		String cityid = data.getStringExtra("cityid");
+		String lng = data.getStringExtra("lng");
+		String lat = data.getStringExtra("lat");
+		putSharedPreferenceValue("lng", lng);
+		putSharedPreferenceValue("lat", lat);
+		putSharedPreferenceValue("cityid", cityid);
+		HttpUtils.getFirstList(res_getSyList, cityid, lng, lat);
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
 }

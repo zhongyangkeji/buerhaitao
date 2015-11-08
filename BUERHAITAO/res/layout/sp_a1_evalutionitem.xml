@@ -18,8 +18,8 @@
 
                     <ImageView
                         android:id="@+id/im_sp_a1_userimage"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:src="@drawable/buerhaitao" />
 
                     <TextView
@@ -59,6 +59,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="这都是什么玩意，评价怎么写？"
+                        android:ellipsize="end"
                         android:maxLines="2"
                         android:textColor="#808080" />
                 </LinearLayout>

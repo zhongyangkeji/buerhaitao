@@ -110,7 +110,7 @@ public class B1_a1_TianTianTeJia extends BaseActivity implements IXListViewListe
 						map.put("goods_jingle", jsonItem.getString("goods_jingle"));
 						map.put("goods_price", jsonItem.getString("goods_price"));
 						map.put("goods_promotion_price", jsonItem.getString("goods_promotion_price"));
-						map.put("goods_image", jsonItem.getString("goods_image"));
+						map.put("goods_image", jsonItem.getString("goods_image_url"));
 						map.put("juli", jsonItem.getString("juli"));
 						data.add(map);
 					}

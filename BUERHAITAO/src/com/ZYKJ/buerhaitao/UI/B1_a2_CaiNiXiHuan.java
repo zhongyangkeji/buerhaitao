@@ -112,8 +112,12 @@ public class B1_a2_CaiNiXiHuan extends BaseActivity implements
 						map.put("goods_price",
 								jsonItem.getString("goods_price"));
 						map.put("goods_image",
-								jsonItem.getString("goods_image"));
+								jsonItem.getString("goods_image_url"));
 						map.put("juli", jsonItem.getString("juli"));
+						map.put("goods_promotion_price",
+								jsonItem.getString("goods_promotion_price"));
+						map.put("is_special",
+								jsonItem.getString("is_special"));
 						data.add(map);
 					}
 					cainilikeadapter.notifyDataSetChanged();
@@ -144,12 +148,14 @@ public class B1_a2_CaiNiXiHuan extends BaseActivity implements
 	public void onRefresh(int id) {
 		// TODO Auto-generated method stub
 		RequestDailog.showDialog(this, "正在加载数据，请稍后");
-		HttpUtils.getCaiNiLike(res_cnlike, "1", "1", "88", "0");
+//		HttpUtils.getCaiNiLike(res_cnlike, "1", "1", "88", "0");
+		HttpUtils.getCaiNiLike(res_cnlike,getSharedPreferenceValue("lng"),getSharedPreferenceValue("lat"),getSharedPreferenceValue("cityid"), "0");
 	}
 
 	@Override
 	public void onLoadMore(int id) {
 		// TODO Auto-generated method stub
 		// Toast.makeText(this, "只有这么多数据", Toast.LENGTH_LONG).show();
+		HttpUtils.getCaiNiLike(res_cnlike,getSharedPreferenceValue("lng"),getSharedPreferenceValue("lat"),getSharedPreferenceValue("cityid"), "0");
 	}
 }

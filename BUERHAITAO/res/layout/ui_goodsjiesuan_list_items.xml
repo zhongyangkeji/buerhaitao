@@ -15,7 +15,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/shangpintu" />
+                android:src="@drawable/buerhaitao" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -27,7 +27,6 @@
                     android:layout_height="fill_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="2"
-                    android:layout_marginTop="5dp"
                     android:orientation="vertical" >
 
                     <TextView

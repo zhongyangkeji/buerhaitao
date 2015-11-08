@@ -59,19 +59,16 @@ public class UIDialog {
 		Button m_btn_2x = (Button) window.findViewById(R.id.dialog_five_modif_2);
 		Button m_btn_3x = (Button) window.findViewById(R.id.dialog_five_modif_3);
 		Button m_btn_4x = (Button) window.findViewById(R.id.dialog_five_modif_4);
-		Button m_btn_5x = (Button) window.findViewById(R.id.dialog_five_modif_5);
 
 		m_btn_1x.setText(showtxt[0]);
 		m_btn_2x.setText(showtxt[1]);
 		m_btn_3x.setText(showtxt[2]);
 		m_btn_4x.setText(showtxt[3]);
-		m_btn_5x.setText(showtxt[4]);
 
 		m_btn_1x.setOnClickListener(lisener);
 		m_btn_2x.setOnClickListener(lisener);
 		m_btn_3x.setOnClickListener(lisener);
 		m_btn_4x.setOnClickListener(lisener);
-		m_btn_5x.setOnClickListener(lisener);
 	}
 	/** 4按键按钮dialog */
 	public static void ForFourBtn(Context context, String[] showtxt,
@@ -86,17 +83,17 @@ public class UIDialog {
 		Button m_btn_1x = (Button) window.findViewById(R.id.dialog_four_modif_1);
 		Button m_btn_2x = (Button) window.findViewById(R.id.dialog_four_modif_2);
 		Button m_btn_3x = (Button) window.findViewById(R.id.dialog_four_modif_3);
-		Button m_btn_4x = (Button) window.findViewById(R.id.dialog_four_modif_4);
+//		Button m_btn_4x = (Button) window.findViewById(R.id.dialog_four_modif_4);
 
 		m_btn_1x.setText(showtxt[0]);
 		m_btn_2x.setText(showtxt[1]);
 		m_btn_3x.setText(showtxt[2]);
-		m_btn_4x.setText(showtxt[3]);
+//		m_btn_4x.setText(showtxt[3]);
 
 		m_btn_1x.setOnClickListener(lisener);
 		m_btn_2x.setOnClickListener(lisener);
 		m_btn_3x.setOnClickListener(lisener);
-		m_btn_4x.setOnClickListener(lisener);
+//		m_btn_4x.setOnClickListener(lisener);
 	}
 	/** 2按键按钮dialog */
 	public static void ForTwoBtn(Context context, String[] showtxt,

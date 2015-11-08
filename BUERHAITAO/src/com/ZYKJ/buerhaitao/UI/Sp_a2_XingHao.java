@@ -29,6 +29,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.google.gson.JsonObject;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * @author lss 2015年7月4日选择型号
@@ -50,6 +51,7 @@ public class Sp_a2_XingHao extends BaseActivity {
 	private String tiaomu;
 	private JSONObject choosejiage,choosexinghao;
 	private String goodsid=null;
+	private ImageView im_gwtouxiang;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -78,6 +80,12 @@ public class Sp_a2_XingHao extends BaseActivity {
 		tv_lijigoumai = (TextView) findViewById(R.id.tv_lijigoumai);
 		tiaomu = getIntent().getStringExtra("tiaomu");
 		tv_addcar = (TextView) findViewById(R.id.tv_addcar);
+		im_gwtouxiang = (ImageView)findViewById(R.id.im_gwtouxiang);
+		try {
+			ImageLoader.getInstance().displayImage(getIntent().getStringExtra("aaa"), im_gwtouxiang);			
+		} catch (Exception e) {
+			
+		}
 		if (tiaomu.equals("1")) {
 			tiaomu1.setVisibility(View.VISIBLE);
 			tiaomu1_zi.setVisibility(View.VISIBLE);
@@ -377,7 +385,10 @@ public class Sp_a2_XingHao extends BaseActivity {
 			}
 			if (error==null)//成功
 			{
-				Toast.makeText(getApplicationContext(), "添加成功", Toast.LENGTH_LONG).show();				
+				Toast.makeText(getApplicationContext(), "添加成功", Toast.LENGTH_LONG).show();		
+				Intent itgwc = new Intent(Sp_a2_XingHao.this,
+						B3_ShoppingCartActivity.class);
+				startActivity(itgwc);		
 			}
 			else//失败 
 			{

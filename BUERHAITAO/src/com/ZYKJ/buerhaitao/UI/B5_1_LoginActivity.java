@@ -19,7 +19,7 @@ import com.ZYKJ.buerhaitao.utils.Tools;
 import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.loopj.android.http.JsonHttpResponseHandler;
 /**
- * 登陆界面
+ * 登录界面
  * @author zyk
  *
  */
@@ -67,8 +67,8 @@ public class B5_1_LoginActivity extends BaseActivity {
 				intent_regist2.putExtra("FIND_OR_REGIST", 2);
 				startActivity(intent_regist2);
 				break;
-			case R.id.btn_login:
-				RequestDailog.showDialog(this, "正在登陆");
+			case R.id.btn_login:	
+				RequestDailog.showDialog(this, "正在登录");
 				login_name=et_login_name.getText().toString().trim();
 				passWord=et_passWord.getText().toString().trim();
 				HttpUtils.login(res_login, login_name, passWord);
@@ -93,7 +93,7 @@ public class B5_1_LoginActivity extends BaseActivity {
 			// TODO Auto-generated method stub
 			super.onSuccess(statusCode, headers, response);
 			RequestDailog.closeDialog();
-//			Tools.Log("登陆"+response);
+//			Tools.Log("登录"+response);
 //			{"datas":{"error":"用户名密码错误"},"code":200}
 			String error=null;
 			JSONObject datas=null;
@@ -106,7 +106,7 @@ public class B5_1_LoginActivity extends BaseActivity {
 				e.printStackTrace();
 			}
 			
-			if (error==null)//登陆成功
+			if (error==null)//登录成功
 			{
 				try {
 					putSharedPreferenceValue("username", datas.getString("username"));
@@ -121,12 +121,12 @@ public class B5_1_LoginActivity extends BaseActivity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				Tools.Notic(B5_1_LoginActivity.this, "登陆成功", null);
+				Tools.Notic(B5_1_LoginActivity.this, "登录成功", null);
 				Intent  intent_tomainavtivity = new Intent(B5_1_LoginActivity.this, B0_MainActivity.class);
 				startActivity(intent_tomainavtivity);
 				B5_1_LoginActivity.this.finish();
 			}
-			else//登陆失败 
+			else//登录失败 
 			{
 				Tools.Notic(B5_1_LoginActivity.this, error+"", null);
 			}

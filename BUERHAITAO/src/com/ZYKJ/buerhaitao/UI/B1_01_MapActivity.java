@@ -1,13 +1,12 @@
 package com.ZYKJ.buerhaitao.UI;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,8 +15,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.UI.SideBar.OnTouchingLetterChangedListener;
 import com.ZYKJ.buerhaitao.adapter.SortAdapter;
@@ -113,14 +110,13 @@ public class B1_01_MapActivity extends BaseActivity{
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				//这里要利用adapter.getItem(position)来获取当前position所对应的对象
-				Intent mapit = new Intent();
+				Intent mapit = new Intent(B1_01_MapActivity.this,B1_HomeActivity.class);
 				mapit.putExtra("cityname",((SortModel)adapter.getItem(position)).getArea_name());
 				mapit.putExtra("cityid",((SortModel)adapter.getItem(position)).getArea_id());
 				mapit.putExtra("lng",lng);
 				mapit.putExtra("lat",lat);
-				mapit.setClass(B1_01_MapActivity.this, B1_HomeActivity.class);
-				startActivity(mapit);
-//				Toast.makeText(getApplication(), ((SortModel)adapter.getItem(position)).getName(), Toast.LENGTH_SHORT).show();
+				B1_01_MapActivity.this.setResult(Activity.RESULT_OK, mapit);
+				B1_01_MapActivity.this.finish();
 			}
 		});
 		
@@ -262,15 +258,14 @@ public class B1_01_MapActivity extends BaseActivity{
 					citynamex = datas.getString("area_name");
 					area_idx = datas.getString("area_id");
 					tv_findcityname.setText(citynamex);
-					tv_dangqiancity.setText(citynamex);
-					Intent mapit = new Intent();
-					mapit.putExtra("cityname",tv_findcityname.getText().toString());
+					tv_dangqiancity.setText(citynamex);					
+					Intent mapit = new Intent(B1_01_MapActivity.this,B1_HomeActivity.class);
 					mapit.putExtra("lng",lng);
 					mapit.putExtra("lat",lat);
 					mapit.putExtra("cityname",citynamex);
 					mapit.putExtra("cityid",area_idx);
-					mapit.setClass(B1_01_MapActivity.this, B1_HomeActivity.class);
-					startActivity(mapit);
+					B1_01_MapActivity.this.setResult(Activity.RESULT_OK, mapit);
+					B1_01_MapActivity.this.finish();
 				} 
 				catch (org.json.JSONException e) {
 					// TODO Auto-generated catch block

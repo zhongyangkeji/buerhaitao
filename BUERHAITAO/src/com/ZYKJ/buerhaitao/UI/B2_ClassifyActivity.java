@@ -172,7 +172,7 @@ public class B2_ClassifyActivity extends BaseActivity{
 						@Override
 						public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 							String gc_id = list.get(position).get("gc_id");
-							Toast.makeText(B2_ClassifyActivity.this, gc_id, Toast.LENGTH_LONG).show();
+//							Toast.makeText(B2_ClassifyActivity.this, gc_id, Toast.LENGTH_LONG).show();
 			    			B1_a4_SearchActivity.CHANNEL=0;
 							Intent intent = new Intent(B2_ClassifyActivity.this,B1_a4_SearchActivity.class);
 							intent.putExtra("gc_id", gc_id);

@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
@@ -181,6 +182,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
 			HttpUtils.zan(res_zan, key, circle_id);
+			B5_3_ShaiDanQuanAdapter.this.notifyDataSetChanged();
 		}
 		/**
 		 * 点赞
@@ -205,7 +207,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 				if (error==null)//成功
 				{
 //					zanArray.put(position, zanArray.get(position)+1);
-//					B5_3_MyShaiDanQuanAdapter.this.notifyDataSetChanged();
+//					B5_3_ShaiDanQuanAdapter.this.notifyDataSetChanged();
+					Toast.makeText(c, "点赞成功，请刷新", Toast.LENGTH_LONG).show();
 				}
 				else//失败 
 				{

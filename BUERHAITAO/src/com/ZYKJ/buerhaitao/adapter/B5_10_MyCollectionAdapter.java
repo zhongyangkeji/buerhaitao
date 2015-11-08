@@ -9,26 +9,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.ZYKJ.buerhaitao.R;
-import com.ZYKJ.buerhaitao.adapter.B5_11_PointsMallAdapter.ExchangeListener;
-import com.ZYKJ.buerhaitao.utils.HttpUtils;
-import com.ZYKJ.buerhaitao.utils.Tools;
-import com.ZYKJ.buerhaitao.view.RequestDailog;
-import com.activeandroid.query.Delete;
-import com.activeandroid.util.Log;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.ZYKJ.buerhaitao.R;
+import com.ZYKJ.buerhaitao.utils.HttpUtils;
+import com.ZYKJ.buerhaitao.utils.Tools;
+import com.ZYKJ.buerhaitao.view.RequestDailog;
+import com.activeandroid.util.Log;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class B5_10_MyCollectionAdapter extends BaseAdapter {
 
@@ -102,15 +97,15 @@ public class B5_10_MyCollectionAdapter extends BaseAdapter {
 			fav_time = data.get(position).get("fav_time");
 			ImageLoader.getInstance().displayImage(goods_image_url, iv_product_collection);
 			tv_productName.setText(goods_name);
-			tv_productPoints.setText(goods_price+"元");
+			tv_productPoints.setText("￥"+goods_price);
 			tv_collectiondate.setText(fav_time+"的收藏");
-			iv_delete.setOnClickListener(new DeleteProduct(data.get(position).get("fav_id"),key));
+			iv_delete.setOnClickListener(new DeleteProduct(data.get(position).get("fav_id"),key,position));
 		}else if (data.get(position).get("tag").equals("Store")) {
 			tv_productPoints.setText("");
 			ImageLoader.getInstance().displayImage(data.get(position).get("store_avatar_url"), iv_product_collection);
 			tv_productName.setText(data.get(position).get("store_name"));
 			tv_collectiondate.setText(data.get(position).get("fav_time_text")+"的收藏");
-			iv_delete.setOnClickListener(new DeleteStore(data.get(position).get("store_id"),key));
+			iv_delete.setOnClickListener(new DeleteStore(data.get(position).get("store_id"),key,position));
 //			iv_delete.setOnClickListener(new DeleteStore());
 		}
 		return cellView;
@@ -122,9 +117,11 @@ public class B5_10_MyCollectionAdapter extends BaseAdapter {
 	 */
 	class DeleteProduct implements View.OnClickListener {
 		String fav_id,key;
-		public DeleteProduct(String fav_id,String key) {
+		int position;
+		public DeleteProduct(String fav_id,String key,int position) {
 			this.fav_id = fav_id;
 			this.key = key;
+			this.position = position;
 		}
 
 		@Override
@@ -134,6 +131,7 @@ public class B5_10_MyCollectionAdapter extends BaseAdapter {
 //			Tools.Log("key="+key+"|fav_id="+fav_id);
 //			Log.e("key", key);
 //			Log.e("fav_id", fav_id);
+			data.remove(position);
 			HttpUtils.delProduct(res_delProduct, key, fav_id);
 			
 		}
@@ -146,13 +144,16 @@ public class B5_10_MyCollectionAdapter extends BaseAdapter {
 	 */
 	class DeleteStore implements View.OnClickListener {
 		String store_id,key;
-		public DeleteStore(String store_id,String key) {
+		int position;
+		public DeleteStore(String store_id,String key,int position) {
 			this.store_id = fav_id;
 			this.key = key;
+			this.position = position;
 		}
 		
 		@Override
 		public void onClick(View v) {
+			data.remove(position);
 			HttpUtils.delStore(res_delProduct, store_id, key);
 		}
 		
@@ -198,7 +199,9 @@ public class B5_10_MyCollectionAdapter extends BaseAdapter {
 			}
 			if (error==null)//成功
 			{
-				Tools.Notic(c, "取消成功,请刷新该页面查看剩余收藏", null);
+				Tools.Notic(c, "取消收藏成功", null);
+
+				notifyDataSetChanged();
 			}
 			else//失败 
 			{

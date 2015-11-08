@@ -38,7 +38,7 @@
             android:textColor="@color/blue"
             android:textSize="18sp" />
 
-        <Button
+        <!-- <Button
             android:id="@+id/dialog_four_modif_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,10 +49,10 @@
             android:paddingRight="25dp"
             android:paddingTop="10dp"
             android:textColor="@color/blue"
-            android:textSize="18sp" />
+            android:textSize="18sp" /> -->
 
         <Button
-            android:id="@+id/dialog_four_modif_4"
+            android:id="@+id/dialog_four_modif_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"

@@ -39,6 +39,8 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="70dp"
+            android:background="#F8F8F8"
+            android:layout_marginRight="5dp"
             android:orientation="vertical" >
 
             <TextView
@@ -47,6 +49,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
+                android:textColor="#A0A0A0"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:text="内容" />
 
             <LinearLayout

@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="张三"
-                android:textColor="@color/blue"
+                android:textColor="#000"
                 android:textSize="16.0sp" />
 
             <TextView
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/tv_huifu"
-                android:textColor="@color/blue"
+                android:textColor="#000"
                 android:textSize="16.0sp"
                 android:text="李四" />
 

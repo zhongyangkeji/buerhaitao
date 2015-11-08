@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:background="@color/theme_grey"
     android:orientation="vertical" >
-    
-<RelativeLayout
+
+    <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
@@ -17,8 +17,8 @@
         <TextView
             android:id="@+id/textView3"
             style="@style/title_head"
-            android:text="@string/exchangedetail" 
-            android:textSize="18sp"/>
+            android:text="@string/exchangedetail"
+            android:textSize="18sp" />
 
         <ImageButton
             android:id="@+id/set_back"
@@ -32,11 +32,11 @@
             android:padding="5dp"
             android:src="@drawable/symbol_left1" />
     </RelativeLayout>
-    <View 
-            android:layout_width="match_parent"
-            android:layout_height="6dp"
-            />
- <!-- 选择地址 -->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="6dp" />
+    <!-- 选择地址 -->
 
     <RelativeLayout
         android:id="@+id/choseAddress"
@@ -63,8 +63,8 @@
             android:layout_marginLeft="22dp"
             android:layout_toRightOf="@+id/iv_addtag"
             android:text="@string/addAdress"
-            android:textSize="16sp"
-            android:textColor="@color/theme_color" />
+            android:textColor="@color/theme_color"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/iv_rightarrow"
@@ -74,37 +74,35 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="17dp"
             android:src="@drawable/arrow_right" />
-
     </RelativeLayout>
-	<View 
-            android:layout_width="match_parent"
-            android:layout_height="6dp"
-            />
 
-	<RelativeLayout
-	    android:background="@color/white"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content" >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="6dp" />
 
-	    <TextView
-	        android:id="@+id/textView2"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_alignParentTop="true"
-	        android:layout_marginLeft="15dp"
-	        android:textColor="@color/grey"
-	        android:textSize="10sp"
-	        android:text="@string/productInfo" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
 
-	</RelativeLayout>
-	<RelativeLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:background="@color/white"
-	     >
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/productInfo"
+            android:textColor="@color/grey"
+            android:textSize="10sp" />
+    </RelativeLayout>
 
-	    <ImageView
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+
+        <ImageView
             android:id="@+id/iv_product"
             android:layout_width="90dp"
             android:layout_height="90dp"
@@ -113,26 +111,27 @@
             android:layout_marginLeft="14dp"
             android:src="@drawable/food_1" />
 
-	    <TextView
-	        android:id="@+id/tv_producName"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentTop="true"
-	        android:layout_marginLeft="14dp"
-	        android:layout_marginTop="16dp"
-	        android:layout_toRightOf="@+id/iv_product"
-	        android:text="产品名称" />
+        <TextView
+            android:id="@+id/tv_producName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="16dp"
+            android:layout_toRightOf="@+id/iv_product"
+            android:text="产品名称" />
 
-	    <TextView
-	        android:id="@+id/tv_productIntro"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignLeft="@+id/tv_producName"
-	        android:layout_centerVertical="true"
-	        android:maxLines="12"
-	        android:singleLine="true"
-	        android:text="产品简介产品简介产品简介" />
-      <TextView
+        <TextView
+            android:id="@+id/tv_productIntro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_producName"
+            android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="产品简介产品简介产品简介" />
+
+        <TextView
             android:id="@+id/tv_productPoints"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -150,47 +149,46 @@
             android:layout_toRightOf="@+id/tv_productPoints"
             android:text="分"
             android:textColor="@color/black" />
-	</RelativeLayout>
-<View 
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            />
-<RelativeLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:background="@color/white"
-	     >
+    </RelativeLayout>
 
-<EditText
-    android:id="@+id/et_pcart_message"
-    android:textSize="10sp" 
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentRight="true"
-    android:layout_alignParentTop="true"
-    android:layout_toRightOf="@+id/textView4"
-    android:ems="10"
-    android:hint="@string/comment_hint"
-    android:inputType="textMultiLine" >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp" />
 
-    <requestFocus />
-</EditText>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
 
-<TextView
-    android:id="@+id/textView4"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentLeft="true"
-    android:layout_centerVertical="true"
-    android:layout_marginLeft="14dp"
-    android:text="@string/comment" />
+        <EditText
+            android:id="@+id/et_pcart_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/textView4"
+            android:ems="10"
+            android:hint="@string/comment_hint"
+            android:inputType="textMultiLine"
+            android:textSize="12sp" >
 
-</RelativeLayout>
-<View 
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            />
-<RelativeLayout
+        </EditText>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:text="@string/comment" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+    <RelativeLayout
         android:id="@+id/relativeLayout2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -214,7 +212,6 @@
             android:text="@string/exchange"
             android:textColor="@color/white"
             android:textSize="18sp" />
-
     </RelativeLayout>
 
 </LinearLayout>

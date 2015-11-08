@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import android.R.integer;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +55,12 @@ public class B5_2_MyPointsDetailAdapter extends BaseAdapter {
 		TextView totoalPoints = (TextView) cellView.findViewById(R.id.tv_totoalPoints);//总积分
 		
 		add_time.setText(data.get(position).get("pl_addtime"));
-		point_change.setText(data.get(position).get("pl_points"));
+		if (Integer.parseInt(data.get(position).get("pl_points"))>0) {
+			point_change.setText("+"+data.get(position).get("pl_points"));
+		}else {
+			point_change.setText(data.get(position).get("pl_points"));
+		}
+		
 		if (data.get(position).get("pl_desc").length()<6) {
 			originOfPoints.setText(data.get(position).get("pl_desc"));
 		}else {

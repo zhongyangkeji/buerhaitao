@@ -34,6 +34,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
+            android:ems="8"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:text="店铺名称"
             android:textColor="#000" />
 

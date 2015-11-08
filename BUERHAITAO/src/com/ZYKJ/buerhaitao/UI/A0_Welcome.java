@@ -5,17 +5,11 @@ import java.util.TimerTask;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.data.AppValue;
 import com.ZYKJ.buerhaitao.utils.Tools;
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.map.MyLocationData;
 import com.umeng.message.PushAgent;
 
 

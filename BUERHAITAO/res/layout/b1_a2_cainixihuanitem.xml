@@ -31,6 +31,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
+                android:maxEms="8"
+                android:ellipsize="end"
                 android:singleLine="true"
                 android:text="产品名称"
                 android:textColor="#000"
@@ -43,8 +45,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:text="小于500米"
-                android:textSize="16sp" />
+                android:text="小于500米"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -58,6 +59,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textColor="#A0A0A0"
                 android:text="产品简介产品简介产品简介产品简介产品简介产品" />
         </LinearLayout>
 
@@ -72,6 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:text="￥"
+                android:textColor="#723E88"
                 android:textSize="16sp" />
 
             <TextView
@@ -79,10 +84,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="2dp"
                 android:layout_toRightOf="@id/qwe"
                 android:textColor="#723E88"
                 android:text="88" />
+
+            <TextView
+                android:id="@+id/tv_a2_jiage1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tv_a2_jiage"
+                android:layout_marginLeft="10dp"
+                android:textColor="#A0A0A0"
+                android:visibility="gone"
+                android:text="￥88"
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/im_moreinfoadapter"
@@ -103,7 +120,7 @@
         android:layout_alignParentRight="true"
         android:background="#F5F5F5"
         android:orientation="vertical"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -111,6 +128,7 @@
             android:layout_weight="10" >
 
             <TextView
+                android:id="@+id/tv_dianpuming"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -139,6 +157,7 @@
                 android:text="库存：" />
 
             <TextView
+                android:id="@+id/tv_kucun"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -160,6 +179,7 @@
                 android:text="销量：" />
 
             <TextView
+                android:id="@+id/tv_xiaoliang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -171,7 +191,8 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="0.0dp"
-            android:layout_weight="7" >
+            android:layout_weight="7" 
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"

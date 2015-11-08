@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.graphics.Paint;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -65,8 +66,9 @@ public class B1_a1_DaySpecialAdapter extends BaseAdapter {
 		ImageLoader.getInstance().displayImage((String)data.get(position).get("goods_image"), ViewHolder.im_b1_a1_pic1);
 		ViewHolder.tv_b1_a1_chanpinname1.setText(data.get(position).get("goods_name"));
 		ViewHolder.tv_b1_a1_chanpinjianjie1.setText(data.get(position).get("goods_jingle"));
-		ViewHolder.tv_b1_a1_zhehoujia1.setText(data.get(position).get("goods_promotion_price"));
-		ViewHolder.tv_b1_a1_yuanjia1.setText(data.get(position).get("goods_price"));
+		ViewHolder.tv_b1_a1_zhehoujia1.setText("￥"+data.get(position).get("goods_promotion_price"));
+		ViewHolder.tv_b1_a1_yuanjia1.setText("￥"+data.get(position).get("goods_price"));
+		ViewHolder.tv_b1_a1_yuanjia1.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 		
 		return convertView;
 	}

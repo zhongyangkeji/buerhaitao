@@ -51,7 +51,7 @@ public class B5_3_MyShaiDanQuan extends BaseActivity implements IXListViewListen
 		// TODO Auto-generated method stub
 		String headImgString=getSharedPreferenceValue("headImg_filename");
 		String username=getSharedPreferenceValue("username");
-//		if (headImgString!=null) //如果登陆过，显示之前本地的头像
+//		if (headImgString!=null) //如果登录过，显示之前本地的头像
 //		{
 ////			File f = new File(headImgString); 
 //		    Bitmap bitmap_head=BitmapFactory.decodeFile(headImgString);
