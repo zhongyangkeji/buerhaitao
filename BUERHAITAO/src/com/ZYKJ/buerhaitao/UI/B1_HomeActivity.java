@@ -80,6 +80,7 @@ public class B1_HomeActivity extends BaseActivity {
 			putSharedPreferenceValue("lng", "118.338501");
 			putSharedPreferenceValue("lat", "35.063786");
 			putSharedPreferenceValue("cityid", "235");
+			putSharedPreferenceValue("cityname", "临沂");
 			HttpUtils.getFirstList(res_getSyList, "235", "118.338501",
 					"35.063786");
 		} else {
@@ -88,6 +89,7 @@ public class B1_HomeActivity extends BaseActivity {
 			String cityid = getIntent().getStringExtra("cityid");
 			String lng = getIntent().getStringExtra("lng");
 			String lat = getIntent().getStringExtra("lat");
+			putSharedPreferenceValue("cityname", cityname);
 			putSharedPreferenceValue("lng", lng);
 			putSharedPreferenceValue("lat", lat);
 			putSharedPreferenceValue("cityid", cityid);
@@ -459,16 +461,21 @@ public class B1_HomeActivity extends BaseActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		cityname = data.getStringExtra("cityname");
-		tv_cityname.setText(cityname);
-		String cityid = data.getStringExtra("cityid");
-		String lng = data.getStringExtra("lng");
-		String lat = data.getStringExtra("lat");
-		putSharedPreferenceValue("lng", lng);
-		putSharedPreferenceValue("lat", lat);
-		putSharedPreferenceValue("cityid", cityid);
-		HttpUtils.getFirstList(res_getSyList, cityid, lng, lat);
-		super.onActivityResult(requestCode, resultCode, data);
+		try {
+			cityname = data.getStringExtra("cityname");
+			tv_cityname.setText(cityname);
+			String cityid = data.getStringExtra("cityid");
+			String lng = data.getStringExtra("lng");
+			String lat = data.getStringExtra("lat");
+			putSharedPreferenceValue("lng", lng);
+			putSharedPreferenceValue("lat", lat);
+			putSharedPreferenceValue("cityid", cityid);
+			HttpUtils.getFirstList(res_getSyList, cityid, lng, lat);
+			super.onActivityResult(requestCode, resultCode, data);
+		} catch (Exception e) {
+			
+		}
+		
 	}
 
 }
