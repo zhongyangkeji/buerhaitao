@@ -83,6 +83,7 @@
     <LinearLayout
         android:id="@+id/dp_tabs"
         android:layout_width="match_parent"
+        android:background="#FFF"
         android:layout_height="42dp">
         <LinearLayout
             android:id="@+id/ly_a4_category"

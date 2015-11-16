@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.data.Shop;
+import com.ZYKJ.buerhaitao.utils.ImageUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class B2_ShopsAdapter extends BaseAdapter {
@@ -58,7 +59,7 @@ public class B2_ShopsAdapter extends BaseAdapter {
 		}
         Shop shop = list.get(position);
         
-		ImageLoader.getInstance().displayImage(shop.getStore_avatar(), ViewHolder.im_a3_pic);
+        ImageUtil.displayImage2Circle(ViewHolder.im_a3_pic, shop.getStore_avatar(), 15f, null);
 		ViewHolder.tv_a3_storename.setText(shop.getStore_name());
 		ViewHolder.tv_a3_juli.setText(shop.getJuli());
 		ViewHolder.comment_rating_bar.setRating(Float.parseFloat(shop.getStore_desccredit()));

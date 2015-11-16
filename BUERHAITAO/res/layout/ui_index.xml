@@ -303,7 +303,7 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="145dp"
+                android:layout_height="158dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
@@ -351,22 +351,22 @@
                 <RelativeLayout
                     android:id="@+id/ll_dayspecial"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" >
+                    android:layout_height="110dp" 
+                    android:background="#F8F8F8">
 
                     <ImageView
                         android:id="@+id/im_b1_a1_pic"
                         android:layout_width="100dp"
-                        android:layout_height="80dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_height="100dp"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginRight="10dp"
+                        android:layout_centerVertical="true"
                         android:scaleType="fitXY"
                         android:src="@drawable/buerhaitao" />
 
                     <LinearLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="87dp"
+                        android:layout_height="110dp"
                         android:layout_marginTop="10dp"
                         android:layout_toRightOf="@id/im_b1_a1_pic"
                         android:orientation="vertical" >
@@ -382,9 +382,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentLeft="true"
                                 android:layout_centerVertical="true"
-                                android:singleLine="true"
                                 android:text="产品名称"
-                                android:textColor="#000"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                    			android:textColor="#696969"
                                 android:textSize="16sp" />
 
                             <TextView
@@ -397,7 +398,8 @@
                         <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="0.0dp"
-                            android:layout_weight="1.5"
+                            android:layout_weight="1"
+                            android:visibility="gone"
                             android:gravity="center_vertical" >
 
                             <TextView
@@ -421,8 +423,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:text="￥"
-                                android:textColor="#F85D58"
-                                android:textSize="16sp" />
+                    			android:textColor="#723E88"
+                    			android:textSize="19sp" />
                             <TextView
                                 android:id="@+id/tv_b1_a1_zhehoujia"
                                 android:layout_width="wrap_content"
@@ -430,8 +432,8 @@
                                 android:layout_centerVertical="true"
                                 android:layout_toRightOf="@id/qwe"
                                 android:text="88"
-                                android:textColor="#F85D58"
-                                android:textSize="16sp" />
+                    			android:textColor="#723E88"
+                    			android:textSize="19sp"/>
 
                             <TextView
                                 android:id="@+id/tv_b1_a1_yuanjia1"
@@ -458,6 +460,7 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="10dp"
+                                android:visibility="gone"
                                 android:src="@drawable/b1_a2_shenglve" />
                         </RelativeLayout>
                     </LinearLayout>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="60dp"
+    android:layout_height="50dp"
     android:background="#FFF" >
 
     <LinearLayout
         android:id="@+id/cb_layout"
         android:layout_width="50dp"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="#FFF"
         android:gravity="center" >
 
@@ -20,7 +20,7 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:gravity="center_vertical" >
 
         <ImageView
@@ -38,7 +38,7 @@
             android:singleLine="true"
             android:ellipsize="end"
             android:text="店铺名称"
-            android:textColor="#000" />
+            android:textColor="#636363" />
 
         <ImageView
             android:layout_width="20dp"
@@ -58,6 +58,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
+                android:textColor="#636363"
                 android:text="编辑" />
 
             <View

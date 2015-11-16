@@ -13,43 +13,39 @@
 
         <ImageView
             android:id="@+id/good_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginRight="10dp"
             android:scaleType="fitXY"
             android:src="@drawable/buerhaitao" />
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_toRightOf="@id/good_image"
             android:orientation="vertical" >
 
             <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="50dp" >
 
                 <TextView
                     android:id="@+id/good_name"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:layout_marginRight="40dp"
-                    android:text="产品名称"
-                    android:textSize="15sp" />
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:layout_centerVertical="true"
+                    android:text="产品名称asssssssssssssssssssssssdddddddddd"
+                    android:textColor="#454545"
+                    android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/good_juli"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="500m"
-                    android:textColor="@color/grey" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginTop="6dp" >
 
                 <TextView
@@ -65,16 +61,16 @@
 
             <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp" >
+                android:layout_height="50dp" >
 
                 <TextView
                     android:id="@+id/yuan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="￥"
-                    android:textColor="#704384"
-                    android:textSize="15sp" />
+                    android:layout_centerVertical="true"
+                    android:textColor="#723E88"
+                    android:textSize="19sp" />
 
                 <TextView
                     android:id="@+id/goods_price"
@@ -82,8 +78,9 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/yuan"
                     android:text="88"
-                    android:textColor="#704384"
-                    android:textSize="15sp" />
+                    android:layout_centerVertical="true"
+                    android:textColor="#723E88"
+                    android:textSize="19sp" />
 
             <TextView
                 android:id="@+id/goods_price1"
@@ -94,9 +91,16 @@
                 android:layout_marginLeft="10dp"
                 android:textColor="#A0A0A0"
                 android:visibility="gone"
-                android:text="￥88"
-                android:textSize="15sp" />
-
+                android:text="￥88"/>
+				<TextView
+                    android:id="@+id/good_juli"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:text="500m"
+                	android:textColor="#A0A0A0"/>
                 <ImageView
                     android:id="@+id/im_moreinfoadapter"
                     android:layout_width="wrap_content"
@@ -105,6 +109,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:clickable="true"
+                    android:visibility="gone"
                     android:src="@drawable/b1_a2_shenglve" />
             </RelativeLayout>
         </LinearLayout>

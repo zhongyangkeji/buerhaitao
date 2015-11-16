@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.data.Goods;
 import com.ZYKJ.buerhaitao.utils.ImageOptions;
+import com.ZYKJ.buerhaitao.utils.ImageUtil;
 
 public class B2_GoodsAdapter extends BaseAdapter {
 
@@ -63,8 +64,8 @@ public class B2_GoodsAdapter extends BaseAdapter {
             holder= (ViewHolder) convertView.getTag();
         }
         Goods good = list.get(position);
-        
-        ImageOptions.displayImage2Circle(holder.good_image, good.getGoods_image_url(), 10f);
+
+        ImageUtil.displayImage2Circle(holder.good_image, good.getGoods_image_url(), 15, null);
         holder.good_name.setText(good.getGoods_name()+"");
         holder.good_juli.setText(good.getJuli()+"");
         holder.good_jingle.setText(good.getGoods_jingle()+"");

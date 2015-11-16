@@ -36,6 +36,7 @@ import com.ZYKJ.buerhaitao.adapter.B1_a3_MeiRiHaoDianAdapter;
 import com.ZYKJ.buerhaitao.adapter.HorizontalListViewAdapter;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
+import com.ZYKJ.buerhaitao.utils.ImageUtil;
 import com.ZYKJ.buerhaitao.utils.Tools;
 import com.ZYKJ.buerhaitao.view.AutoListView;
 import com.ZYKJ.buerhaitao.view.RequestDailog;
@@ -212,8 +213,7 @@ public class B1_HomeActivity extends BaseActivity {
 					// 天天特价
 					org.json.JSONArray arr = datas.getJSONArray("day_special");
 					JSONObject jsonIt = arr.getJSONObject(0);
-					ImageLoader.getInstance().displayImage(
-							jsonIt.getString("goods_image"), im_b1_a1_pic);
+					ImageUtil.displayImage2Circle(im_b1_a1_pic, jsonIt.getString("goods_image"), 15, null);
 					tv_b1_a1_chanpinname
 							.setText(jsonIt.getString("goods_name"));
 					tv_b1_a1_chanpinjianjie.setText(jsonIt

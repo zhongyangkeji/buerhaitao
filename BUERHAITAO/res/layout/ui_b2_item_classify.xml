@@ -4,18 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
-    android:padding="5dp"
+    android:padding="2dp"
     android:orientation="vertical" >
     <ImageView 
         android:id="@+id/classify_image"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:scaleType="fitXY"
         android:src="@drawable/buerhaitao"/>
     <TextView 
         android:id="@+id/classify_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:layout_marginTop="5dp"
+    	android:layout_marginLeft="5dp"
         android:text="@string/classify_ladys"/>
 </LinearLayout>

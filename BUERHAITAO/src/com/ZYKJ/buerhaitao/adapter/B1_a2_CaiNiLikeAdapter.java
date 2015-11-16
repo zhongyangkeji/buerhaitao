@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.UI.B5_11_1_ExchangeDetail;
 import com.ZYKJ.buerhaitao.adapter.B5_11_PointsMallAdapter.ExchangeListener;
+import com.ZYKJ.buerhaitao.utils.ImageUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
@@ -77,7 +78,7 @@ public class B1_a2_CaiNiLikeAdapter extends BaseAdapter {
 		}else{
 			ViewHolder=(ViewHolder) convertView.getTag();
 		}
-		ImageLoader.getInstance().displayImage((String)data.get(position).get("goods_image"), ViewHolder.im_a2_pic);
+		ImageUtil.displayImage2Circle(ViewHolder.im_a2_pic, (String)data.get(position).get("goods_image"), 15f, null);
 		ViewHolder.tv_a2_chanpinname.setText(data.get(position).get("goods_name"));
 		ViewHolder.tv_a2_juli.setText(data.get(position).get("juli"));
 		ViewHolder.tv_a2_chanpinjianjie.setText(data.get(position).get("goods_jingle"));

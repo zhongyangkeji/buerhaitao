@@ -1,31 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F5"
     android:orientation="vertical" >
 
+    <CheckBox
+        android:id="@+id/children_cb"
+        android:layout_width="50dp"
+        android:layout_height="100dp"
+        android:button="@drawable/checkbox_style1"
+        android:focusable="false"
+        android:scaleX="0.55"
+        android:scaleY="0.55" />
+
     <LinearLayout
+        android:id="@+id/ll_abc"
         android:layout_width="fill_parent"
         android:layout_height="100dp"
+        android:layout_toRightOf="@id/children_cb"
         android:background="#F8F8F8"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
-
-        <LinearLayout
-            android:layout_width="47dp"
-            android:layout_height="fill_parent"
-            android:gravity="center_vertical|right"
-            android:orientation="vertical" >
-            <CheckBox
-                android:id="@+id/children_cb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-	       		android:scaleX="0.55"
-	       		android:scaleY="0.55"
-	        	android:button="@drawable/checkbox_style1"
-                android:focusable="false"/>
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -39,7 +35,7 @@
                 android:src="@drawable/buerhaitao" />
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:orientation="vertical" >
 
@@ -49,46 +45,52 @@
                     android:layout_height="fill_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical" >
 
                     <TextView
                         android:id="@+id/children_name"
                         android:layout_width="wrap_content"
                         android:layout_height="0.0dp"
                         android:layout_weight="1.5"
-                        android:maxLines="2"
                         android:ellipsize="end"
-                        android:text="沙发水电费水电费三分玩儿玩儿玩儿" />
+                        android:maxLines="2"
+                        android:text="沙发水电费水电费三分玩儿玩儿玩儿"
+                        android:textColor="#787878" />
 
                     <TextView
                         android:id="@+id/tv_spec"
                         android:layout_width="wrap_content"
                         android:layout_height="0.0dp"
-                        android:layout_weight="1.5"/>
+                        android:layout_weight="1.3"
+                        android:singleLine="true"
+                        android:textColor="#A0A0A0" />
 
                     <RelativeLayout
                         android:layout_width="fill_parent"
                         android:layout_height="0.0dp"
-                        android:layout_weight="1" >
-						<LinearLayout 
+                        android:layout_weight="1.2" >
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:layout_marginBottom="5dp" >
-						    
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="￥"
-                            android:textColor="#704384" />
 
-                        <TextView
-                            android:id="@+id/tv_goods_price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="52.5"
-                            android:textColor="#704384" />
-						</LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="￥"
+                                android:textColor="#704384"
+                                android:textSize="19sp" />
+
+                            <TextView
+                                android:id="@+id/tv_goods_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="52.5"
+                                android:textColor="#704384"
+                                android:textSize="19sp" />
+                        </LinearLayout>
 
                         <TextView
                             android:id="@+id/tv_goods_num"
@@ -106,8 +108,8 @@
                     android:id="@+id/ll_b3shopedit"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:visibility="gone"
-                    android:layout_marginLeft="5dp"  >
+                    android:layout_marginLeft="5dp"
+                    android:visibility="gone" >
 
                     <LinearLayout
                         android:id="@+id/ll_del"
@@ -184,8 +186,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
-                                android:layout_marginRight="25dp"
                                 android:layout_marginLeft="5dp"
+                                android:layout_marginRight="25dp"
                                 android:text="颜色:红" />
                         </RelativeLayout>
                     </LinearLayout>
@@ -211,13 +213,16 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/view_a"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
+        android:layout_below="@id/ll_abc"
         android:background="#DADADA" />
 
     <View
         android:layout_width="fill_parent"
-        android:layout_height="10dp"
+        android:layout_height="5dp"
+        android:layout_below="@id/view_a"
         android:background="#F5F5F5" />
 
-</LinearLayout>
+</RelativeLayout>

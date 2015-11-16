@@ -17,6 +17,7 @@ import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.adapter.B1_a2_CaiNiLikeAdapter.MoreInfoListener;
 import com.ZYKJ.buerhaitao.adapter.B1_a2_CaiNiLikeAdapter.ViewHolder;
 import com.ZYKJ.buerhaitao.adapter.B1_a2_CaiNiLikeAdapter.YinCangListener;
+import com.ZYKJ.buerhaitao.utils.ImageUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class B0_StoreInfoAdapter extends BaseAdapter {
@@ -69,7 +70,7 @@ public class B0_StoreInfoAdapter extends BaseAdapter {
 		}else{
 			ViewHolder=(ViewHolder) convertView.getTag();
 		}
-		ImageLoader.getInstance().displayImage((String)data.get(position).get("goods_image_url"), ViewHolder.im_a3_pic1);
+		ImageUtil.displayImage2Circle(ViewHolder.im_a3_pic1, (String)data.get(position).get("goods_image_url"), 15f, null);
 		ViewHolder.tv_a3_storename1.setText(data.get(position).get("goods_name").toString());
 		ViewHolder.tv_chanpinjianjie.setText(data.get(position).get("goods_jingle").toString());
 //		ViewHolder.comment_rating_bar1.setRating(Float.parseFloat(data.get(position).get("evaluation_good_star")));
