@@ -48,7 +48,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:text="全选"
-                android:textColor="#787878"/>
+                android:textColor="#000" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -59,7 +59,7 @@
                     android:layout_width="120dp"
                     android:layout_height="fill_parent"
                     android:layout_alignParentRight="true"
-                    android:background="#FF9900"
+                    android:background="#F10583"
                     android:gravity="center"
                     android:text="结算（0）"
                     android:textColor="#FFF"
@@ -82,16 +82,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:textColor="#787878"
                             android:text="合计：" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginRight="3dp"
                             android:text="￥"
-                            android:textSize="19sp"
-                            android:textColor="#6D438B" />
+                            android:textColor="#F10583" />
 
                         <TextView
                             android:id="@+id/tv_sumgoods"
@@ -99,9 +98,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="3dp"
-                            android:textSize="19sp"
                             android:text="0.00"
-                            android:textColor="#6D438B" />
+                            android:textColor="#F10583" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -116,8 +114,6 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="3dp"
-                            android:textSize="12sp"
-                            android:textColor="#787878"
                             android:text="不含运费" />
                     </LinearLayout>
                 </LinearLayout>

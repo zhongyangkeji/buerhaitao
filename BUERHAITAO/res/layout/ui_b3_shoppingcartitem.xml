@@ -1,29 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F5"
     android:orientation="vertical" >
 
-    <CheckBox
-        android:id="@+id/children_cb"
-        android:layout_width="50dp"
-        android:layout_height="100dp"
-        android:button="@drawable/checkbox_style1"
-        android:focusable="false"
-        android:scaleX="0.55"
-        android:scaleY="0.55" />
-
     <LinearLayout
-        android:id="@+id/ll_abc"
         android:layout_width="fill_parent"
         android:layout_height="100dp"
-        android:layout_toRightOf="@id/children_cb"
         android:background="#F8F8F8"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
-<<<<<<< HEAD
-=======
 
         <LinearLayout
             android:layout_width="47dp"
@@ -38,7 +25,6 @@
 	       		android:scaleY="0.55"
 	        	android:button="@drawable/checkbox_style1"/>
         </LinearLayout>
->>>>>>> branch 'master' of https://github.com/zhongyangkeji/buerhaitao.git
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -52,7 +38,7 @@
                 android:src="@drawable/food_1" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:orientation="vertical" >
 
@@ -69,56 +55,32 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0.0dp"
                         android:layout_weight="1.5"
-                        android:ellipsize="end"
                         android:maxLines="2"
-                        android:text="沙发水电费水电费三分玩儿玩儿玩儿"
-                        android:textColor="#787878" />
+                        android:ellipsize="end"
+                        android:text="沙发水电费水电费三分玩儿玩儿玩儿" />
 
                     <TextView
                         android:id="@+id/tv_spec"
                         android:layout_width="wrap_content"
                         android:layout_height="0.0dp"
-                        android:layout_weight="1.3"
-                        android:singleLine="true"
-                        android:textColor="#A0A0A0" />
+                        android:layout_weight="1.5"/>
 
                     <RelativeLayout
                         android:layout_width="fill_parent"
                         android:layout_height="0.0dp"
-                        android:layout_weight="1.2" >
-
-                        <LinearLayout
+                        android:layout_weight="1" >
+						<LinearLayout 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:layout_marginBottom="5dp" >
-<<<<<<< HEAD
-=======
 						    
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="￥"
                             android:textColor="#F10583" />
->>>>>>> branch 'master' of https://github.com/zhongyangkeji/buerhaitao.git
 
-<<<<<<< HEAD
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="￥"
-                                android:textColor="#704384"
-                                android:textSize="19sp" />
-
-                            <TextView
-                                android:id="@+id/tv_goods_price"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="52.5"
-                                android:textColor="#704384"
-                                android:textSize="19sp" />
-                        </LinearLayout>
-=======
                         <TextView
                             android:id="@+id/tv_goods_price"
                             android:layout_width="wrap_content"
@@ -126,7 +88,6 @@
                             android:text="52.5"
                             android:textColor="#F10583" />
 						</LinearLayout>
->>>>>>> branch 'master' of https://github.com/zhongyangkeji/buerhaitao.git
 
                         <TextView
                             android:id="@+id/tv_goods_num"
@@ -223,8 +184,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
-                                android:layout_marginLeft="5dp"
                                 android:layout_marginRight="25dp"
+                                android:layout_marginLeft="5dp"
                                 android:text="颜色:红" />
                         </RelativeLayout>
                     </LinearLayout>
@@ -250,16 +211,13 @@
     </LinearLayout>
 
     <View
-        android:id="@+id/view_a"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/ll_abc"
         android:background="#DADADA" />
 
     <View
         android:layout_width="fill_parent"
-        android:layout_height="5dp"
-        android:layout_below="@id/view_a"
+        android:layout_height="10dp"
         android:background="#F5F5F5" />
 
-</RelativeLayout>
+</LinearLayout>
