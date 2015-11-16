@@ -39,7 +39,7 @@
                     android:id="@+id/im_checkall"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/ck_unchecked" />
+                    android:src="@drawable/checkbox_style2" />
             </LinearLayout>
 
             <TextView
@@ -124,16 +124,15 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_above="@id/gwcdb" >
-
             <ExpandableListView
                 android:id="@+id/list_shoppingcar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-        </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 
 </LinearLayout>
