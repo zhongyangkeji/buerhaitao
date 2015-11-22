@@ -48,7 +48,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:text="全选"
-                android:textColor="#000" />
+                android:textColor="#787878" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -82,6 +82,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
+                            android:textColor="#787878"
                             android:text="合计：" />
 
                         <TextView
@@ -90,6 +91,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="3dp"
                             android:text="￥"
+                            android:textSize="19sp"
                             android:textColor="@color/theme_color" />
 
                         <TextView
@@ -99,6 +101,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="3dp"
                             android:text="0.00"
+                        	android:textSize="19sp"
                             android:textColor="@color/theme_color"/>
                     </LinearLayout>
 
@@ -114,6 +117,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="3dp"
+                            android:textColor="#787878"
                             android:text="不含运费" />
                     </LinearLayout>
                 </LinearLayout>

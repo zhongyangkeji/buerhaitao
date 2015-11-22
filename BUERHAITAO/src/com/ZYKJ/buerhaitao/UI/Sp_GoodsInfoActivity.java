@@ -173,7 +173,7 @@ public class Sp_GoodsInfoActivity extends BaseActivity {
 		viewPager = (AutoScrollViewPager) findViewById(R.id.index_viewpage);
 		LayoutParams pageParms = viewPager.getLayoutParams();
 		pageParms.width = Tools.M_SCREEN_WIDTH;
-		pageParms.height = Tools.M_SCREEN_WIDTH*2/3;
+		pageParms.height = Tools.M_SCREEN_WIDTH;
 
 		viewPager.setInterval(2000);
 		viewPager.startAutoScroll();

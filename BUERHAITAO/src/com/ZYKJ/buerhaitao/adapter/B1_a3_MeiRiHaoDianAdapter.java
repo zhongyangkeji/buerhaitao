@@ -19,8 +19,11 @@ import android.widget.Toast;
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.UI.B1_HomeActivity;
 import com.ZYKJ.buerhaitao.UI.B1_a3_MeiRiHaoDian;
+import com.ZYKJ.buerhaitao.utils.AnimateFirstDisplayListener;
+import com.ZYKJ.buerhaitao.utils.ImageOptions;
 import com.ZYKJ.buerhaitao.utils.ImageUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 /**
  * @author lss 2015年6月24日 每日好店adapter
@@ -28,6 +31,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  */
 public class B1_a3_MeiRiHaoDianAdapter  extends BaseAdapter {
 	private Activity context;
+	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 	List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 
 	public B1_a3_MeiRiHaoDianAdapter(Activity context, List<Map<String, String>> data) {
@@ -71,7 +75,9 @@ public class B1_a3_MeiRiHaoDianAdapter  extends BaseAdapter {
 		}else{
 			ViewHolder=(ViewHolder) convertView.getTag();
 		}
-		ImageUtil.displayImage2Circle(ViewHolder.im_a3_pic, (String)data.get(position).get("store_label"), 15f, null);
+		ImageLoader.getInstance().displayImage((String)data.get(position).get("store_label"),  ViewHolder.im_a3_pic, ImageOptions.getOpstion(), animateFirstListener);
+		
+//		ImageLoader.getInstance().displayImage((String)data.get(position).get("store_label"), ViewHolder.im_a3_pic);
 		ViewHolder.tv_a3_storename.setText(data.get(position).get("store_name"));
 		ViewHolder.tv_a3_juli.setText(data.get(position).get("juli"));
 		ViewHolder.comment_rating_bar.setRating(Float.parseFloat(data.get(position).get("store_desccredit")));

@@ -150,6 +150,7 @@ public class B1_a1_TianTianTeJia extends BaseActivity implements IXListViewListe
 	@Override
 	public void onLoadMore(int id) {
 		// TODO Auto-generated method stub
-//		Toast.makeText(this, "只有这么多数据", Toast.LENGTH_LONG).show();
+		RequestDailog.showDialog(this, "正在加载数据，请稍后");
+		HttpUtils.getDaySpecial(res_dayspecial, "0",getSharedPreferenceValue("cityid"),getSharedPreferenceValue("lng"),getSharedPreferenceValue("lat"));
 	}
 }

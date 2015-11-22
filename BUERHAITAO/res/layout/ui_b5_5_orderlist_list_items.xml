@@ -16,6 +16,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
             android:layout_toRightOf="@+id/imageView1"
+            android:textColor="#636364"
             android:textSize="16sp"
             android:text="店铺名称" />
 
@@ -71,6 +72,7 @@
             android:layout_alignBottom="@+id/tv_orderprice"
             android:layout_marginRight="27dp"
             android:layout_toLeftOf="@+id/tv_orderprice"
+            android:textColor="#696969"
             android:text="共X件商品" />
 
         <TextView
@@ -80,6 +82,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="14dp"
+            android:textColor="#696969"
             android:text="实付:￥00.00" />
 
     </RelativeLayout>

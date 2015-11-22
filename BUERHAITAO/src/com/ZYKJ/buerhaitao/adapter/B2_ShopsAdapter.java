@@ -58,8 +58,13 @@ public class B2_ShopsAdapter extends BaseAdapter {
 			ViewHolder=(ViewHolder) convertView.getTag();
 		}
         Shop shop = list.get(position);
-        
-        ImageUtil.displayImage2Circle(ViewHolder.im_a3_pic, shop.getStore_avatar(), 15f, null);
+        String a = shop.getStore_avatar();
+        if (a==null) {
+			
+		}else {
+			ImageLoader.getInstance().displayImage(shop.getStore_avatar(), ViewHolder.im_a3_pic);
+//			ImageUtil.displayImage2Circle(ViewHolder.im_a3_pic, shop.getStore_avatar(), 15f, null);
+		}
 		ViewHolder.tv_a3_storename.setText(shop.getStore_name());
 		ViewHolder.tv_a3_juli.setText(shop.getJuli());
 		ViewHolder.comment_rating_bar.setRating(Float.parseFloat(shop.getStore_desccredit()));
