@@ -4,15 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONException;
-
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.media.ThumbnailUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -21,9 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ZYKJ.buerhaitao.R;
+import com.ZYKJ.buerhaitao.utils.AnimateFirstDisplayListener;
+import com.ZYKJ.buerhaitao.utils.ImageOptions;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class HorizontalListViewAdapter extends BaseAdapter {
 
@@ -31,6 +28,7 @@ public class HorizontalListViewAdapter extends BaseAdapter {
 	private Activity context;
     Bitmap iconBitmap;  
 //    private int selectIndex = -1;  
+	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
   
     public HorizontalListViewAdapter(Activity context, List<Map<String, String>> data){  
         this.context = context;  
@@ -72,8 +70,8 @@ public class HorizontalListViewAdapter extends BaseAdapter {
         String urlString;
 		urlString = jsonObject.getString("0");
 		Log.e("urlString", urlString);
-		ImageLoader.getInstance().displayImage(urlString, holder.iv_image);
-        ImageLoader.getInstance().displayImage(data.get(position).get("avatar"), holder.iv_avatar);
+		ImageLoader.getInstance().displayImage(urlString, holder.iv_image, ImageOptions.getOpstion(), animateFirstListener);
+        ImageLoader.getInstance().displayImage(data.get(position).get("avatar"), holder.iv_avatar, ImageOptions.getOpstion(), animateFirstListener);
         holder.tv_nickname.setText(data.get(position).get("member_name"));
         holder.tv_content.setText(data.get(position).get("description"));
         holder.tv_zannumber.setText("("+data.get(position).get("praise")+")");

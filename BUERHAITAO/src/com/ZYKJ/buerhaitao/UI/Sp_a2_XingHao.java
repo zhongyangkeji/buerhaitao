@@ -22,14 +22,15 @@ import android.widget.Toast;
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
 import com.ZYKJ.buerhaitao.data.ChanPinCanShu;
+import com.ZYKJ.buerhaitao.utils.AnimateFirstDisplayListener;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
-import com.ZYKJ.buerhaitao.utils.Tools;
+import com.ZYKJ.buerhaitao.utils.ImageOptions;
 import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
-import com.google.gson.JsonObject;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 /**
  * @author lss 2015年7月4日选择型号
@@ -52,6 +53,7 @@ public class Sp_a2_XingHao extends BaseActivity {
 	private JSONObject choosejiage,choosexinghao;
 	private String goodsid=null;
 	private ImageView im_gwtouxiang;
+	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -82,7 +84,7 @@ public class Sp_a2_XingHao extends BaseActivity {
 		tv_addcar = (TextView) findViewById(R.id.tv_addcar);
 		im_gwtouxiang = (ImageView)findViewById(R.id.im_gwtouxiang);
 		try {
-			ImageLoader.getInstance().displayImage(getIntent().getStringExtra("aaa"), im_gwtouxiang);			
+			ImageLoader.getInstance().displayImage(getIntent().getStringExtra("aaa"), im_gwtouxiang, ImageOptions.getOpstion(), animateFirstListener);			
 		} catch (Exception e) {
 			
 		}

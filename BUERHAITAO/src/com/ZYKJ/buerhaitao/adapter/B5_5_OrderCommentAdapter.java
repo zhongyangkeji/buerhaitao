@@ -1,14 +1,9 @@
 package com.ZYKJ.buerhaitao.adapter;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.http.Header;
@@ -18,11 +13,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -36,19 +27,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
-import com.ZYKJ.buerhaitao.UI.B5_MyActivity;
 import com.ZYKJ.buerhaitao.data.AppValue;
+import com.ZYKJ.buerhaitao.utils.AnimateFirstDisplayListener;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
+import com.ZYKJ.buerhaitao.utils.ImageOptions;
 import com.ZYKJ.buerhaitao.utils.Tools;
-import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.ZYKJ.buerhaitao.view.UIDialog;
-import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class B5_5_OrderCommentAdapter extends BaseAdapter {
 	
@@ -64,6 +54,7 @@ public class B5_5_OrderCommentAdapter extends BaseAdapter {
 	private String filename;
 	private int position1;
 	String  userid,key,order_id;
+	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
     
 	public B5_5_OrderCommentAdapter(Activity c, JSONArray extend_order_goods2 , String userid, String key, String order_id) {
 		this.c = c;
@@ -118,7 +109,7 @@ public class B5_5_OrderCommentAdapter extends BaseAdapter {
 			JSONObject  extend_order_goods1 = (JSONObject) extend_order_goods.get(position);
 			String goods_image_url = extend_order_goods1.getString("goods_image_url");
 			String goods_id = extend_order_goods1.getString("goods_id").toString();
-			ImageLoader.getInstance().displayImage(goods_image_url, viewHolder.iv_product);//设置产品图片
+			ImageLoader.getInstance().displayImage(goods_image_url, viewHolder.iv_product, ImageOptions.getOpstion(), animateFirstListener);//设置产品图片
 			viewHolder.tv_productName.setText(extend_order_goods1.getString("goods_name").toString());//设置产品名称
 			viewHolder.tv_goodsprice.setText("￥"+extend_order_goods1.getString("goods_price").toString());//设置产品价格
 			viewHolder.tv_number.setText("X"+extend_order_goods1.getString("goods_num").toString());
@@ -128,7 +119,7 @@ public class B5_5_OrderCommentAdapter extends BaseAdapter {
 			String image = AppValue.map_photo.get("avatar");
 			viewHolder.btn_addComment.setOnClickListener(new Comment(key,goods_id,comment,score,image,order_id));
 			Tools.Log("userid"+userid+"avatar"+AppValue.map_photo.get("avatar"));
-			ImageLoader.getInstance().displayImage("http://115.28.21.137/data/upload/shop/member/"+userid+"/"+image, viewHolder.iv_takePhoto);
+			ImageLoader.getInstance().displayImage("http://115.28.21.137/data/upload/shop/member/"+userid+"/"+image, viewHolder.iv_takePhoto, ImageOptions.getOpstion(), animateFirstListener);
     	} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

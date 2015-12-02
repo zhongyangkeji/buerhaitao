@@ -105,10 +105,24 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp">
-            	<com.ZYKJ.buerhaitao.customview.B1_HomeShowView
+
+			    <cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager
+			        android:id="@+id/slideshowView"
+			        android:layout_width="match_parent"
+			        android:layout_height="match_parent"
+			        android:background="@drawable/buerhaitao"/>
+                <LinearLayout
+                    android:id="@+id/gallery_point_linear1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="#00f0eff4"
+                    android:gravity="center"
+                    android:orientation="horizontal"/>
+            	<!-- <com.ZYKJ.buerhaitao.customview.B1_HomeShowView
                 	android:id="@+id/slideshowView"
                 	android:layout_width="fill_parent"
-                	android:layout_height="fill_parent"/>
+                	android:layout_height="fill_parent"/> -->
 			    <ImageView 
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"

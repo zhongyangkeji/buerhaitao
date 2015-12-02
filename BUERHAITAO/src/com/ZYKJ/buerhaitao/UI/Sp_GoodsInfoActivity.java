@@ -32,11 +32,14 @@ import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.adapter.IndexPageAdapter1;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
+import com.ZYKJ.buerhaitao.utils.AnimateFirstDisplayListener;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
+import com.ZYKJ.buerhaitao.utils.ImageOptions;
 import com.ZYKJ.buerhaitao.utils.Tools;
 import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 /**
  * @author lss 2015年7月1日 商品详情
@@ -112,6 +115,7 @@ public class Sp_GoodsInfoActivity extends BaseActivity {
 	/** 当前的位置 */
 	private int now_pos = 0;
 	private WebView webView;
+	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -158,8 +162,10 @@ public class Sp_GoodsInfoActivity extends BaseActivity {
 				+ goods_id;
 		webView.loadUrl(url);
 		WebSettings webSettings = webView.getSettings();
-		webSettings.setJavaScriptEnabled(true);
-		webSettings.setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
+		webSettings.setUseWideViewPort(true);
+		webSettings.setLoadWithOverviewMode(true);
+//		webSettings.setJavaScriptEnabled(true);
+		webSettings.setLayoutAlgorithm(LayoutAlgorithm.NARROW_COLUMNS);
 		webView.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -394,7 +400,7 @@ public class Sp_GoodsInfoActivity extends BaseActivity {
 			// JSONArray jsonarray = xuanxiang.getJSONArray("1");
 			JSONArray jsonarray = xuanxiang.getJSONArray(leixing1
 					.getJSONObject(0).getString("id").toString());
-			List<String> list = new ArrayList<String>();
+			/*List<String> list = new ArrayList<String>();
 			for (int i = 0; i < jsonarray.length(); i++) {
 				try {
 					list.add(jsonarray.getString(i));
@@ -402,9 +408,11 @@ public class Sp_GoodsInfoActivity extends BaseActivity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
-			String[] stringArray = list.toArray(new String[list.size()]);
-			itaddcar1.putExtra("arry1", stringArray);
+			}*/
+			itaddcar1.putExtra("arry1", jsonarray.toString());
+			
+//			String[] stringArray = list.toArray(new String[list.size()]);
+//			itaddcar1.putExtra("arry1", stringArray);
 
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -502,7 +510,7 @@ public class Sp_GoodsInfoActivity extends BaseActivity {
 						// 用户头像
 						ImageLoader.getInstance().displayImage(
 								(String) jsonitemz.getString("geval_avatar"),
-								im_userimage);
+								im_userimage, ImageOptions.getOpstion(), animateFirstListener);
 						// 用户名称
 						tv_username.setText(jsonitemz
 								.getString("geval_frommembername"));
@@ -656,4 +664,13 @@ public class Sp_GoodsInfoActivity extends BaseActivity {
 			}
 		}
 	};
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		webView.destroy();
+	}
+	
+	
+	
 }

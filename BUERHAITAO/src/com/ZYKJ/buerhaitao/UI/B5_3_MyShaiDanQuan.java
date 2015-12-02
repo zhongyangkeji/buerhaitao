@@ -16,19 +16,21 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.adapter.B5_3_MyShaiDanQuanAdapter;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
+import com.ZYKJ.buerhaitao.utils.AnimateFirstDisplayListener;
 import com.ZYKJ.buerhaitao.utils.CircularImage;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
+import com.ZYKJ.buerhaitao.utils.ImageOptions;
 import com.ZYKJ.buerhaitao.utils.Tools;
 import com.ZYKJ.buerhaitao.view.MyListView;
 import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.external.maxwin.view.XListView.IXListViewListener;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 /**
  * 晒单圈 （我的）
@@ -46,6 +48,8 @@ public class B5_3_MyShaiDanQuan extends BaseActivity implements IXListViewListen
 	private MyListView lv_shaidanquan_mypublish;
 	List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
 	B5_3_MyShaiDanQuanAdapter adapter;
+	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
+	
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -57,7 +61,7 @@ public class B5_3_MyShaiDanQuan extends BaseActivity implements IXListViewListen
 //		    Bitmap bitmap_head=BitmapFactory.decodeFile(headImgString);
 //		    img_head_myshaidanquan.setImageBitmap(bitmap_head);
 //		}
-		ImageLoader.getInstance().displayImage(getSharedPreferenceValue("avatar"), img_head_myshaidanquan);
+		ImageLoader.getInstance().displayImage(getSharedPreferenceValue("avatar"), img_head_myshaidanquan, ImageOptions.getOpstion(), animateFirstListener);
 		if (username!=null) {
 			tv_nickname_myshaidanquan.setText(username);
 		}

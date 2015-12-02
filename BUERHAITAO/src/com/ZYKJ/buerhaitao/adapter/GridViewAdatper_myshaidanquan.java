@@ -4,28 +4,27 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.ZYKJ.buerhaitao.R;
-import com.ZYKJ.buerhaitao.UI.PublishedActivity;
-import com.ZYKJ.buerhaitao.UI.PublishedActivity.PopupWindows;
-import com.ZYKJ.buerhaitao.utils.HttpUtils;
+import com.ZYKJ.buerhaitao.utils.AnimateFirstDisplayListener;
+import com.ZYKJ.buerhaitao.utils.ImageOptions;
 import com.ZYKJ.buerhaitao.utils.Tools;
-import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.ZYKJ.buerhaitao.view.UIDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class GridViewAdatper_myshaidanquan extends BaseAdapter {
 
 	private Activity c;
 	private JSONObject obj;
 	ViewHolder viewHolder = null;
+	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
+	
 	public GridViewAdatper_myshaidanquan(Activity c, JSONObject obj) {
 		this.c = c;
 		this.obj = obj;
@@ -73,7 +72,7 @@ public class GridViewAdatper_myshaidanquan extends BaseAdapter {
 		
 			pathString = obj.getString(position+"");
 			Tools.Log("pathString="+pathString);
-			ImageLoader.getInstance().displayImage(pathString, viewHolder.photo);
+			ImageLoader.getInstance().displayImage(pathString, viewHolder.photo, ImageOptions.getOpstion(), animateFirstListener);
 			viewHolder.photo.setOnClickListener(new ShowPhoto(position,pathString));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

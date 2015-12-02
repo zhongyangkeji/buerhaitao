@@ -13,13 +13,16 @@ import android.widget.TextView;
 
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.data.Shop;
-import com.ZYKJ.buerhaitao.utils.ImageUtil;
+import com.ZYKJ.buerhaitao.utils.AnimateFirstDisplayListener;
+import com.ZYKJ.buerhaitao.utils.ImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class B2_ShopsAdapter extends BaseAdapter {
 
 	private List<Shop> list;
     private LayoutInflater inflater;
+	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 	
 	public B2_ShopsAdapter(Context context, List<Shop> list) {
         inflater = LayoutInflater.from(context);
@@ -62,7 +65,7 @@ public class B2_ShopsAdapter extends BaseAdapter {
         if (a==null) {
 			
 		}else {
-			ImageLoader.getInstance().displayImage(shop.getStore_avatar(), ViewHolder.im_a3_pic);
+			ImageLoader.getInstance().displayImage(shop.getStore_avatar(), ViewHolder.im_a3_pic, ImageOptions.getOpstion(), animateFirstListener);
 //			ImageUtil.displayImage2Circle(ViewHolder.im_a3_pic, shop.getStore_avatar(), 15f, null);
 		}
 		ViewHolder.tv_a3_storename.setText(shop.getStore_name());
