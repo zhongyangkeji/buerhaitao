@@ -17,11 +17,14 @@ import android.widget.Toast;
 
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.base.BaseActivity;
+import com.ZYKJ.buerhaitao.utils.AnimateFirstDisplayListener;
 import com.ZYKJ.buerhaitao.utils.HttpUtils;
+import com.ZYKJ.buerhaitao.utils.ImageOptions;
 import com.ZYKJ.buerhaitao.utils.Tools;
 import com.ZYKJ.buerhaitao.view.RequestDailog;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 /**
  * 兑换详情页面
  * @author zyk
@@ -35,6 +38,7 @@ public class B5_11_1_ExchangeDetail extends BaseActivity {
 	Button btn_exchange;
 	String pgoods_id,address_id ;
 	public EditText et_pcart_message;
+	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 	
 	private int GetAddress=1;
 	@Override
@@ -60,7 +64,7 @@ public class B5_11_1_ExchangeDetail extends BaseActivity {
 		et_pcart_message=(EditText) findViewById(R.id.et_pcart_message);
 		
 		
-		ImageLoader.getInstance().displayImage(bundle.getString("pgoods_image"), iv_product);
+		ImageLoader.getInstance().displayImage(bundle.getString("pgoods_image"), iv_product, ImageOptions.getOpstion(), animateFirstListener);
 		tv_producName.setText(bundle.getString("pgoods_name"));
 		tv_productIntro.setText(bundle.getString("pgoods_body"));
 		tv_productPoints.setText(bundle.getString("pgoods_points"));

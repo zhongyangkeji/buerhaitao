@@ -1,7 +1,5 @@
 package com.ZYKJ.buerhaitao.adapter;
 
-import java.util.List;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,10 +7,12 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import com.ZYKJ.buerhaitao.data.HttpAction;
+
+import com.ZYKJ.buerhaitao.utils.AnimateFirstDisplayListener;
 import com.ZYKJ.buerhaitao.utils.ImageOptions;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 /**
  * 轮播功能的实现
@@ -26,6 +26,7 @@ public class IndexPageAdapter1 extends RecyclingPagerAdapter {
 	private Context context;
 	// 下载图片的属性
 	private DisplayImageOptions m_options;
+	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 
 	public IndexPageAdapter1(Context context, JSONObject datsj) {
 		this.datsj = datsj;
@@ -95,7 +96,7 @@ public class IndexPageAdapter1 extends RecyclingPagerAdapter {
 		// holder.imageView.setErrorImageResId(R.drawable.pic_default);
 		// holder.imageView.setImageUrl(
 		// HttpAction.SERVER_IP + carousel.getImgurl(), m_loader);
-		ImageLoader.getInstance().displayImage(aaa, holder.imageView);
+		ImageLoader.getInstance().displayImage(aaa, holder.imageView, ImageOptions.getOpstion(), animateFirstListener);
 		return convertView;
 	}
 

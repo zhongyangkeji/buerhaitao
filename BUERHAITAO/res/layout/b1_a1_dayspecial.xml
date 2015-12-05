@@ -7,13 +7,15 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="110dp" >
 
         <ImageView
             android:id="@+id/im_b1_a1_pic1"
             android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:layout_margin="10dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
             android:src="@drawable/buerhaitao" />
 
         <LinearLayout
@@ -33,9 +35,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:singleLine="true"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:text="产品名称"
-                    android:textColor="#000"
+                    android:textColor="#696969"
                     android:textSize="16sp" />
             </RelativeLayout>
 
@@ -43,6 +46,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="0.0dp"
                 android:layout_weight="1.5"
+                android:visibility="gone"
                 android:gravity="center_vertical" >
 
                 <TextView
@@ -64,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="￥88"
-                    android:textColor="#F85D58"
+                    android:textColor="@color/theme_color"
                     android:textSize="16sp" />
 
                 <TextView
@@ -74,6 +78,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/tv_b1_a1_zhehoujia1"
+                    android:textColor="#A0A0A0"
                     android:text="￥98" />
 
                 <ImageView

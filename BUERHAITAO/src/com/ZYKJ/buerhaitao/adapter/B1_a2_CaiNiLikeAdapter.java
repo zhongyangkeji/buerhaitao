@@ -5,25 +5,19 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Intent;
 import android.graphics.Paint;
-import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ZYKJ.buerhaitao.R;
-import com.ZYKJ.buerhaitao.UI.B5_11_1_ExchangeDetail;
-import com.ZYKJ.buerhaitao.adapter.B5_11_PointsMallAdapter.ExchangeListener;
-import com.ZYKJ.buerhaitao.utils.ImageUtil;
+import com.ZYKJ.buerhaitao.utils.AnimateFirstDisplayListener;
+import com.ZYKJ.buerhaitao.utils.ImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 /**
  * @author lss 2015年6月24日  猜你喜欢Adapter
@@ -32,6 +26,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class B1_a2_CaiNiLikeAdapter extends BaseAdapter {
 	private Activity context;
 	List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 
 	public B1_a2_CaiNiLikeAdapter(Activity context, List<Map<String, String>> data) {
 		this.context = context;
@@ -78,7 +73,8 @@ public class B1_a2_CaiNiLikeAdapter extends BaseAdapter {
 		}else{
 			ViewHolder=(ViewHolder) convertView.getTag();
 		}
-		ImageUtil.displayImage2Circle(ViewHolder.im_a2_pic, (String)data.get(position).get("goods_image"), 15f, null);
+		ImageLoader.getInstance().displayImage((String)data.get(position).get("goods_image"),  ViewHolder.im_a2_pic, ImageOptions.getOpstion(), animateFirstListener);
+//		ImageUtil.displayImage2Circle(ViewHolder.im_a2_pic, (String)data.get(position).get("goods_image"), 15f, null);
 		ViewHolder.tv_a2_chanpinname.setText(data.get(position).get("goods_name"));
 		ViewHolder.tv_a2_juli.setText(data.get(position).get("juli"));
 		ViewHolder.tv_a2_chanpinjianjie.setText(data.get(position).get("goods_jingle"));

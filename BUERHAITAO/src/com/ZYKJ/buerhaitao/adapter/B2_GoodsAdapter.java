@@ -14,14 +14,16 @@ import android.widget.TextView;
 
 import com.ZYKJ.buerhaitao.R;
 import com.ZYKJ.buerhaitao.data.Goods;
+import com.ZYKJ.buerhaitao.utils.AnimateFirstDisplayListener;
 import com.ZYKJ.buerhaitao.utils.ImageOptions;
-import com.ZYKJ.buerhaitao.utils.ImageUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class B2_GoodsAdapter extends BaseAdapter {
 
 	private List<Goods> list;
     private LayoutInflater inflater;
-	
+    private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 	
 	public B2_GoodsAdapter(Context context, List<Goods> list) {
         inflater = LayoutInflater.from(context);
@@ -64,18 +66,21 @@ public class B2_GoodsAdapter extends BaseAdapter {
             holder= (ViewHolder) convertView.getTag();
         }
         Goods good = list.get(position);
-
-        ImageUtil.displayImage2Circle(holder.good_image, good.getGoods_image_url(), 15, null);
+        ImageLoader.getInstance().displayImage(good.getGoods_image_url(),  holder.good_image, ImageOptions.getOpstion(), animateFirstListener);
+//        ImageUtil.displayImage2Circle(holder.good_image, good.getGoods_image_url(), 15, null);
         holder.good_name.setText(good.getGoods_name()+"");
         holder.good_juli.setText(good.getJuli()+"");
         holder.good_jingle.setText(good.getGoods_jingle()+"");
-        
-        holder.goods_price.setText(good.getGoods_price()+"");
-		if (good.getIs_special().equals("1")) {
-			holder.goods_price1.setVisibility(View.VISIBLE);
+//        goods_promotion_price
+        if (good.getIs_special().equals("1")) {
+            holder.goods_price.setText(good.getGoods_promotion_price()+"");
+        	holder.goods_price1.setVisibility(View.VISIBLE);
 			holder.goods_price1.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-			holder.goods_price1.setText("￥ "+good.getGoods_marketprice());
+			holder.goods_price1.setText("￥ "+good.getGoods_price());
+		}else {
+            holder.goods_price.setText(good.getGoods_price()+"");
 		}
+        
         holder.tv_dianpuming.setText(good.getStore_name()+"");
         holder.tv_kucun.setText(good.getGoods_storage()+"");
         holder.tv_xiaoliang.setText(good.getGoods_salenum()+"");

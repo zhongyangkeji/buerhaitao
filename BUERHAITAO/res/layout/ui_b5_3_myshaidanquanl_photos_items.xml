@@ -9,9 +9,9 @@
 
     <ImageView
         android:id="@+id/iv_photos"
-        android:layout_width="@dimen/head_img"
-        android:layout_height="@dimen/head_img"
-        android:layout_marginLeft="10dip"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginLeft="5dip"
         android:layout_marginTop="5dip"
         android:background="@drawable/buerhaitao"
         android:scaleType="fitXY" />
